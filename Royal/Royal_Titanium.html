@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>SoluckU · Casino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.91.0/lib/index.iife.min.js"></script>
+<link rel="stylesheet" href="SoluckU.css"/>
+</head>
+<body>
+<div class="bg-grid"></div><div class="bg-radial"></div><div class="scanlines"></div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <button class="logo-btn" id="btn-lobby">
+      <div class="logo-mark">
+        
+        <img src="Titanium.png" alt="Logo" class="header-logo">
+      </div>
+      <span class="logo-text">Royal Titanium<span class="logo-dot">.</span></span>
+    </button>
+  </div>
+  <div class="ticker-bar"><div class="ticker-track" id="ticker-track">
+    <span class="tk-item"><span class="tk-sym">SOL</span><span class="tk-price" id="tk-sol">—</span><span class="tk-ch" id="tk-sol-ch"></span></span>
+    <span class="tk-sep">·</span>
+    <span class="tk-item"><span class="tk-sym">QHUBX</span><span class="tk-price" id="tk-qhubx">—</span><span class="tk-ch" id="tk-qhubx-ch"></span></span>
+    <span class="tk-sep">·</span>
+    <span class="tk-item"><span class="tk-sym">BTC</span><span class="tk-price" id="tk-btc">—</span></span>
+    <span class="tk-sep">·</span>
+    <span class="tk-item"><span class="tk-sym">ETH</span><span class="tk-price" id="tk-eth">—</span></span>
+    <span class="tk-sep">·</span>
+    <span class="tk-item"><span class="tk-sym">JACKPOT</span><span class="tk-price gold">50K QHUBX</span></span>
+    <span class="tk-sep">·</span>
+    <span class="tk-item"><span class="tk-sym">GAMES</span><span class="tk-price teal">4 LIVE</span></span>
+  </div></div>
+  <div class="header-right">
+    <div class="wallet-pill" id="wallet-pill"><span class="wallet-dot" id="wallet-dot"></span><span id="wallet-label">Connect Wallet</span></div>
+    <button class="btn-connect" id="btn-connect" onclick="openWalletMenu()">Connect</button>
+  </div>
+</header>
+
+<!-- BALANCE BAR -->
+<div class="balance-bar" id="balance-bar">
+  <div class="balance-card qhubx-card">
+    <div class="bal-icon qhubx-icon">Q</div>
+    <div class="bal-info"><span class="bal-label">QHUBX</span><span class="bal-amount" id="bal-qhubx">0.00</span><span class="bal-usd" id="bal-qhubx-usd">≈ $—</span></div>
+  </div>
+  <div class="balance-card">
+    <div class="bal-icon sol-icon">◎</div>
+    <div class="bal-info"><span class="bal-label">SOL (fees)</span><span class="bal-amount" id="bal-sol">0.000</span><span class="bal-usd" id="bal-sol-usd">≈ $—</span></div>
+  </div>
+  <div class="balance-card stat-card">
+    <span class="bal-label">Prize Pool</span><span class="bal-amount prize-glow" id="stat-pool">—</span><span class="bal-label" style="font-size:8px">QHUBX</span>
+  </div>
+  <div class="balance-card stat-card jackpot-card">
+    <span class="bal-label">Jackpot</span>
+    <div class="jackpot-bar-wrap"><div class="jackpot-bar-track"><div class="jackpot-bar-fill" id="jackpot-fill"></div></div><span class="jackpot-pct" id="jackpot-pct">0%</span></div>
+    <span class="bal-amount" style="color:var(--c-gold);font-size:10px">50K QHUBX</span>
+  </div>
+  <button class="feed-toggle-btn" id="feed-toggle-btn" onclick="toggleFeed()"><span class="feed-live-dot"></span>LIVE</button>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrapper" id="main-wrapper">
+
+  <!-- LOBBY -->
+  <div class="view active" id="view-lobby">
+    <div class="lobby-hero">
+      <canvas class="hero-canvas" id="hero-canvas"></canvas>
+      <canvas class="arcade-canvas" id="arcade-left"></canvas>
+      <canvas class="arcade-canvas right" id="arcade-right"></canvas>
+      <div class="hero-content">
+        <div class="lobby-title">Royal Titanium<span class="lt-dot">.</span></div>
+        <div class="lobby-sub">QHUBX · Provably Fair · 18+</div>
+        <div class="hero-stats">
+          <div class="hs-item"><span class="hs-val" id="hs-games">0</span><span class="hs-lbl">GAMES</span></div>
+          <div class="hs-div"></div>
+          <div class="hs-item"><span class="hs-val gold" id="hs-pool">0</span><span class="hs-lbl">PRIZE POOL</span></div>
+          <div class="hs-div"></div>
+          <div class="hs-item"><span class="hs-val teal" id="hs-jackpot">50K</span><span class="hs-lbl">JACKPOT</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="game-grid">
+      <div class="game-card" onclick="openView('wheel')" style="--accent:var(--c-teal);--glow:rgba(0,255,224,.15)">
+        <div class="gc-badge hot">HOT</div>
+        <div class="gc-art"><canvas class="gc-canvas" id="gc-wheel-canvas" width="130" height="120"></canvas></div>
+        <div class="gc-info">
+          <div class="gc-name">FORTUNE WHEEL</div>
+          <div class="gc-desc">×2 · Airdrop · Jackpot · Retry</div>
+          <div class="gc-footer"><span class="gc-tok">QHUBX</span><span class="gc-rtp">RTP 63–75%</span></div>
+        </div>
+      </div>
+      <div class="game-card" onclick="openView('blackjack')" style="--accent:#f5c842;--glow:rgba(245,200,66,.15)">
+        <div class="gc-badge pop">POPULAR</div>
+        <div class="gc-art"><canvas class="gc-canvas" id="gc-bj-canvas" width="130" height="120"></canvas></div>
+        <div class="gc-info">
+          <div class="gc-name">BLACKJACK</div>
+          <div class="gc-desc">Hit · Stand · Double Down · 21</div>
+          <div class="gc-footer"><span class="gc-tok">QHUBX</span><span class="gc-rtp">RTP 99.5%</span></div>
+        </div>
+      </div>
+      <div class="game-card" onclick="openView('roulette')" style="--accent:#ff2244;--glow:rgba(255,34,68,.15)">
+        <div class="gc-badge"></div>
+        <div class="gc-art"><canvas class="gc-canvas" id="gc-rl-canvas" width="130" height="120"></canvas></div>
+        <div class="gc-info">
+          <div class="gc-name">ROULETTE</div>
+          <div class="gc-desc">European · 35:1 · Single Zero</div>
+          <div class="gc-footer"><span class="gc-tok">QHUBX</span><span class="gc-rtp">RTP 97.3%</span></div>
+        </div>
+      </div>
+      <div class="game-card" onclick="openView('slots')" style="--accent:#bf00ff;--glow:rgba(191,0,255,.15)">
+        <div class="gc-badge"></div>
+        <div class="gc-art"><canvas class="gc-canvas" id="gc-sl-canvas" width="130" height="120"></canvas></div>
+        <div class="gc-info">
+          <div class="gc-name">SLOTS</div>
+          <div class="gc-desc">3-Reel Classic · 500× max win</div>
+          <div class="gc-footer"><span class="gc-tok">QHUBX</span><span class="gc-rtp">RTP 92%</span></div>
+        </div>
+      </div>
+    </div>
+    <canvas class="network-canvas" id="network-canvas"></canvas>
+  </div>
+
+  <!-- WHEEL -->
+  <div class="view" id="view-wheel">
+    <div class="gv-inner">
+      <div class="gtop"><button class="back-btn" onclick="openView('lobby')">← Lobby</button><span class="gv-title" style="color:var(--c-teal)">🎡 Fortune Wheel</span></div>
+      <div class="wheel-layout">
+        <div class="drum-wrap">
+          <div class="drum-frame">
+            <div class="drum-glow-top"></div><div class="drum-glow-bot"></div>
+            <div class="drum-ptr"><svg width="18" height="18" viewBox="0 0 18 18"><polygon points="0,0 18,9 0,18" fill="var(--c-teal)"/></svg></div>
+            <div class="drum-vp"><div class="drum-strip" id="drum-strip"></div></div>
+          </div>
+          <div class="result-box" id="wheel-result"><div class="rb-icon">🎰</div><div class="rb-main">Spin to play</div><div class="rb-sub">Place a bet and spin</div></div>
+        </div>
+        <div class="bet-col"><div class="bet-panel">
+          <div class="bp-s"><div class="bp-lbl">BET AMOUNT (QHUBX)</div>
+            <div class="bp-row"><button class="bp-adj" onclick="adjBet('wheel',.5)">½</button><div class="bp-iw"><input type="number" id="wheel-amt" value="100" min="100" step="100" oninput="upPrev()"/><span class="bp-sym">QHUBX</span></div><button class="bp-adj" onclick="adjBet('wheel',2)">×2</button></div>
+            <div class="qbs"><button class="qb" onclick="sBet('wheel',100)">100</button><button class="qb" onclick="sBet('wheel',500)">500</button><button class="qb" onclick="sBet('wheel',1000)">1K</button><button class="qb" onclick="sBet('wheel',5000)">5K</button></div>
+          </div>
+          <div class="bp-s pots">
+            <div class="pr"><span>×2 Win</span><span class="pv g" id="w-x2">—</span></div>
+            <div class="pr"><span>Airdrop</span><span class="pv pu">QHUBX Drop</span></div>
+            <div class="pr"><span>Jackpot 💎</span><span class="pv go">50,000 QHUBX</span></div>
+            <div class="pr"><span>Retry ×1</span><span class="pv mu">Bet refunded</span></div>
+          </div>
+          <button class="btn-main" id="wheel-btn" onclick="spinWheel()" disabled>SPIN TO WIN</button>
+          <div class="sl" id="wheel-status">Connect wallet to play</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLACKJACK -->
+  <div class="view" id="view-blackjack">
+    <div class="gv-inner">
+      <div class="gtop"><button class="back-btn" onclick="openView('lobby')">← Lobby</button><span class="gv-title" style="color:var(--c-gold)">🃏 Blackjack</span><span class="gv-badge">Dealer hits soft 17</span></div>
+      <div class="bj-layout">
+        <div class="bj-table">
+          <div class="bj-side dealer-side"><div class="bj-lbl">DEALER <span id="bj-dv"></span></div><div class="card-row" id="bj-dc"></div></div>
+          <div class="bj-vs"><div id="bj-banner" class="bj-ban"></div></div>
+          <div class="bj-side"><div class="bj-lbl">YOU <span id="bj-pv"></span></div><div class="card-row" id="bj-pc"></div></div>
+          <div class="bj-acts" id="bj-acts" style="display:none">
+            <button class="bja hit" onclick="bjAct('hit')">HIT</button>
+            <button class="bja stand" onclick="bjAct('stand')">STAND</button>
+            <button class="bja dbl" id="bj-dbl" onclick="bjAct('double')">DOUBLE</button>
+          </div>
+        </div>
+        <div class="bet-col"><div class="bet-panel">
+          <div class="bp-s"><div class="bp-lbl">BET AMOUNT (QHUBX)</div>
+            <div class="bp-row"><button class="bp-adj" onclick="adjBet('bj',.5)">½</button><div class="bp-iw"><input type="number" id="bj-amt" value="100" min="100" step="100" oninput="upPrev()"/><span class="bp-sym">QHUBX</span></div><button class="bp-adj" onclick="adjBet('bj',2)">×2</button></div>
+            <div class="qbs"><button class="qb" onclick="sBet('bj',100)">100</button><button class="qb" onclick="sBet('bj',500)">500</button><button class="qb" onclick="sBet('bj',1000)">1K</button><button class="qb" onclick="sBet('bj',5000)">5K</button></div>
+          </div>
+          <div class="bp-s pots">
+            <div class="pr"><span>Blackjack</span><span class="pv go">3:2 payout</span></div>
+            <div class="pr"><span>Win</span><span class="pv g">×2</span></div>
+            <div class="pr"><span>Double Win</span><span class="pv g" id="bj-dbl-prev">—</span></div>
+            <div class="pr"><span>Push</span><span class="pv mu">Bet returned</span></div>
+          </div>
+          <button class="btn-main" id="bj-btn" onclick="dealBJ()" style="--mc:var(--c-gold)" disabled>DEAL CARDS</button>
+          <div class="sl" id="bj-status">Connect wallet to play</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROULETTE -->
+  <div class="view" id="view-roulette">
+    <div class="gv-inner">
+      <div class="gtop"><button class="back-btn" onclick="openView('lobby')">← Lobby</button><span class="gv-title" style="color:var(--c-red)">🎡 European Roulette</span><span class="gv-badge">Single Zero · HE 2.7%</span></div>
+      <div class="rl-layout">
+        <div class="rl-left">
+          <canvas id="rl-canvas" width="280" height="280"></canvas>
+          <div class="result-box" id="rl-result"><div class="rb-icon">🎡</div><div class="rb-main">Place your bet</div><div class="rb-sub">Select type on the right</div></div>
+        </div>
+        <div class="rl-right"><div class="bet-panel">
+          <div class="bp-s"><div class="bp-lbl">BET AMOUNT (QHUBX)</div>
+            <div class="bp-row"><button class="bp-adj" onclick="adjBet('rl',.5)">½</button><div class="bp-iw"><input type="number" id="rl-amt" value="100" min="100" step="100" oninput="upPrev()"/><span class="bp-sym">QHUBX</span></div><button class="bp-adj" onclick="adjBet('rl',2)">×2</button></div>
+            <div class="qbs"><button class="qb" onclick="sBet('rl',100)">100</button><button class="qb" onclick="sBet('rl',500)">500</button><button class="qb" onclick="sBet('rl',1000)">1K</button><button class="qb" onclick="sBet('rl',5000)">5K</button></div>
+          </div>
+          <div class="bp-s">
+            <div class="bp-lbl">BET TYPE</div>
+            <div class="rl-bts" id="rl-bts">
+              <button class="rbt active" onclick="setRlBet('color','red')">🔴 Red 1:1</button>
+              <button class="rbt" onclick="setRlBet('color','black')">⚫ Black 1:1</button>
+              <button class="rbt" onclick="setRlBet('parity','even')">Even 1:1</button>
+              <button class="rbt" onclick="setRlBet('parity','odd')">Odd 1:1</button>
+              <button class="rbt" onclick="setRlBet('half','low')">1–18 (1:1)</button>
+              <button class="rbt" onclick="setRlBet('half','high')">19–36 (1:1)</button>
+              <button class="rbt" onclick="setRlBet('dozen','1')">1st 12 (2:1)</button>
+              <button class="rbt" onclick="setRlBet('dozen','2')">2nd 12 (2:1)</button>
+              <button class="rbt" onclick="setRlBet('dozen','3')">3rd 12 (2:1)</button>
+            </div>
+            <div style="margin-top:5px">
+              <div class="bp-lbl">STRAIGHT UP (35:1)</div>
+              <div class="bp-row" style="gap:5px">
+                <div class="bp-iw" style="max-width:72px"><input type="number" id="rl-sn" min="0" max="36" placeholder="0–36" style="font-size:12px"/></div>
+                <button class="rbt" style="flex:1" onclick="setRlBet('straight',document.getElementById('rl-sn').value)">Set #</button>
+              </div>
+            </div>
+          </div>
+          <div class="bp-s pots">
+            <div class="pr"><span>Bet</span><span class="pv te" id="rl-bd">Red (1:1)</span></div>
+            <div class="pr"><span>Potential win</span><span class="pv g" id="rl-pot">—</span></div>
+          </div>
+          <button class="btn-main" id="rl-btn" onclick="spinRL()" style="--mc:var(--c-red)" disabled>SPIN WHEEL</button>
+          <div class="sl" id="rl-status">Connect wallet to play</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOTS -->
+  <div class="view" id="view-slots">
+    <div class="gv-inner">
+      <div class="gtop"><button class="back-btn" onclick="openView('lobby')">← Lobby</button><span class="gv-title" style="color:var(--c-purple)">🎰 Slots</span><span class="gv-badge">3-Reel · Up to 500×</span></div>
+      <div class="sl-layout">
+        <div class="sl-machine">
+          <div class="sl-machine-top">
+            <div class="sl-lights" id="sl-lights"></div>
+            <div class="sl-title-plate">SoluckU SLOTS</div>
+          </div>
+          <div class="sl-body">
+            <div class="sl-winlabel">PAY LINE</div>
+            <div class="sl-reels-outer">
+              <div class="win-line"></div>
+              <div class="sl-reels" id="sl-reels">
+                <div class="reel" id="reel-0"><div class="reel-inner" id="ri-0"></div></div>
+                <div class="reel-div"></div>
+                <div class="reel" id="reel-1"><div class="reel-inner" id="ri-1"></div></div>
+                <div class="reel-div"></div>
+                <div class="reel" id="reel-2"><div class="reel-inner" id="ri-2"></div></div>
+              </div>
+            </div>
+            <div class="result-box" id="sl-result" style="display:none;margin-top:8px;max-width:320px">
+              <div class="rb-icon" id="sl-ico">🎰</div><div class="rb-main" id="sl-main">—</div><div class="rb-sub" id="sl-sub"></div>
+            </div>
+          </div>
+          <div class="paytable">
+            <div class="pt-col"><div class="pt-r"><span>🍒🍒🍒</span><span class="pt-m">×5</span></div><div class="pt-r"><span>🍋🍋🍋</span><span class="pt-m">×8</span></div><div class="pt-r"><span>🍊🍊🍊</span><span class="pt-m">×10</span></div><div class="pt-r"><span>🍇🍇🍇</span><span class="pt-m">×15</span></div></div>
+            <div class="pt-col"><div class="pt-r"><span>🔔🔔🔔</span><span class="pt-m">×25</span></div><div class="pt-r"><span>⭐⭐⭐</span><span class="pt-m">×50</span></div><div class="pt-r"><span>💎💎💎</span><span class="pt-m">×100</span></div><div class="pt-r hl"><span>7️⃣7️⃣7️⃣</span><span class="pt-m go">×500</span></div></div>
+          </div>
+        </div>
+        <div class="bet-col"><div class="bet-panel">
+          <div class="bp-s"><div class="bp-lbl">BET AMOUNT (QHUBX)</div>
+            <div class="bp-row"><button class="bp-adj" onclick="adjBet('sl',.5)">½</button><div class="bp-iw"><input type="number" id="sl-amt" value="100" min="100" step="100" oninput="upPrev()"/><span class="bp-sym">QHUBX</span></div><button class="bp-adj" onclick="adjBet('sl',2)">×2</button></div>
+            <div class="qbs"><button class="qb" onclick="sBet('sl',100)">100</button><button class="qb" onclick="sBet('sl',500)">500</button><button class="qb" onclick="sBet('sl',1000)">1K</button><button class="qb" onclick="sBet('sl',5000)">5K</button></div>
+          </div>
+          <div class="bp-s pots">
+            <div class="pr"><span>Max Win (7s)</span><span class="pv go" id="sl-max">—</span></div>
+            <div class="pr"><span>💎 3-match</span><span class="pv pu" id="sl-diam">—</span></div>
+            <div class="pr"><span>⭐ 3-match</span><span class="pv" id="sl-star">—</span></div>
+          </div>
+          <button class="btn-main" id="sl-btn" onclick="spinSL()" style="--mc:var(--c-purple)" disabled>SPIN SLOTS</button>
+          <div class="sl" id="sl-status">Connect wallet to play</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- main-wrapper -->
+
+<footer class="footer">
+  <span class="fc">© 2026 QhuboX, Inc. · 18+ · Play Responsibly · <span id="net-label">Mainnet</span></span>
+  <div class="fl"><a href="/MENT4L.html" class="flink">◎ Ecosystem</a><a href="#" class="flink">𝕏 Twitter</a><a href="/ecosystem/mentalecosystemapp.html" class="flink">⬡ App</a></div>
+</footer>
+
+<!-- LIVE FEED -->
+<div class="feed-sidebar" id="feed-sidebar">
+  <div class="feed-header">
+    <span class="feed-title">LIVE BETS</span>
+    <div style="display:flex;align-items:center;gap:6px"><div class="feed-dot"></div><button class="feed-close" onclick="toggleFeed()">×</button></div>
+  </div>
+  <div class="feed-meta">
+    <div class="fm-item"><div class="fm-val" id="fm-total">0</div><div class="fm-lbl">Bets</div></div>
+    <div class="fm-item"><div class="fm-val gold" id="fm-paid">0</div><div class="fm-lbl">Paid QHUBX</div></div>
+    <div class="fm-item"><div class="fm-val green" id="fm-wins">0</div><div class="fm-lbl">Wins</div></div>
+  </div>
+  <div class="feed-list" id="feed-list"><div class="feed-empty">Waiting for action…</div></div>
+</div>
+
+<!-- WALLET MENU -->
+<div class="wm-overlay" id="wm-overlay" onclick="closeWalletMenu()"></div>
+<div class="wallet-menu" id="wallet-menu">
+  <div class="wm-title">SELECT WALLET</div>
+  <div class="wm-list" id="wm-list"></div>
+  <div class="wm-connected" id="wm-connected" style="display:none">
+    <div class="wm-addr" id="wm-addr"></div>
+    <div class="wm-bal" id="wm-bal"></div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="wm-dc" onclick="disconnectWallet()">Disconnect</button>
+      <button class="wm-dc" style="border-color:var(--c-teal);color:var(--c-teal)" onclick="showWalletList()">Change</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box"><div class="modal-icon" id="m-icon">🎰</div><div class="modal-title" id="m-title"></div><div class="modal-body" id="m-body"></div><div class="modal-tx" id="m-tx"></div><button class="modal-close" onclick="closeModal()">CLOSE</button></div>
+</div>
+
+<div id="confetti-container"></div>
+<script src="script.js"></script>
+</body>
+</html>
