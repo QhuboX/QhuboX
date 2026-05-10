@@ -1,0 +1,481 @@
+/* CORRECTED CSS for `styles/main.css` - NavBar VISIBLE en Desktop y Fija/Centrada en Móvil */
+
+body {
+    /* Centra la libreta en la pantalla usando flexbox */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: 100vh;
+    margin: 0;
+    overflow-x: hidden; 
+    background-image:
+        radial-gradient(circle at center, rgba(0, 0, 0, 0.594), rgba(0, 0, 0, 0.553)),
+        url('assets/fondo.png');
+    
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+.logo-container {
+    position: absolute;
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start; 
+    gap: 5px; 
+    top: 4%;
+    left: 4%;
+    
+    margin-bottom: 20px;
+    pointer-events: none;
+}
+
+.logo-top {
+    width: 90px; 
+    height: auto;
+    opacity: 0.9;
+}
+
+.logo-text {
+    position: relative;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2.5rem;
+    letter-spacing: 0.3rem;
+    font-weight: 300;
+}
+
+/* --- CONTENEDOR PRINCIPAL DE LA LIBRETA (PAD) --- */
+.pad-wrapper {
+    width: 95%;
+    max-width: 900px;
+    height: auto;
+    aspect-ratio: 16 / 10; /* Proporción de escritorio */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pad {
+    width: 100%;
+    height: 85%;
+    background: rgba(59, 67, 69, 0.027);
+    border: 3px solid rgba(1, 5, 5, 0.863);
+    border-radius: 10px;
+    
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+    position: relative;
+    display: flex;
+    animation: bordeLuz 15.5s linear infinite;
+    
+    border-image-slice: 41.5;
+}
+
+/* Animación en bucle */
+@keyframes bordeLuz {
+    0% {
+        border-image-source: linear-gradient(90deg, #141414d7, #3f3d3d, #0a0a0ab7);
+    }
+    25% {
+        border-image-source: linear-gradient(180deg, #0f0f0fc3, #a5a4a4, #111010b3);
+    }
+    50% {
+        border-image-source: linear-gradient(90deg, #08080897, #424242, #0c0c0cc8);
+    }
+    75% {
+        border-image-source: linear-gradient(180deg, #161414c4, #6a6a6a, #131212c7);
+    }
+    100% {
+        border-image-source: linear-gradient(90deg, #111111b3, #9e9898, #0f0f0fa5);
+    }
+}
+
+/* --- PANTALLAS IZQUIERDA Y DERECHA (Escritorio) --- */
+.screen {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    position: absolute;
+    width: calc(50% - 10px); /* 50% menos la mitad del lomo */
+    height: 100%;
+    top: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.screen-1 {
+    left: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    z-index: 1; 
+}
+.screen-1::-webkit-scrollbar {
+    display: none;
+}
+
+.screen-2 {
+    right: 0;
+    z-index: 1; 
+}
+
+/* --- LOMO CENTRAL DE LA LIBRETA --- */
+.pad-spine {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 10;
+}
+
+.pad-spine::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(51, 51, 51, 0.123) 0%, rgba(203, 255, 255, 0.973) 50%, rgba(70, 70, 70, 0.192) 100%);
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.pad-spine::after {
+    content: '|||||||||||||||||||||||||||||||||||||||';
+    color: #0ff;
+    opacity: 0.3;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    font-family: monospace;
+    text-shadow: 0 0 5px rgb(185, 95, 170);
+}
+
+/* --- ELEMENTOS DE LA PANTALLA --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    margin-top: 0.11%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #ffffff;
+    background: linear-gradient(to bottom, #fff82d3e, #051b744e);
+    border: 1px solid #6196966b;
+    padding: 5px 20px;
+    border-radius: 16px;
+}
+
+button {
+    margin-top: 1%;
+    background: rgba(0, 192, 121, 0.511);
+    color: #ffffff;
+    border: 1px solid rgba(54, 55, 55, 0.749);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(1px);
+    box-shadow: 0 1px 1px rgba(0, 255, 255, 0.5);
+}
+
+.crypto-card {
+    background: rgba(2, 2, 2, 0.368);
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid rgba(192, 185, 185, 0.37);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    color: #ebf2f1;
+    text-shadow:
+    1px 1px 1px rgba(0, 107, 0, 0.991),
+    0 0 1px rgb(0, 0, 0);
+}
+
+.crypto-card:hover {
+    background: rgba(88, 87, 87, 0.089);
+}
+
+.crypto-actions button {
+    background: transparent;
+    color: #0ff;
+    border: none;
+    margin-left: 8px;
+    font-size: 1.1rem;
+    padding: 0;
+}
+
+/* --- MODAL Y FORMULARIO (Escritorio - Centrado en Screen-1) --- */
+#cryptoFormModal {
+    position: absolute; 
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+     
+}
+
+#cryptoFormModal.hidden {
+    display: none;
+}
+
+#cryptoForm {
+   background: linear-gradient(to bottom, #0d0e0de7, #000000ed);
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    position: relative;
+    box-shadow: 0 0 20px rgb(0, 0, 0);
+}
+
+#cryptoForm input,
+#cryptoForm button {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+#cryptoForm input {
+    background: linear-gradient(to bottom, #fff82d3e, #051b744e);
+    color: #fff;
+    border: 1px solid rgba(128, 132, 132, 0.461);
+}
+
+#cryptoForm button {
+    background: rgba(15, 42, 7, 0.692);
+    color: #fcfbfb;
+    font-weight: bold;
+    cursor: pointer;
+    
+}
+
+#coinDetails {
+    margin-bottom: 20px;
+    color: #fff8f8;
+    text-shadow:
+    1px 1px 1px rgba(0, 107, 0, 0.247),
+    0 0 1.5px rgb(0, 0, 0);
+}
+
+canvas {
+    width: 100% !important;
+    max-height: 55vh;
+    
+
+}
+
+/* Posiciona el botón en la esquina superior derecha (Escritorio) */
+#addCryptoBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+#backBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+
+
+.boton-3d2 {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: #ffffff;
+    background: linear-gradient(to bottom, #fff82d3e, #051b744e);
+    border: 1px solid #6196966b;
+    padding: 5px 20px;
+    border-radius: 16px;
+    text-transform: uppercase;
+    z-index: -1;
+    box-shadow:
+        inset 0 0 5px rgba(0, 0, 0, 0.139),
+        0 0 10px rgba(0, 0, 0, 0.368),
+        0 2px 0 #00000054;
+}
+
+
+/* --- AJUSTES CRÍTICOS PARA MÓVILES (768px a 480px) --- */
+@media (max-width: 768px) {
+    canvas {
+    width: 100% !important;
+    height: 50% !important;
+    
+
+}
+  body { 
+        overflow: hidden; 
+        /* Usamos 100dvh para móvil (medida real de la pantalla) menos el espacio que quieras dejar (ej: 25px) */
+        height: calc(100dvh - 45px); 
+        margin-bottom: 45px; /* Esto crea la separación física en la parte inferior */
+        box-sizing: border-box;
+    }
+
+    /* LOGO Y NOMBRE: Compactación máxima arriba */
+    .logo-container {
+        position: absolute !important;
+        top: 10px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        flex-direction: column !important;
+        width: 100%;
+        gap: 0;
+        z-index: 3000;
+    }
+    .logo-top { width: 45px; }
+    .logo-text { font-size: 1.4rem; letter-spacing: 0.2rem; margin: 0; }
+
+    
+
+    /* --- EL PAD: MAXIMIZADO --- */
+    .pad-wrapper {
+        position: absolute !important;
+        /* Calculamos: 100vh menos el espacio del logo/nav (120px) y el footer/botón (90px) */
+        height: calc(98vh - 160px) !important; 
+        width: 95% !important;
+        top: 80px; 
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        margin: 0 !important;
+        max-width: none !important;
+    }
+
+    .pad {
+        display: block !important;
+        height: 100% !important; /* Ocupa todo el alto del wrapper */
+        background: rgba(20, 20, 20, 0.089);
+    }
+
+    .screen {
+        height: 100% !important; /* Las pantallas internas llenan el pad */
+        overflow-y: auto;
+    }
+
+    .screen-1 { display: block !important; width: 100% !important; }
+    .screen-2 { display: none !important; width: 100% !important; }
+    
+    /* Clases de intercambio (JS) */
+    .screen-1.hidden-mobile { display: none !important; }
+    .screen-2.active { display: block !important; }
+
+    .pad-spine { display: none !important; }
+
+    /* BOTÓN FLOTANTE: Debajo del Pad */
+.boton-3d2 {
+    position: fixed;
+    display: flex !important;
+    
+    
+    width: 70% !important; 
+    max-width: 390px;      
+
+   
+    justify-content: center !important; 
+    
+    bottom: 40px !important; 
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 1.2rem;
+    padding: 12px 10px;
+    z-index: 50;
+    pointer-events: none;
+}
+
+  }
+/* Ajuste extra para pantallas muy cortas (ej. iPhone SE) */
+@media (max-height: 600px) and (max-width: 768px) {
+    .logo-top { width: 35px; }
+    .barra-superior { top: 70px; }
+    .pad-wrapper { 
+        top: 110px !important; 
+        height: calc(100vh - 180px) !important; 
+    }
+}
+/* --- AJUSTES PARA MÓVILES PEQUEÑOS (480px) --- */
+@media (max-width: 480px) {
+    /* Reducción extrema para dar aire al Pad */
+    .logo-top { width: 35px; }
+    .logo-text { font-size: 1.1rem; }
+    
+    .barra-superior { top: 75px; }
+    .nav-links a { font-size: 0.65rem; gap: 5px; }
+
+    .boton-3d2 {
+        font-size: 0.7rem;
+        bottom: 80px;
+        min-width: 200px;
+    }
+.screen-1 {
+        display: block !important;
+        width: 100% !important;
+        max-height: 80vh;
+    }
+
+    .screen-2 {
+        display: none !important;
+        width: 100% !important;
+        max-height: 80vh;
+    }
+    #copyright { font-size: 8px; }
+
+    /* Ocultar elementos sociales si el espacio es crítico o moverlos al tope */
+    #social-links-container {
+        top: 15px;
+        right: 15px;
+        bottom: auto;
+    }
+}
+@media (max-width: 932px) and (orientation: landscape) {
+    .pad {
+        display: flex !important; /* Volvemos a mostrar ambas pantallas */
+    }
+    .screen-1, .screen-2 {
+        display: block !important;
+        width: 50% !important; /* Cada una ocupa la mitad */
+    }
+    .pad-spine {
+        display: flex !important; /* Recuperamos el lomo */
+    }
+    .screen-1.hidden-mobile {
+        display: block !important; /* Forzamos visibilidad */
+    }
+    #backBtn {
+        display: none !important; /* No hace falta el botón de volver en horizontal */
+    }
+}

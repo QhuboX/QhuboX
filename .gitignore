@@ -1,0 +1,84 @@
+# ==========================================
+# QhuboX - Global .gitignore
+# ==========================================
+
+# 1. DEPENDENCIAS (Vital para que no pese Gigas)
+**/node_modules/
+**/.venv/
+**/venv/
+**/__pycache__/
+**/*.pyc
+
+# 2. SEGURIDAD Y VARIABLES DE ENTORNO
+**/.env
+**/.env.local
+**/.env.*
+**/secrets/
+
+# 3. ARCHIVOS JSON (Ignorar todos EXCEPTO los de configuración)
+**/*.json
+!**/package.json
+!**/package-lock.json
+!**/tsconfig.json
+!**/vercel.json
+!**/next.config.js
+
+# 4. LOGS Y CACHÉ
+**/*.log
+**/.cache/
+**/.npm/
+**/.next/
+**/dist/
+**/build/
+
+# 5. ARCHIVOS DEL SISTEMA Y EDITORES
+.DS_Store
+**/.DS_Store
+Thumbs.db
+**/Thumbs.db
+**/.vscode/
+**/.idea/
+
+# Ignora node_modules en CUALQUIER carpeta
+**/node_modules/
+node_modules/
+
+# Ignora builds y archivos temporales
+**/dist/
+**/build/
+**/.next/
+**/out/
+
+# SEGURIDAD: Archivos de configuración y claves
+**/.env
+**/.env.local
+**/.env.*
+**/*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+
+# Logs y Cache
+**/*.log
+**/.cache/
+**/.npm/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+**/.vscode/
+# Entornos virtuales de Python
+    .venv/
+    venv/
+    ENV/
+    env/
+    bin/
+    lib/
+    include/
+    share/
+    **/.venv/
+    **/venv/
+    
+    # Archivos de caché de Python
+    **/__pycache__/
+    **/*.pyc/

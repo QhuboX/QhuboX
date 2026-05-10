@@ -1,0 +1,37 @@
+{
+  "name": "qhronox-protocol",
+  "version": "1.0.0",
+  "description": "QhronoX Protocol — Real yield ecosystem participation on Solana. Where time becomes value.",
+  "private": true,
+  "workspaces": [
+    "app"
+  ],
+  "scripts": {
+    "dev": "cd app && npm run dev",
+    "build:app": "cd app && npm run build",
+    "build:contract": "anchor build",
+    "deploy:devnet": "anchor deploy --provider.cluster devnet",
+    "deploy:mainnet": "anchor deploy --provider.cluster mainnet",
+    "create-token": "npx ts-node scripts/create-token.ts",
+    "init-pool": "npx ts-node scripts/initialize-pool.ts",
+    "harvest": "npx ts-node scripts/harvest-fees.ts",
+    "test": "anchor test"
+  },
+  "devDependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.95.8",
+    "@types/node": "^22.10.2",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.1",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@project-serum/anchor": "^0.26.0",
+    "@tailwindcss/postcss": "^4.3.0",
+    "pino-pretty": "^13.1.3"
+  }
+}

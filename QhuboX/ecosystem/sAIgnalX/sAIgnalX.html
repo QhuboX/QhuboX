@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sAIgnalX</title>
+    <link rel="stylesheet" href="siris.css">
+</head>
+<body>
+     <canvas id="techHiveCurve"></canvas>
+
+ 
+    <div class="btc-background-provider">
+    <canvas id="btcChartCanvas"></canvas>
+    <div id="btcRealTimePrice" class="btc-price-tag"></div>
+</div>
+    <canvas id="sniperRange"></canvas>
+    
+   
+     <nav class="main-nav">
+            <a href="/ecosystem/BurnQhuboX/iBurn.html" target="_blank" class="nav-left-link">Burn QHUBX</a>
+            <ul>
+                <li><a href="/QhuboX.html" target="_blank">QhuboX</a></li>
+                <li><a href="/ecosystem/QhuboX.html " target="_blank">Ecosystem</a></li>
+                <li><a href="/whitepaper.html" target="_blank">Whitepaper</a></li>
+                 <li class="cta-link down">
+    <a href="javascript:void(0)">Buy QHUBX</a>
+    <ul class="down-menu">
+        
+        
+        <li><a href="https://raydium.io" target="_blank"><img src="/imahe/ray.png" class="nav-logo"> Raydium</a></li>
+        <li><a href="#"><img src="/imahe/binance.png" class="nav-logo"> Binance <span class="soon-tag">Soon</span></a></li>
+        <li><a href="#"><img src="/imahe/bybit.jpg" class="nav-logo"> Bybit <span class="soon-tag">Soon</span></a></li>
+        <li><a href="#"><img src="/imahe/Bingx.png" class="nav-logo"> BingX <span class="soon-tag">Soon</span></a></li>
+        <li><a href="#"><img src="/imahe/4.png" class="nav-logo"> OKX <span class="soon-tag">Soon</span></a></li>
+        <li><a href="#"><img src="/imahe/bitget.png" class="nav-logo"> Bitget <span class="soon-tag">Soon</span></a></li>
+    </ul>
+</li>
+</ul>
+        </nav>
+  <div class="scene">
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-row">
+                <img src="media/logo.png" alt="Logo" class="main-logo">
+                <h1 class="brand-name">sAIgnalX</h1><span class="version-tag">||Free v2.0</span>
+            </div>
+            <p class="typing-effect">
+                The Only AI Signals Bot Built for Delta Snipers<br> chart 1 to 15 min.
+            </p>
+        </div>
+    </div>
+
+    <div class="cube" id="cube">
+        <div class="face front">
+            <canvas class="face-matrix"></canvas>
+            <div class="face-content">
+                <div class="face-title">💎 AI Signals Bot</div>
+                <div class="grid-container" id="face-0"></div>
+            </div>
+        </div>
+
+        <div class="face right">
+            <canvas class="face-matrix"></canvas>
+            <div class="face-content">
+                <div class="face-title">🔥 AI Signals Bot</div>
+                <div class="grid-container" id="face-1"></div>
+            </div>
+        </div>
+
+        <div class="face back">
+            <canvas class="face-matrix"></canvas>
+            <div class="face-content">
+                <div class="face-title">⚡ AI Signals Bot</div>
+                <div class="grid-container" id="face-2"></div>
+            </div>
+        </div>
+
+        <div class="face left">
+            <canvas class="face-matrix"></canvas>
+            <div class="face-content">
+                <div class="face-title">🌊 AI Signals Bot</div>
+                <div class="grid-container" id="face-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <label>Speed</label>
+        <input type="range" id="speedRange" min="2" max="30" value="15">
+        <button id="playPauseBtn" class="sniper-btn">PAUSE</button>
+        <button id="deployBtn" class="sniper-btn">DEPLOY</button>
+    </div>
+</div>
+<div class="side-column left-col">
+    <div class="col-header">TOP CRYPTO</div>
+    <div id="crypto-ticker" class="ticker-wrapper"></div>
+</div>
+
+<div class="side-column right-col">
+    <div class="col-header" style="color: #ffaa00;">MEME MARKETS</div>
+    <div id="global-ticker" class="ticker-wrapper"></div>
+</div>
+
+<footer>
+        <div class="footer-left">
+            <a href="/QhuboX.html" target="_blank">&copy; 2026 || QhuboX, All Rights Reserved</a>
+        </div>
+        <div class="footer-right">
+            <div class="social-container">
+                <a href="/ecosystem/QhuboX.html "><img src="/ecosystem/Kiaraap/assets/icons/icono_link.svg" alt="home"></a>
+                <a href="#" target="_blank"><img src="/ecosystem/icons/twitter.png" alt="X"></a>
+                <a href="https://discord.com" target="_blank"><img src="/ecosystem/icons/discord.png" alt="Discord"></a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="bingx.js"></script>
+    <script src="script.js"></script>
+    
+    <script src="face-matrix.js"></script>    
+        
+        <script src="techHiveCurve.js"></script>
+</body>
+</html>

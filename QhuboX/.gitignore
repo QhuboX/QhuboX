@@ -1,0 +1,47 @@
+# --- QhuboX Ecosystem Global Ignore ---
+
+# 1. SEGURIDAD (Obligatorio: Nunca subas tus llaves)
+**/.env
+**/.env.local
+**/.env.*.local
+**/web3-keys.json
+**/*.pem
+**/*.key
+**/secrets/
+
+# 2. DEPENDENCIAS (Se recuperan con 'npm install' en el servidor)
+**/node_modules/
+**/jspm_packages/
+**/pnpm-lock.yaml
+**/yarn.lock
+
+# 3. ARCHIVOS DE COMPILACIÓN (Basura técnica de la web)
+**/dist/
+**/build/
+**/out/
+**/.next/
+**/.cache/
+**/target/
+
+# 4. BLOCKCHAIN & SOLANA (Específicos de smart contracts)
+**/.anchor/
+**/deploy/
+**/.program-ids.json
+**/test-ledger/
+
+# 5. IA & ANALÍTICA QUANT (Basura de Python/Data)
+**/__pycache__/
+**/.ipynb_checkpoints/
+**/.pytest_cache/
+**/.venv/
+**/venv/
+**/*.pyc
+**/data/*.csv
+**/data/*.json
+
+# 6. ARCHIVOS DE SISTEMA (Basura de Windows/Mac)
+.DS_Store
+Thumbs.db
+*.log
+**/.vscode/
+**/.idea/

@@ -1,0 +1,30 @@
+# Solana / Anchor
+target/
+.anchor/
+test-ledger/
+deployment.json
+
+# Node
+node_modules/
+app/node_modules/
+app/.next/
+app/out/
+
+# Environment — NEVER commit these
+.env
+.env.local
+.env*.local
+*.pem
+id.json
+keypair.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# TypeScript
+*.tsbuildinfo

@@ -1,0 +1,937 @@
+/* Contenedor principal del modal */
+.modal-overlay {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+    display: absolute;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #000000fa;
+    overflow: hidden; /* Para evitar scroll en el body si app-container tiene altura fija */
+    
+    
+    background-size: cover;
+    background-attachment: fixed;
+    
+}
+
+
+.wallet-modal {
+     border: 1px solid #ada6a6cf;
+    
+    /* CAMBIO: Usamos 90vw (90% del ancho del viewport) y limitamos a 400px, 
+       lo cual es más estándar que 50vh para el ancho. */
+    width: 90vw; /* Ocupa el 90% del ancho del viewport en pantallas pequeñas */
+    max-width: 400px; /* Asegura un ancho máximo confortable */
+    
+    height: 95vh; /* Mantenemos 95% de la altura */
+    
+    background-color: #000000c9; 
+    
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.995);
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Encabezado y botón de cierre */
+.close-button {
+    position: absolute;
+    top: 2px;
+    right: 15px;
+    font-size: 2em;
+    font-weight: 300;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+.wallet-header {
+    display: flex;
+    justify-content: center; /* CRUCIAL: Esto centra el logo y el texto horizontalmente */
+    align-items: center;     /* Esto los mantiene centrados verticalmente entre sí */
+    gap: 5px; 
+    
+    /* MARGEN Y PADDING: */
+    margin: 8px 0;        /* Agrega 20px de espacio por FUERA del contenedor (arriba y abajo) */
+    padding: 15px 5px;     /* Agrega 15px de espacio por DENTRO del contenedor (antes de la línea del borde) */
+    
+    border-bottom: 1px solid #0a0808;
+}
+
+.vaults-logo img {
+   
+    object-fit: contain; /* Asegura que la imagen no se deforme */
+    display: block;
+    margin: 0; /* ELIMINADOS margin-top y margin-left que rompían la alineación */
+}
+
+.wallet-header h2 {
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    letter-spacing: 0.1rem;
+    font-weight: 300;
+    margin: 0; 
+    line-height: 1; 
+    text-align: center; /* Asegura que el texto esté centrado si llega a saltar a una segunda línea */
+}
+
+
+
+
+
+
+
+.slide-container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1; /* Permite que ocupe toda la altura restante */
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide-panel {
+    flex-shrink: 0;
+    width: 100%;
+    flex-grow: 1;
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Importante: quitamos padding-bottom aquí, lo moveremos a la lista */
+}
+
+/* Estilos de las pantallas */
+.screen-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+/* Pantalla de Saldo */
+.wallet-address-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Reducido ligeramente para ahorrar espacio */
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px 12px; /* Un poco más de aire a los lados para que sea estético */
+    border-radius: 100px; 
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+   
+    flex-direction: row; /* Alinea en fila */
+    
+    
+    
+    
+
+    
+    width: fit-content; 
+    margin-left: auto;   
+    margin-right: auto;  
+}
+
+.wallet-address-text {
+    font-size: 0.8rem; 
+    margin: 0;
+    text-align: center;
+}
+
+
+
+
+.wallet-address-text span {
+    color: #666;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Botón de Copiado */
+.copy-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0;
+    
+    /* Alineación interna */
+    display: inline-flex;
+    align-items: center; 
+    justify-content: center;
+    flex-direction: row; 
+    /* Evita que el botón sea más alto que el texto */
+    line-height: 1; 
+    height: 1.1rem; 
+    
+    transition: transform 0.1s ease;
+}
+
+.copy-button:hover {
+    transform: scale(1.1);
+}
+
+.copy-button:active {
+    transform: scale(0.9);
+}
+
+
+
+.send-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 12px; 
+    margin-bottom: 10px;
+    
+}
+
+.send-container input {
+    padding: 10px; /* Reducido */
+    border-radius: 10px; /* Más compacto */
+    font-size: 0.78em; /* Reducido */
+    border: 1px solid #ccc;
+}
+
+/* Contenedor que agrupa los botones */
+.wallet-actions-container {
+    display: flex;
+    justify-content: center; /* Centra los botones */
+    gap: 10px;               /* Espacio entre botones */
+    margin: 20px 0;          /* Margen arriba y abajo */
+    width: 100%;
+   font-size: 0.78em; 
+   
+}
+.wallet-actions-container .action-button {
+    padding: 8px 10px;
+    font-size: 0.85em;
+    width: 20%;              /* Reducido de 35% a 25% */
+    max-width: 400px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.wallet-actions-container .action-button:active {
+    transform: scale(0.95);  /* Efecto de pulsado */
+}
+.scrollable-content {
+    overflow-y: auto;
+    max-height: 400px;
+    padding-right: 5px;
+}
+
+
+/* ==========================================================================
+ /* --- CONTENEDOR PRINCIPAL SIN SCROLL --- */
+.security-settings-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    height: 100%;
+    position: relative; /* Necesario para el overlay */
+    overflow: hidden;   /* Bloquea el scroll */
+}
+
+.security-option {
+    background: rgba(3, 3, 3, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: left;
+}
+
+.security-option h4 {
+    margin: 0 0 5px 0;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.security-option p {
+    margin: 0 0 10px 0;
+    color: #888;
+    font-size: 0.8rem;
+}
+
+/* --- OVERLAY PARA EL SETUP 2FA --- */
+.setup-flow-2fa {
+    position: absolute;
+    top: 0;
+    left: 14px;
+    right: 0;
+    bottom: 0;
+    background: #121212; /* Fondo sólido para tapar lo de abajo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 10; /* Se pone por encima de todo */
+    border-radius: 12px;
+    animation: fadeIn 0.3s ease;
+    height: 80%;
+    width: 82%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- ELEMENTOS DENTRO DEL OVERLAY --- */
+.qr-background {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.setup-flow-2fa .import-input {
+    width: 100%;
+    max-width: 200px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    letter-spacing: 2px;
+}
+
+.setup-flow-2fa .action-button {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+/* Inputs de la pantalla principal */
+.security-option .import-input {
+    
+    width: 92%;
+    background: #000;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    
+}
+
+.setup-button {
+    width: 100%;
+    padding: 8px;
+    
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    gap: 10px;
+     border: 1px solid rgba(146, 83, 175, 0.3); background: rgba(146, 83, 175, 0.1); color: rgb(192, 132, 245);
+        
+}
+
+
+.delete-button {
+    background: #271113;
+    
+    margin-top: 30px;
+     border: 1px solid #f8a1a1df;
+}
+
+/* Pantalla de Agenda */
+
+.agenda-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    min-height: 0; 
+    
+}
+  .agenda-container h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.contact-list-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 5px;
+    /* Importante: Espacio abajo para que el último contacto no quede tapado por el botón flotante */
+    padding-bottom: 65px; 
+    box-sizing: border-box;
+}
+
+/* Scrollbar fina */
+.contact-list-container::-webkit-scrollbar {
+    width: 4px;
+}
+.contact-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.contact-list-container::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+.contact-item {
+    padding: 8px 10px; /* Reducido */
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    margin-bottom: 8px; /* Menos separación entre contactos */
+    background: linear-gradient(to bottom, #fff82d3e, #051b744e);
+    
+    border: 1px solid #f0f0f0;
+}
+
+.contact-item:hover {
+    transform: translateY(-2px);
+}
+
+.contact-item h4 {
+    font-size: 1.0em; /* Aseguramos que sea legible */
+    margin: 0 0 1px 0;
+    color: #ffffff;
+}
+
+.contact-item p {
+    font-size: 0.8em; /* Reducido */
+    color: #ffffff;
+}
+
+.contact-actions {
+    display: flex;
+    /* 1. CLAVE: Permite que los botones salten a una nueva línea */
+    flex-wrap: wrap; 
+    
+    /* 2. CLAVE: Alinea todas las líneas de botones al centro */
+    justify-content: center; 
+    
+    gap: 5px; /* Reducido */
+    margin-top: 10px;
+    width: 100%; /* Asegura que el contenedor use todo el espacio para centrar */
+}
+
+/* 3. CLAVE: Forzar el salto de línea para EDIT */
+.contact-actions .edit-button {
+    /* Forzar al botón 'Edit' a ocupar el 100% de la línea. */
+    /* Esto empuja a 'Delete' a la línea siguiente. */
+    flex-basis: 100%; 
+    
+    /* Sin embargo, no queremos que el botón se estire a 100%. Lo limitamos: */
+    width: fit-content; /* Permite que el ancho se ajuste al contenido */
+    
+    /* 4. CLAVE: Centrar el botón 'Edit' en la línea que ocupa */
+    margin: 0 auto; 
+    margin-bottom: 8px; /* Espacio para separarlo de los botones de arriba */
+}
+
+/* Botones genéricos */
+.action-button {
+    padding: 4px 8px; /* Ajusta estos valores: vertical (8px) y horizontal (16px) */
+    border-radius: 20px;
+    border: none;
+    color: #4e4b4b;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.3em; /* Puedes ajustar el tamaño de fuente si quieres */
+}
+.action-button.small-button {
+   
+   font-size: 0.7em; /* Más pequeño para ahorrar espacio */
+    padding: 4px 8px; /* Relleno compacto para botones pequeños */
+    
+    border-radius: 6px; 
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+    white-space: nowrap; /* Evita que el texto del botón se rompa */
+}
+
+.primary-button {
+    
+    background-color: #3f51b5;
+    color: rgb(65, 63, 63);
+}
+
+.primary-button:hover {
+    background-color: #9f48304f;
+}
+
+.secondary-button {
+    background-color: #504b4b;
+    color: #201d1d;
+}
+
+.secondary-button:hover {
+    background-color: #181717;
+}
+.secondary-row .edit-button,
+.secondary-row .delete-button {
+    margin: 0;
+}
+.secondary-row .edit-button,
+.secondary-row .delete-button:hover {
+    background-color: #abc1d822; /* Gris claro al pasar el ratón */
+}
+.full-width {
+    position: absolute;
+    top: 105%; /* Pegado al fondo del contenedor agenda */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Ancho controlado */
+    max-width: 300px;
+    padding: 12px;
+    font-size: 0.9em;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1); /* Sombra para resaltar sobre la lista */
+    z-index: 10;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Este estilo es crucial para que el modal se mantenga dentro de la pantalla de la agenda */
+.agenda-screen-container {
+    position: relative;
+    height: 100%; /* Asegura que el contenedor tenga una altura definida */
+}
+
+/* El fondo oscuro del modal */
+.add-contact-modal-overlay {
+    position: absolute; /* Esto lo posiciona relativo a .agenda-screen-container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* La tarjeta del modal con el formulario */
+.add-contact-modal {
+    background-color: #1d1d1d77;
+    padding: 25px;
+    border-radius: 10px;
+   
+    width: 90%;
+    max-width: 300px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animación para una entrada suave del modal */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Estilos adicionales para el contenido del modal (opcional) */
+.add-contact-modal h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-contact-modal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Asegúrate de que tus botones de acción tengan estilos definidos, como los que ya usas */
+.action-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+   
+}
+
+.primary-button {
+    
+   border: 1px solid rgba(146, 83, 175, 0.3); background: rgba(146, 83, 175, 0.1); color: rgb(192, 132, 245);
+}
+
+.secondary-button {
+     
+    border: 1px solid rgba(146, 83, 175, 0.3); background: rgba(146, 83, 175, 0.1); color: rgb(192, 132, 245);
+}
+/* ==================== SWAP UI LIMPIO ==================== */
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.swap-centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 85%;
+    max-height: 350px;
+    /* Cambiamos height fijo por min-height para evitar cortes */
+    max-height: 400px;
+    margin: 20px auto;
+    animation: fadeIn 0.3s ease;
+}
+
+/* --- TARJETA DE SWAP --- */
+.swap-card {
+    background: #00000005;
+    border: 1px solid #2b2a2a;
+    border-radius: 20px;
+    padding: 15px;
+    width: 100%;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.877);
+    /* Quitamos height fijo para que el contenido dicte el tamaño */
+    height: auto; 
+    display: flex;
+    flex-direction: column;
+    margin-top: -5%;
+}
+
+.swap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.swap-header h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: color 0.2s;
+}
+
+.close-btn:hover { color: #fff; }
+
+/* --- GRUPOS DE ENTRADA (Inputs) --- */
+.swap-input-group {
+    background: #3b0eb609;
+    border-radius: 16px;
+    padding: 12px;
+    border: 1px solid #222;
+    /* Eliminamos height fijo para que quepa el contract-input dentro */
+    height: auto; 
+    margin-bottom: 5px;
+}
+.swap-input-group:focus-within {
+    border-color: #333;
+    background: #581bff0e;
+}
+
+.input-label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.label-text { color: #888; }
+.balance-hint { color: #d8d8d8; }
+
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.swap-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.3rem; /* Reducido un poco para ahorrar espacio vertical */
+    font-weight: bold;
+    width: 100%;
+    outline: none;
+}
+
+.swap-input.readonly { color: #14F195; }
+.swap-input::placeholder { color: #333; }
+
+.token-badge {
+    background: #222222c7;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border: 1px solid #333;
+}
+
+.contract-input {
+    width: 100%; /* Ocupa el ancho total del grupo */
+    background: #000000c8;
+    border: 1px solid #222;
+    color: #14F195;
+    font-size: 0.68rem; /* Un poco más grande para que sea legible */
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 12px; /* Margen fijo, no porcentual */
+    outline: none;
+    font-family: monospace;
+    z-index: 10;
+    cursor: text; /* IMPORTANTE: Debe ser text para poder escribir/pegar */
+    box-sizing: border-box; /* Evita que el padding desborde el ancho */
+}
+
+.contract-input:focus {
+    border-color: #14F195;
+    background: #050505;
+}
+/* --- DIVISOR Y BOTÓN SWAP --- */
+.swap-divider {
+    display: flex;
+    justify-content: center;
+    margin: -14px 0;
+    position: relative;
+    z-index: 5;
+}
+
+.switch-btn {
+    background: #161616;
+    border: 4px solid #0a0a0a;
+    color: #14F195;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+}
+
+.switch-btn:hover { transform: rotate(180deg); background: #222; }
+.main-swap-btn {
+    width: 100%;
+    background: #14F195;
+    color: #000;
+    font-weight: 900;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(20, 241, 149, 0.2);
+}
+
+.main-swap-btn:hover:not(:disabled) {
+    background: #10c379;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(20, 241, 149, 0.4);
+}
+
+.main-swap-btn:disabled {
+    background: #5e00008e;
+    color: #a4a1a1; 
+    box-shadow: none;
+    border: 1px solid #4e4e4eb0;
+}
+
+/* --- INFO DE SEGURIDAD Y PRECIO --- */
+.token-security-info, .price-impact-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+    margin-top: 12px;
+}
+
+.token-mini-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 0.85rem;
+}
+
+.token-mini-profile img { width: 22px; height: 22px; border-radius: 50%; }
+
+.liq-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+.liq-badge.safe { background: rgba(20, 241, 149, 0.1); color: #14F195; }
+.liq-badge.risk { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; }
+
+.price-impact-row { font-size: 0.75rem; color: #666; }
+
+/* --- DEGEN FEED (LISTA VERTICAL) --- */
+.new-tokens-list {
+    
+    flex-direction: column;
+    max-height: 20%;       /* Ocupa el alto que le asigne su padre */
+   display: flexbox;
+    overflow: auto;   /* Evita que el contenedor entero crezca */
+    padding: 900vh;
+width: 100%;
+    
+    margin-top: 1%;
+
+}
+
+
+.list-title {
+    color: #555;
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.list-title::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: #14F195;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px #14F195;
+}
+
+.new-tokens-list p.list-title {
+    font-size: 0.7rem;
+    color: #444;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.tokens-vertical-scroller {
+    flex: 1;                 /* Se estira para llenar el espacio */
+    overflow-y: auto;        /* Habilita el scroll interno */
+    padding-right: 5px; 
+      
+}
+/* Estilo de fila ultra compacto para ver más tokens */
+.token-item-row {
+    padding: 5px 8px;
+    height: 32px;            /* Altura fija para que el scroll sea predecible */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+}
+
+.mini-token-card-row {
+    grid-template-columns: 30px 1fr 80px;
+    padding: 8px;
+    border-radius: 8px;
+    border: none; 
+    background-color: #0f0f0f44;
+}
+.mini-token-card-row:hover {
+    border-color: #14F195;
+    background: #16161618;
+    transform: translateX(1px);
+}
+
+.token-info-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.token-item-row {
+    min-height: 40px;   /* Altura fija pequeña para control total */
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.mini-token-img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+
+.symbol { display: block; color: #fff; font-weight: bold; font-size: 0.9rem; }
+.price-text { font-size: 0.75rem; color: #14F195; font-family: monospace; }
+
+.token-stats-right {
+    display: flex;
+    gap: 16px;
+    text-align: right;
+}
+
+.stat-item { display: flex; flex-direction: column; }
+.stat-label { font-size: 0.6rem; color: #444; text-transform: uppercase; }
+.stat-value { font-size: 0.75rem; color: #ccc; font-weight: 600; }
+
+/* --- UTILIDADES --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tokens-vertical-scroller::-webkit-scrollbar { width: 4px; }
+.tokens-vertical-scroller::-webkit-scrollbar-thumb { background: #33333313; border-radius: 10px;display: none; }
+
+.Quoting-text {
+    font-style: italic;
+    color: #14f1955a;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+/* Ocultar barra de scroll para Chrome, Safari y Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ocultar barra de scroll para IE, Edge y Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}

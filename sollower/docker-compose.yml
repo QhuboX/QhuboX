@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "4001:4001"
+    environment:
+      - NODE_ENV=production
+      - PORT=4001
+      - FRONTEND_URL=${FRONTEND_URL}
+      - SOLANA_NETWORK=${SOLANA_NETWORK}
+      - SOLANA_RPC_URL=${SOLANA_RPC_URL}
+      - PLATFORM_PRIVATE_KEY=${PLATFORM_PRIVATE_KEY}
+      - PLATFORM_PUBLIC_KEY=${PLATFORM_PUBLIC_KEY}
+      - TOKEN_MINT_ADDRESS=${TOKEN_MINT_ADDRESS}
+      - TOKEN_DECIMALS=${TOKEN_DECIMALS}
+      - SELLER_WALLET_ADDRESS=${SELLER_WALLET_ADDRESS}
+      - PUBLICATION_FEE=${PUBLICATION_FEE}
+      - PUBLICATION_FEE_SALE=${PUBLICATION_FEE_SALE}
+      - PUBLICATION_FEE_FUNDRAISING=${PUBLICATION_FEE_FUNDRAISING}
+      - PUBLICATION_FEE_AD=${PUBLICATION_FEE_AD}
+      - MIN_AD_REWARD_PER_VIEW=${MIN_AD_REWARD_PER_VIEW}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4001/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_SOLANA_RPC_URL=${VITE_SOLANA_RPC_URL}
+        - VITE_TOKEN_MINT_ADDRESS=${TOKEN_MINT_ADDRESS}
+        - VITE_TOKEN_DECIMALS=${TOKEN_DECIMALS}
+        - VITE_SELLER_WALLET_ADDRESS=${SELLER_WALLET_ADDRESS}
+        - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend

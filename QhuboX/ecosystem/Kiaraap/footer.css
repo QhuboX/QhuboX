@@ -1,0 +1,153 @@
+
+/* Main styles for legal page */
+
+
+/* Estilos para el contenedor principal de la barra superior */
+.barra-superior {
+    padding: 15px 20px; /* Espaciado interno */
+    display: flex; /* Habilita Flexbox */
+    justify-content: center; /* ¡Alinea los elementos al centro! */
+    align-items: center; /* Centra los elementos verticalmente */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    position: fixed; /* Lo fija en la parte superior */
+    top: 25px; /* Lo coloca en la parte superior de la ventana */
+    left: 30%;
+    z-index: 1000; /* Lo mantiene por encima de otros elementos */
+}
+
+.barra-superior a {
+    margin: 0 20px; /* Agrega un margen horizontal entre los enlaces para separarlos */
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    color: #333; /* Cambia el color del texto */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+
+
+
+.nav-links a {
+   color: #ffffff8e; /* Light blue link color */
+    text-decoration: none; /* Remove underline */
+    font-size: 1.2vw;
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.nav-links a:hover {
+    color: #ffffff; /* White color on hover */
+    text-decoration: underline; /* Add underline on hover */
+}
+
+/* Legal page styles */
+.pantalla-legal {
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #0a0a0a 0%, #111 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: #ffffff;
+}
+
+.contenido-legal {
+    width: 80vw;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #c0c0c0;
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
+    border-radius: 1vw;
+    padding: 4vh 4vw;
+    font-size: 1.1vw;
+}
+
+/* Support page styles */
+.pantalla-soporte {
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #0a0a0a 0%, #111 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: #ffffff;
+}
+
+.formulario-soporte {
+    width: 60vw;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #c0c0c0;
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
+    border-radius: 1vw;
+    padding: 4vh 4vw;
+    font-size: 1.1vw;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    margin-top: 2vh;
+}
+
+input, textarea {
+    padding: 1vh 1vw;
+    border: none;
+    border-radius: 0.5vw;
+    font-size: 1vw;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+textarea {
+    height: 20vh;
+    resize: none;
+}
+
+.respuesta-oculta {
+    margin-top: 2vh;
+    font-size: 1vw;
+    color: #a0ffcc;
+    display: none;
+}
+
+/* Contact page styles */
+.pantalla-contacto {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #0a0a0a 0%, #111 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: #ffffff;
+}
+
+.contenido-contacto {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #c0c0c0;
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
+    border-radius: 1vw;
+    padding: 4vh 6vw;
+    font-size: 1.2vw;
+}
+
+.correo-contacto {
+    text-align: center;
+    font-size: 1.5vw;
+    margin-top: 2vh;
+    color: #a0c4ff;
+}

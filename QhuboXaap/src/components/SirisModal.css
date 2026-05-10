@@ -1,0 +1,88 @@
+.siris-modal-overlay {
+    position: absolute;
+    top: 55px; /* Empuja el modal hacia abajo justo donde termina el header */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 55px); /* Le restamos la altura del header para que no se desborde por abajo */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    z-index: 10; /* Se mantiene por debajo del z-index: 50 del header por seguridad */
+ overflow-y: auto; /* Permite scroll vertical */
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+.cube.expanded::-webkit-scrollbar {
+    display: none;
+}
+   
+
+.siris-modal-content {
+   width: 100% !important;
+    height: 100% !important;
+    
+    max-width: 400px !important;
+    max-height: 100% !important; /* Cambiamos 95vh por 100% para que respete al contenedor padre */
+    
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: none;
+ overflow-y: auto; /* Permite scroll vertical */
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+.cube.expanded::-webkit-scrollbar {
+    display: none;
+}
+   
+.siris-modal-content > * {
+       flex-grow: 1;
+    flex-shrink: 0; /* Prohíbe que el contenido se "aplaste" */
+    width: 100%;
+    height: 100%;
+ overflow-y: auto; /* Permite scroll vertical */
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+.cube.expanded::-webkit-scrollbar {
+    display: none;
+}
+   
+.siris-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(12, 15, 26, 0.92);
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.siris-close-btn:hover {
+    
+    background: rgba(255, 255, 255, 0.1);
+       color: #b638ff;
+
+}
+
+.siris-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+}
+

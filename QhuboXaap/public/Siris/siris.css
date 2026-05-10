@@ -1,0 +1,911 @@
+:root {
+    --size: 350px;
+    --rotation-speed: 15s;
+    --bg-dark: #0b0c15;
+    --neon-green: #00ff9d;
+    --neon-red: #ff0055;
+    --bg-panel: rgba(26, 26, 26, 0.4);
+    --accent-color: #000000;
+    --side-width: 180px;
+    --side-height: 400px;
+}
+body {
+    
+    
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+}
+
+
+.typing-effect {
+     margin-top: 10px;
+    color: rgba(177, 193, 255, 0.8); 
+    display: block;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    line-height: 1.8;
+    /* Configuración multilínea */
+    white-space: nowrap; 
+    width: 95%;
+    max-width: 400px;
+    font-size: clamp(7px, 1.5vw, 10px);
+    /* Animación de entrada + Glitch infinito */
+    opacity: 0;
+    animation: 
+        fadeInBoot 1s ease-out 0.3s forwards, /* Aparece suavemente al cargar */
+        signalGlitch 5s infinite 2.9s; /* Efecto glitch aleatorio constante */
+}
+
+
+@keyframes fadeInBoot {
+    0% { opacity: 0; filter: blur(10px) brightness(2); transform: scale(0.95); }
+    100% { opacity: 1; filter: blur(0) brightness(1); transform: scale(1); }
+}
+
+
+@keyframes signalGlitch {
+    0%, 100% {
+        text-shadow: 0 0 4px rgba(34, 211, 238, 0.4);
+        transform: skew(0deg);
+        filter: blur(0px);
+    }
+    
+    2% {
+        text-shadow: 2px 0 0px #22d3ee, -2px 0 0px #ff0055; /* Desdoblamiento cian y rojo */
+        transform: skew(-10deg);
+        filter: blur(0.5px);
+    }
+    4% {
+        text-shadow: -2px 0 0px #22d3ee, 2px 0 0px #ff0055;
+        transform: skew(10deg);
+        filter: blur(0px);
+    }
+    6% {
+        text-shadow: 0 0 4px rgba(34, 211, 238, 0.4);
+        transform: skew(0deg);
+    }
+    
+    50% { opacity: 1; }
+    51% { opacity: 0.6;  }
+    52% { opacity: 1; transform: translateY(0); }
+
+}
+
+header {
+    position: relative;
+    margin-top: -10px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    width: 100%;
+    padding: 0 20px; 
+}
+
+.header-content {
+    
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    text-align: center;
+    width: 100%;
+}
+
+.logo-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 0; 
+}
+
+
+.header h1 {
+    margin: 0;
+    font-size: clamp(20px, 5vw, 24px); 
+    font-weight: 900; 
+    font-style: italic;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    font-family: system-ui, -apple-system, sans-serif;
+    
+    background: linear-gradient(to right, #bdbbbb, #ffffff, #c2c2c2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none; 
+}
+
+
+header p {
+    position: relative;
+    margin: 5px 0 0 0; 
+    padding: 0;
+    gap: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+    text-shadow: none;
+}
+
+.version-tag {
+    font-size: 0.62em; 
+    margin-top: 5px;   
+    color: #22d3ee; 
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    display: flex;
+    font-family: 'Courier New', Courier, monospace;
+    align-self: center; 
+}
+
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.main-logo {
+    width: 50px;
+    height: auto;
+    filter: drop-shadow(0 0 8px #22d3ee55); 
+    transition: transform 0.3s ease;
+}
+
+.main-logo:hover {
+    transform: scale(1.1) rotate(-5deg);
+  
+}
+
+
+#techHiveCurve {
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+  
+}
+  
+.face-title {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+
+.grid-container {
+    margin-top: 20px; 
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    width: 90%;
+    height: 85%;
+}
+
+
+.scene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    
+    width: var(--size);
+    height: var(--size);
+    perspective: 1200px;
+    z-index: 5;
+    transition: transform 0.5s ease;
+}
+
+.cube {
+    position: relative;
+   bottom: 50px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateInfinite var(--rotation-speed) linear infinite;
+    flex-shrink: 0; 
+}
+
+.cube:hover {
+    animation-play-state: paused; 
+}
+
+@keyframes rotateInfinite {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+
+.face {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+.face-content {
+    
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+}
+
+
+.face-matrix {
+   
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; 
+    pointer-events: none; 
+    opacity: 0.5; 
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    width: 90%;
+    height: 90%;
+    
+}
+
+.signal-btn {
+   
+   display: flex; flex-direction: column; justify-content: space-between; 
+        padding: 10px; border-radius: 10px; background: rgba(12,12,20,0.95); 
+        border: 1px solid rgba(255,255,255,0.05); transition: all 0.2s;
+    
+    max-height: 145px;
+}
+
+.signal-btn:hover {
+    
+    transform: scale(1.05); 
+    background: rgba(29, 29, 29, 0.705);
+}
+
+
+.signal-long {
+    background: rgba(3, 27, 0, 0.979); 
+    border-bottom: 3px solid var(--neon-green);
+    box-shadow: 0 4px 10px rgba(0, 255, 157, 0.486);
+    border-top:3px solid var(--neon-green) ;
+    border-left:2px solid var(--neon-green) ;
+    border-right:2px solid var(--neon-green) ;
+    border-radius: 14px;
+}
+.signal-short {
+    background: rgb(15, 0, 0);
+    border-bottom: 3px solid var(--neon-red);
+    box-shadow: 0 4px 10px rgba(255, 0, 85, 0.474);
+    border-top:3px solid var(--neon-red) ;
+    border-left:2px solid var(--neon-red) ;
+    border-right:2px solid var(--neon-red) ;
+        border-radius: 14px;
+}
+
+.coin-name { font-weight: bold; font-size: 14px; margin-bottom: 2px; }
+.signal-type { font-size: 18px; font-weight: 900; margin-bottom: 2px; }
+.signal-long .signal-type { color: var(--neon-green); }
+.signal-short .signal-type { color: var(--neon-red); }
+.price { font-size: 11px; opacity: 0.8; font-family: monospace; }
+.wall-info { font-size: 9px; opacity: 0.5; margin-top: 2px; }
+
+.front  { transform: rotateY(0deg) translateZ(calc(var(--size)/2)); }
+.right  { transform: rotateY(90deg) translateZ(calc(var(--size)/2)); }
+.back   { transform: rotateY(180deg) translateZ(calc(var(--size)/2)); }
+.left   { transform: rotateY(-90deg) translateZ(calc(var(--size)/2)); }
+
+.loader { grid-column: span 2; text-align: center; font-size: 12px; color: #aaa; }
+
+
+
+
+
+.ticker-wrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    
+}
+
+.auto-scroll-container {
+    display: flex;
+    flex-direction: column;
+    animation: scrollVertical 280s linear infinite;
+}
+
+
+.auto-scroll-container:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scrollVertical {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); } 
+}
+
+
+.price-item {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    min-height: 65px; /* Altura fija para cálculos precisos */
+    box-sizing: border-box;
+    
+}
+
+.symbol-name { font-size: 11px; color: #888; text-transform: uppercase; }
+.symbol-price { font-size: 14px; font-weight: bold; font-family: 'monospace'; margin: 2px 0; }
+.up { color: #00ff88 !important; }
+.down { color: #ff3366 !important; }
+
+
+
+.controls {
+    margin-top: 1px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; 
+    background: rgba(5, 5, 5, 0.283); 
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;       
+    padding: 9px 35px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.05);
+    position: relative; 
+    z-index: 1;             
+    width: fit-content;   
+    max-width: 300px;                  
+}
+
+
+.sniper-btn {
+    background-color: transparent;
+    color: rgba(174, 182, 214, 0.562);
+    padding: 6px 15px;
+    border-radius: 45px;
+    font-size: 10px;
+    border-block-start: #0000006b 2px solid;
+    border-block-end: #0000006b 2px solid;
+    border-inline-start: #0000006b 2px solid;
+    border-inline-end: #0000006b 2px solid;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    
+}
+
+.sniper-btn:hover {
+     background: rgb(180, 36, 0);
+    color: #000;
+    box-shadow: 0 0 15px rgb(180, 36, 0);
+}
+
+
+.controls label {
+    
+    font-size: 12px;
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+    color: rgba(174, 182, 214, 0.562);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-shadow: #000 0px 0px 5px;
+}
+
+
+.paused .cube {
+    animation-play-state: paused !important;
+}
+
+
+#speedRange {
+    -webkit-appearance: none; 
+    appearance: none;        
+    width: 60px; /* Corregido: Reemplaza 100% por un valor fijo o min-width para evitar el colapso en Flexbox */
+    height: 8px;
+    background: rgba(160, 159, 159, 0.678);
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    position: relative; /* Corregido: Necesario para que el z-index funcione */
+    z-index: 12;
+}
+
+#speedRange:hover {
+    background: rgba(160, 59, 0, 0.452);
+}
+
+#speedRange::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--accent-color, #22d3ee); /* Fallback añadido por si la variable no está declarada */
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent-color, #22d3ee);
+    border: 2px solid #ffffff6a;
+    cursor: pointer;
+}
+
+
+#speedRange::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: var(--accent-color, #22d3ee);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent-color, #22d3ee);
+    border: 2px solid #fff;
+    cursor: pointer;
+}
+  .signal-btn {
+    max-height: 120px;
+    padding: 10px 0px;
+    max-width: 150px;
+    
+}
+   
+
+#sniperRange {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2; /* Detrás de SiriS */
+    background: #00000000; /* Fondo base */
+}
+
+
+/* Estilo para el texto "Soon" */
+.soon-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 800;
+    padding: 3px 2px;
+    font-family: 'Roboto Mono', monospace;
+    text-shadow: #00e7d4;
+    color: #d8d8d8;
+    margin-left: auto;
+    
+    
+    display: inline-flex; /* Permite que el tag no ocupe todo el ancho */
+    margin-left: auto;    /* Empuja el elemento hacia la derecha */
+    
+    /* Animación y estética */
+    animation: neon-flicker 1.5s infinite alternate;
+}
+
+/* Animación Fluorescente */
+@keyframes neon-flicker {
+    0%, 100% {
+        text-shadow: 0 0 1px #4ff9006e, 0 0 1px #4ff9006b; 
+        box-shadow: 0 0 2px #363635, inset 0 0 1px #f897d8;
+        opacity: 1;
+    }
+    50% {
+        text-shadow: 0 0 1px #4ff90069, 0 0 10px #4ff900, 0 0 1px #4ff90073;
+        box-shadow: 0 0 5px #939493, inset 0 0 1px #9ba3978a;
+        opacity: 0.8;
+    }
+}
+
+
+.cube.expanded {
+    animation: none !important;
+    transform: rotateX(0deg) rotateY(0deg) !important;
+    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+/* 2. DISEÑO DE PANELES (380x380) */
+.cube.expanded .face {
+    width: 380px !important; 
+    height: 380px !important;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid rgba(0, 212, 255, 0.6);
+    background: rgba(11, 12, 21, 0.98); /* Casi opaco para máxima claridad */
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+    backface-visibility: visible !important;
+    box-sizing: border-box;
+}
+
+/* 3. OCULTAR CARAS SUPERIOR/INFERIOR */
+.cube.expanded .top, 
+.cube.expanded .bottom {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* 4. POSICIONAMIENTO EN LÍNEA (Horizontal Row) */
+/* Calculado para que el centro del grupo sea el centro de la pantalla */
+/* Gap de 20px entre caras */
+
+/* Extremo Izquierda */
+.cube.expanded .front {
+    transform: translate(-630px, -1px) rotateY(0deg) translateZ(0) !important;
+}
+
+/* Centro Izquierda */
+.cube.expanded .back {
+    transform: translate(-230px, -1px) rotateY(0deg) translateZ(0) !important;
+}
+
+/* Centro Derecha */
+.cube.expanded .left {
+    transform: translate(200px, -1px) rotateY(0deg) translateZ(0) !important;
+}
+
+/* Extremo Derecha */
+.cube.expanded .right {
+    transform: translate(600px, -1px) rotateY(0deg) translateZ(0) !important;
+}
+
+/* Suavizado de la transición */
+.face {
+    transition: all 1.38s cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* Estilo para resaltar el botón cuando está activo */
+.active-deploy {
+    background: rgba(0, 212, 255, 0.3) !important;
+    box-shadow: 0 0 15px #00d4ff;
+}
+    
+
+
+
+/* --- RESPONSIVE: MÓVIL --- */
+@media (max-width: 768px) {
+   
+    
+    .signal-btn {
+    max-height: 120px;
+    padding: 10px 0px;
+    max-width: 150px;
+    
+}
+   
+}
+#sniperRange {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2; /* Detrás de SiriS */
+    background: #00000000; /* Fondo base */
+}
+
+
+/* Estilo para el texto "Soon" */
+.soon-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 800;
+    padding: 3px 2px;
+    font-family: 'Roboto Mono', monospace;
+    text-shadow: #00e7d4;
+    color: #d8d8d8;
+    margin-left: auto;
+    
+    
+    display: inline-flex; /* Permite que el tag no ocupe todo el ancho */
+    margin-left: auto;    /* Empuja el elemento hacia la derecha */
+    
+    /* Animación y estética */
+    animation: neon-flicker 1.5s infinite alternate;
+}
+
+/* Animación Fluorescente */
+@keyframes neon-flicker {
+    0%, 100% {
+        text-shadow: 0 0 1px #4ff9006e, 0 0 1px #4ff9006b; 
+        box-shadow: 0 0 2px #363635, inset 0 0 1px #f897d8;
+        opacity: 1;
+    }
+    50% {
+        text-shadow: 0 0 1px #4ff90069, 0 0 10px #4ff900, 0 0 1px #4ff90073;
+        box-shadow: 0 0 5px #939493, inset 0 0 1px #9ba3978a;
+        opacity: 0.8;
+    }
+}
+
+
+.cube.expanded {
+    animation: none !important;
+    transform: rotateX(0deg) rotateY(0deg) !important;
+    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+ overflow-y: auto; /* Permite scroll vertical */
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+.cube.expanded::-webkit-scrollbar {
+    display: none;
+}
+   
+
+/* 2. DISEÑO DE PANELES (380x380) */
+.cube.expanded .face {
+    width: 380px !important; 
+    height: 380px !important;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid rgba(0, 212, 255, 0.6);
+    background: rgba(11, 12, 21, 0.98); /* Casi opaco para máxima claridad */
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+    backface-visibility: visible !important;
+    box-sizing: border-box;
+ overflow-y: auto; /* Permite scroll vertical */
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+.cube.expanded::-webkit-scrollbar {
+    display: none;
+}
+   
+
+/* 3. OCULTAR CARAS SUPERIOR/INFERIOR */
+.cube.expanded .top, 
+.cube.expanded .bottom {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+ overflow-y: auto; /* Permite scroll vertical */
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+.cube.expanded::-webkit-scrollbar {
+    display: none;
+}
+   
+/* 4. POSICIONAMIENTO EN LÍNEA (Horizontal Row) */
+/* Calculado para que el centro del grupo sea el centro de la pantalla */
+/* Gap de 20px entre caras */
+
+/* Extremo Izquierda */
+.cube.expanded .front {
+    transform: translate(-630px, -1px) rotateY(0deg) translateZ(0) !important;
+}
+
+/* Centro Izquierda */
+.cube.expanded .back {
+    transform: translate(-230px, -1px) rotateY(0deg) translateZ(0) !important;
+}
+
+/* Centro Derecha */
+.cube.expanded .left {
+    transform: translate(200px, -1px) rotateY(0deg) translateZ(0) !important;
+}
+
+/* Extremo Derecha */
+.cube.expanded .right {
+    transform: translate(600px, -1px) rotateY(0deg) translateZ(0) !important;
+}
+
+/* Suavizado de la transición */
+.face {
+    transition: all 1.38s cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* Estilo para resaltar el botón cuando está activo */
+.active-deploy {
+    background: rgba(0, 212, 255, 0.3) !important;
+    box-shadow: 0 0 15px #00d4ff;
+}
+
+@media (max-width: 768px) {
+    /* 1. CONFIGURACIÓN DEL CUERPO */
+    html, body {
+        overflow-x: hidden;
+        height: auto !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* 2. LA ESCENA: Se adapta si el cubo está expandido o no */
+    .scene {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        /* Si el cubo NO está expandido, usamos altura controlada */
+        height: 460px; 
+        perspective: 1000px;
+        overflow: visible !important;
+    
+        transition: height 0.3s ease;
+     overflow-y: auto; /* Permite scroll vertical */
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+.cube.expanded::-webkit-scrollbar {
+    display: none;
+}
+   
+    /* Cuando el cubo crece, la escena debe dejarlo fluir */
+    .scene:has(.cube.expanded) {
+        height: auto !important;
+        perspective: none !important; /* Matar perspectiva evita bloqueos de clics */
+     overflow-y: auto; /* Permite scroll vertical */
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+.cube.expanded::-webkit-scrollbar {
+    display: none;
+}
+   
+    /* 3. HEADER COMPACTO */
+    .header {
+        width: 100%;
+        margin-top: 40px;
+        padding: 10px 10px 10px 10px;
+        z-index: 20;
+    }
+    
+    .main-logo { width: 35px; }
+    .header h1 { font-size: 1.4rem !important; }
+    .version-tag { font-size: 0.5rem !important; }
+    
+    .typing-effect {
+        font-size: 10px;
+        max-width: 280px;
+        margin: 5px auto;
+        white-space: normal;
+        width: 90% !important;
+        animation: none;
+        opacity: 0.8;
+    }
+
+    /* 4. EL CUBO: ESTADO NORMAL (3D) */
+    .cube:not(.expanded) {
+            
+        --size: 290px !important;
+        width: var(--size);
+        height: var(--size);
+        margin: 30px 20px 0 20px;
+    }
+
+    .cube:not(.expanded) .face {
+        width: 260px !important;
+        height: 370px !important;
+    }
+
+    /* Re-calculo de caras para cubo de 260px */
+    .cube:not(.expanded) .front  { transform: rotateY(0deg) translateZ(130px) !important; }
+    .cube:not(.expanded) .right  { transform: rotateY(90deg) translateZ(130px) !important; }
+    .cube:not(.expanded) .back   { transform: rotateY(180deg) translateZ(130px) !important; }
+    .cube:not(.expanded) .left   { transform: rotateY(-90deg) translateZ(130px) !important; }
+
+    /* 5. EL CUBO: ESTADO EXPANDIDO (LISTA VERTICAL) */
+    .cube.expanded {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 25px;
+        height: auto !important;
+        margin-top: 20px;
+        transform: none !important;
+        animation: none !important; /* IMPORTANTE: Detener rotación al expandir */
+    overflow-y: auto; /* Permite scroll vertical */
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+.cube.expanded::-webkit-scrollbar {
+    display: none;
+}
+    .cube.expanded .face {
+        position: relative !important; 
+        transform: none !important; 
+        width: 95vw !important;
+        max-width: 380px;
+        height: 380px !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* Ocultamos caras extra en expansión */
+    .cube.expanded .top, .cube.expanded .bottom { display: none !important; }
+
+    /* 6. CONTROLES Y BOTÓN DEPLOY */
+    .controls {
+        
+        position: relative !important;
+        z-index: 12;
+        background: transparent !important;
+        border: none !important;
+        margin: 40px !important; 
+        display: flex;
+        justify-content: center;
+        width: 84% !important;
+    }
+
+    .sniper-btn {
+    background-color: transparent;
+    color: rgba(174, 182, 214, 0.562);
+    padding: 6px 15px;
+    border-radius: 45px;
+    font-size: 10px;
+    border-block-start: #0000006b 2px solid;
+    border-block-end: #0000006b 2px solid;
+    border-inline-start: #0000006b 2px solid;
+    border-inline-end: #0000006b 2px solid;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    
+}
+
+.sniper-btn:hover {
+     background: rgb(180, 36, 0);
+    color: #000;
+    box-shadow: 0 0 15px rgb(180, 36, 0);
+}
+
+
+    #deployBtn {
+        padding: 8px 35px !important;
+        font-size: 6px !important;
+        border-radius: 50px !important;
+        background: rgba(34, 211, 238, 0.2) !important;
+        border: 2px solid #22d3ee !important;
+        color: #22d3ee;
+        box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+    }
+
+   
+    }

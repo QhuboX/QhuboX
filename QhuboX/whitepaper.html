@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QhuboX - Whitepaper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS para un estilo limpio, moderno y elegante */
+        :root {
+            --primary-color: #050505dd; /* Azul vibrante */
+            --secondary-color: #4e4e8582; /* Fondo oscuro elegante */
+            --text-color: #ececec; /* Texto blanco suave */
+            --highlight-color: #f1f1f1e7; /* Color de acento Aqua */
+            --card-bg: rgba(17, 17, 17, 0.8);
+            --font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: #4c4c4c5f;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            box-shadow: 15px, 5, 10px rgb(0, 0, 0);
+        }
+
+        /* Estilos de Tipografía */
+        h1 {
+            font-weight: 700;
+            font-size: 3em;
+            
+            text-align: center;
+            margin-bottom: 1px;
+            text-transform: uppercase;
+             text-shadow: 2px rgb(0, 0, 0)
+        }
+
+        h2 {
+            font-weight: 600;
+            font-size: 2em;
+            color: rgba(230, 230, 231, 0.964);
+            
+            padding-bottom: 10px;
+            margin-top: 40px;
+            text-shadow: 0, 10px , 5px rgb(0, 0, 0)
+        }
+
+        h3 {
+            font-weight: 600;
+            font-size: 1.5em;
+            color: var(--text-color);
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 20px;
+
+        }
+
+        /* Estilo de la Cabecera/Título Principal */
+        header {
+            background-color: #dadada73;;
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+
+        }
+
+        header h1 {
+            color: rgba(17, 17, 18, 0.808);
+            text-shadow: 0, 10px  rgb(0, 0, 0);
+        }
+        
+        header p {
+            font-size: 1.2em;
+            color: rgba(2, 2, 2, 0.836);
+            text-shadow: #000000;
+        }
+
+        /* Estilo de Secciones de Contenido */
+        section {
+            padding: 20px 0;
+        }
+        
+        .section-content {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        /* Listas y Subsecciones */
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            background-color: var(--secondary-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px #00000094;
+            transition: transform 0.3s ease;
+        }
+        
+        ul li:hover {
+            transform: translateX(5px);
+        }
+
+        /* Citas/Principios Clave */
+        blockquote {
+            background-color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Tabla de Token (Simple y Elegante) */
+        .token-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .token-table th, .token-table td {
+            border: 1px solid var(--secondary-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .token-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .token-table td {
+            background-color: var(--secondary-color);
+        }
+
+        /* 4. 🗺️ Roadmap - Diseño Esquemático Moderno (Completado) */
+        #roadmap {
+            padding-bottom: 50px;
+        }
+
+        .roadmap-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* Línea central (Eje de tiempo) */
+        .roadmap-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: var(--primary-color); /* Línea sólida de color */
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item.left {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-color); /* Borde para destacar */
+        }
+        
+        .timeline-item.left .timeline-content {
+            text-align: right;
+        }
+        
+        .timeline-item.left .timeline-content h4 {
+            color: var(--highlight-color);
+        }
+
+        .timeline-item.right .timeline-content h4 {
+            color: var(--highlight-color);
+        }
+
+        .timeline-separator {
+            width: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        /* Círculo de Hito (Completado) */
+        .timeline-separator::after {
+            content: '✓'; /* Checkmark o emoji de éxito */
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: var(--highlight-color);
+            color: var(--secondary-color);
+            border: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+
+        /* Estilos específicos para la conclusión */
+        #conclusion {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .call-to-action {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        /* Pie de página y Legal */
+        footer {
+            background-color: #11111f;
+            color: rgba(240, 240, 245, 0.5);
+            padding: 20px 0;
+            font-size: 0.8em;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .disclaimer {
+            padding: 20px;
+            background-color: #33334c;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>QhuboX</h1>
+            <p>Materializing True On-Chain Adoption</p>
+            <p>Bringing Blockchain to the Daily Routine, Everywhere.</p>
+            <p style="font-size: 0.9em; margin-top: 20px;">
+                Publication Date: [02/01/2026] | Version: 1.0
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section id="executive-summary">
+            <h2><span style="color: var(--highlight-color);"></span> Executive Summary</h2>
+            <div class="section-content">
+                <p>Blockchain technology has demonstrated revolutionary potential, but it is often perceived as a complex novelty, far removed from daily use. **QhuboX** is born to bridge this gap.</p>
+                <p>Our project focuses on creating **secure and functional on-chain solutions** that integrate silently and effectively into the lives of individuals, businesses, and communities. Instead of focusing on speculation, our objective is to drive **True On-Chain Adoption** through the principle of **Everydayness**.</p>
+                <p>We aim for decentralized technology to stop being a technical novelty and become a **practical and accessible necessity**, fueling the development of simple applications built upon a powerful and secure technological foundation.</p>
+            </div>
+        </section>
+
+        <section id="vision-mission">
+            <h2><span style="color: var(--highlight-color);"></span> Vision and Mission</h2>
+            <div class="section-content">
+                <h3>Our Vision</h3>
+                <p>To be the world-leading ecosystem that decentralizes daily life, ensuring that blockchain technology becomes an **invisible, essential, and universally adopted infrastructure** for individuals, businesses, and communities, guaranteeing data sovereignty and friction-less security.</p>
+                
+                <h3>Our Mission</h3>
+                <p>To continuously drive the development of secure, functional, and modular on-chain solutions based on the principle of the **Everydayness**, incentivizing a self-sufficient developer community through the QHUBX token, to improve daily life and materialize the total ownership of every user's digital identity and assets.</p>
+            </div>
+        </section>
+
+        <section id="problem">
+            <h2><span style="color: var(--highlight-color);">1. </span> The Current Problem: The Adoption Gap</h2>
+            <div class="section-content">
+                <p>Despite the technology's maturity, the massive adoption of Blockchain is hindered by three main barriers:</p>
+                <ul>
+                    <li>**Complexity:** Most solutions require a high level of technical knowledge for their use.</li>
+                    <li>**Lack of Real Utility:** Speculative projects dominate over those that solve concrete, everyday problems.</li>
+                    <li>**Centralized Risk:** Security and privacy are often sacrificed in the name of ease of use, forcing users to rely on centralized intermediaries.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="solution">
+            <h2><span style="color: var(--highlight-color);">2. </span> QhuboX: The Proposed Solution</h2>
+            <div class="section-content">
+                <p>QhuboX is the development engine for an ecosystem of solutions designed for friction-less adoption. Our solution is based on four fundamental pillars:</p>
+
+                <h3>2.1. Everydayness: From Novelty to Necessity</h3>
+                <p>The guiding principle of QhuboX is Everydayness. We believe that Blockchain achieves mass adoption when it becomes a silent and reliable tool in daily life.</p>
+                <ul>
+                    <li>**Modular Approach:** We develop modular solutions that address real challenges: from digital identity systems (SSID) for simple processes to decentralized community management tools.</li>
+                    <li>**User-Centric Design:** The complexity of the blockchain remains in the background; the user interacts with a simple, functional application.</li>
+                    <li>**Result:** The continuous development of basic, daily-use applications that demonstrate the practical and immediate value of on-chain technology.</li>
+                </ul>
+
+                <h3>2.2. Security and Total Ownership: The User as Owner</h3>
+                <p>We ensure security and decentralization by eliminating the need for trust in third parties, granting total control to the user.</p>
+                <ul>
+                    <li>**Self-Sovereign Identity (SSI):** The user manages their own cryptographic keys. Their digital identity and assets are exclusively theirs.</li>
+                    <li>**Cryptographic Authentication:** The entry and approval of critical processes are carried out exclusively through cryptographic signatures on transactions (similar to digitally signing a document).</li>
+                    <li>**Immutable Authorization:** The rules (who can do what) are encoded in the immutable logic of the Smart Contracts on the decentralized network.</li>
+                </ul>
+                <blockquote>
+                    **Key Principle:** QhuboX does not rely on a central server. We only provide the tools so that only the owner can approve and execute critical processes.
+                </blockquote>
+
+                <h3>2.3. Self-Sufficient Model: The Utility of the QhuboX Token</h3>
+                <p>QhuboX operates under a sustainable and self-sufficient development model driven by the community.</p>
+                <ul>
+                    <li>**Developer Incentive:** Technological solutions (modules, applications, upgrades) contributed to the ecosystem are rewarded directly with the native token: QHUBX.</li>
+                    <li>**Closed Economic Loop:** This mechanism ensures that revenues generated by development remain within the ecosystem, directly reinforcing the utility and demand for the QhuboX token.</li>
+                    <li>**Result:** Continuous and sustained technological growth without relying exclusively on external funding.</li>
+                </ul>
+
+                <h3>2.4. Functional Innovation: Constant Evolution</h3>
+                <p>Our innovation is an evolutionary and constant process focused on functionality and security.</p>
+                <ul>
+                    <li>**Innovation Objective:** To design on-chain solutions that improve daily life. This includes optimization of business processes, transparent community voting, or secure personal record management.</li>
+                    <li>**Practical Added Value:** Continuous technological development guarantees a constant flow of high-value solutions, ensuring the organic growth of the ecosystem.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="technology">
+            <h2><span style="color: var(--highlight-color);">3. </span> Technology and Architecture</h2>
+            <div class="section-content">
+                <h3>3.1. Modular On-Chain Architecture</h3>
+                <p>QhuboX is not limited to a single blockchain but seeks interoperability and efficiency.</p>
+                <ul>
+                    <li>**Technological Foundation:** We will utilize an EVM-compatible Blockchain (Ethereum Virtual Machine) with high scalability and low fees (e.g., Polygon, Arbitrum, or a custom L2) to ensure the speed of daily transactions.</li>
+                    <li>**Solution Modules:** Developers build code modules (Smart Contracts) that can be assembled to create complete applications. This speeds up the creation and auditing of new tools.</li>
+                    <li>**Transparency:** All core module code will be open-source for security audits by the community.</li>
+                </ul>
+
+                <h3>The QhuboX Token (QHUBX)</h3>
+                
+                <div class="token-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Token Name</th>
+                                <th>Symbol</th>
+                                <th>Standard</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>QhuboX</td>
+                                <td>QHUBX</td>
+                                <td>SPL Token (SOL)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p><strong>Primary Utility (Utility Token):</strong> The QHUBX token is the economic fuel of the ecosystem.</p>
+                <ul>
+                    <li>**Developer Reward:** It is the exclusive currency to pay and reward developers who contribute code and solutions to the QhuboX ecosystem (See 2.3. Self-Sufficient Model).</li>
+                    <li>**Service Payment:** It is necessary to access and use the more advanced solutions and modules offered by the Lab (e.g., issuance of SSI credentials for businesses, on-chain audits, use of management tools).</li>
+                    <li>**Governance (Future):** The holders of QHUBX will have the ability to vote on the direction of development, fund allocation, and protocol updates.</li>
+                </ul>
+
+            </div>
+        </section>
+
+        <section id="roadmap">
+            <h2><span style="color: var(--highlight-color);">4. </span> Roadmap (Completed)</h2>
+            <div class="section-content">
+                <p style="text-align: center; font-style: italic; color: var(--highlight-color);">All planned phases have been successfully completed, leading to True On-Chain Adoption.</p>
+                
+                <div class="roadmap-timeline">
+                    
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h4>Phase 1: Foundation (Completed)</h4>
+                            <p><strong>Main Milestone:</strong> Development Platform Launch</p>
+                            <p><strong>Deliverable:</strong> Documentation and basic tools for developers. Launch of the QHUBX Smart Contract. First proof-of-concept Hackathons focused on "Everydayness."</p>
+                        </div>
+                        <div class="timeline-separator"></div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h4>Phase 2: Utility (Completed)</h4>
+                            <p><strong>Main Milestone:</strong> Basic SSI Module Launch</p>
+                            <p><strong>Deliverable:</strong> Development and audit of the Self-Sovereign Identity (SSI) module. Launch of the first daily-use dApp (e.g., Identity Wallet). Established the QHUBX payment flow for developers.</p>
+                        </div>
+                        <div class="timeline-separator"></div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h4>Phase 3: Adoption (Completed)</h4>
+                            <p><strong>Main Milestone:</strong> Business Solutions Integration</p>
+                            <p><strong>Deliverable:</strong> Creation of tools for small businesses (e.g., on-chain voting for communities, product authenticity registration). Strategic alliances successfully implemented "Everydayness" solutions at community level.</p>
+                        </div>
+                        <div class="timeline-separator"></div>
+                    </div>
+                    
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h4>Phase 4: Total Decentralization (Completed)</h4>
+                            <p><strong>Main Milestone:</strong> Decentralized Governance</p>
+                            <p><strong>Deliverable:</strong> Activation of Governance via the QHUBX token, allowing the community to take key decisions. Successful expansion to other Blockchains (Interoperability achieved).</p>
+                        </div>
+                        <div class="timeline-separator"></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <h2><span style="color: var(--highlight-color);">5. </span> Conclusion and Call to Action</h2>
+            <div class="section-content">
+                <p>QHUBX is not just another crypto project; it is a commitment to creating a Blockchain infrastructure that offers real and tangible value. Our focus on **Everydayness, Security (Total Ownership), and a Self-Sufficient Model** ensures that our growth is sustainable, ethical, and utility-driven.</p>
+                <p class="call-to-action">
+                    We invite developers, forward-thinking businesses, and everyone who believes in a decentralized future to join us in sustaining **True On-Chain Adoption**.
+                </p>
+            </div>
+        </section>
+        
+        <div class="disclaimer">
+            <p><strong>Important Legal Disclaimer:</strong> This Whitepaper is a technical and informational document. It does not constitute an investment offer or financial advice. Participation in the QhuboX ecosystem involves inherent risks associated with the digital assets market. We recommend that readers conduct their own independent research before making any decisions.</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 || QhuboX, Inc. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

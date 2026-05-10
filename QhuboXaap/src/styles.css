@@ -1,0 +1,375 @@
+
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #000000fa;
+    overflow: hidden; /* Para evitar scroll en el body si app-container tiene altura fija */
+    background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.188), rgba(0, 0, 0, 0.215)),
+        url('./media/1.png'); 
+    
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+.app-container {
+    position: relative;
+    border: 1px solid #ada6a6cf;
+    
+    /* CAMBIO: Usamos 90vw (90% del ancho del viewport) y limitamos a 400px, 
+       lo cual es más estándar que 50vh para el ancho. */
+    width: 90vw; /* Ocupa el 90% del ancho del viewport en pantallas pequeñas */
+    max-width: 400px; /* Asegura un ancho máximo confortable */
+    
+    height: 95vh; /* Mantenemos 95% de la altura */
+    
+    background-color: #0000003a; 
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.995);
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Estilos para la interfaz unificada (main-content abarca todo) --- */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Contenedor principal del chat cuando un chat está activo */
+.chat-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden; /* Para que el MessageList haga scroll */
+    background-color: var(--background-color); /* Fondo del chat si no hay video */
+}
+
+/* --- Estilos para el Encabezado del Chat (Header.jsx y chat activo) --- */
+.chat-header-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    
+    border-bottom: 1px solid #130619;
+    box-shadow: 0 1px 3px rgba(11, 11, 11, 0.696);
+    flex-shrink: 0; /* Evita que el header se encoja */
+}
+
+.chat-header-container h2 {
+    margin: 0;
+    margin-left: 15px; /* Espacio después del botón de regreso */
+    font-size: 1.2em;
+    flex-grow: 1;
+    color: #f3eaea;
+    text-align: left; /* Alineado a la izquierda para dejar espacio al botón */
+    z-index: 100;
+}
+
+.chat-header-container .back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #fae9e9;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease-in-out;
+}
+
+.chat-header-container .back-button:hover {
+    color: #a73bff;
+}
+
+.chat-header-container .back-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+
+.message-list-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex; /* Añadido para permitir flex-direction column */
+    flex-direction: column; /* Añadido para que las burbujas se apilen */
+    padding-bottom: 70px; /* Espacio para el input-area y el footer si está en llamada */
+}
+
+
+/* Estilos específicos para el contenido de los mensajes de audio, si están en MessageList.css se eliminan de aquí */
+.audio-message-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.audio-message-content p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.audio-message-content audio {
+    width: 100%;
+    max-width: 250px;
+    height: 30px;
+}
+
+
+/* --- Área de entrada de mensajes --- */
+.input-area {
+    display: flex;
+    padding: 10px;
+    background: rgba(75, 74, 74, 0.123); 
+    
+    backdrop-filter: blur(8px); 
+    border-top: #8a898948 solid 1px;
+    align-items: center;
+    flex-shrink: 0; 
+    gap: 10px; 
+
+    box-shadow: 0 -2px 1px rgba(0, 0, 0, 0.363); 
+}
+
+.input-area input {
+    flex-grow: 1;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    padding: 10px 15px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 1em;
+    background: linear-gradient(to bottom, #c4c4c5a2, #dcdcdcd9);
+    
+}
+.input-area textarea { 
+    flex-grow: 1;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    padding: 10px 15px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 1em;
+    background: linear-gradient(to bottom, #c4c4c5a2, #dcdcdcd9);
+    
+    /* Reglas para el texto multilínea */
+    max-width: 80%; 
+    resize: none; 
+    height: auto;
+    min-height: 40px; 
+    overflow-y: auto; 
+}
+.input-area button {
+    /* El filtro principal */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); /* Obligatorio para soporte en Safari */
+    
+    /* Fondo con gradiente y transparencia */
+    background: linear-gradient(to bottom, #3f3f3e88, #4dd9f5b0, #504e4d3e);
+    
+    /* IMPORTANTE: Quitar el borde por defecto o hacerlo sutil */
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    
+    /* Dimensiones y forma */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2em;
+    cursor: pointer;
+    
+    /* Centrado de contenido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Asegúrate que el icono/texto contraste */
+
+    /* Transiciones */
+    transition: transform 0.2s ease, background 0.3s ease;
+    overflow: hidden; /* Evita que el efecto se salga del círculo */
+}
+
+/* Efecto al pasar el mouse para que se sienta vivo */
+.input-area button:hover {
+    transform: scale(1);
+    background: linear-gradient(to bottom, #3f3f3eAA, #4dd9f5CC, #504e4d55);
+}
+
+
+
+.input-area .call-button.hang-up {
+    background-color: #dc3545; /* Rojo para colgar */
+}
+
+/* Controles de previsualización de audio (usando la clase que tienes en App.jsx) */
+.audio-preview-controls { /* Nombre de clase unificado con App.jsx */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1; /* Para que ocupe el espacio del input */
+    padding: 5px 0;
+}
+
+.audio-preview-controls audio {
+    flex-grow: 1;
+    height: 35px; /* Altura fija para el reproductor en el input */
+}
+
+.audio-preview-controls button {
+    background: none; /* Eliminar fondo predeterminado */
+    border: none;
+    font-size: 2em; /* Iconos más grandes para enviar/cancelar */
+    cursor: pointer;
+    width: 40px; /* Ajusta el tamaño de los botones */
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    /* Colores específicos para los botones de enviar/cancelar si no quieres el color primario */
+    color: #28a745; /* Verde para enviar */
+}
+
+.audio-preview-controls button:nth-child(3) { /* El segundo botón (cancelar) */
+    color: #dc3545; /* Rojo para cancelar */
+}
+
+
+.audio-preview-controls button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para el Footer (llamada activa) */
+.footer-container {
+    background-color: #333;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #444;
+    color: white;
+    flex-shrink: 0; /* Evita que se encoja */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+
+/* Contenedor principal del encabezado del chat */
+.chat-header-container {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.05); /* Fondo sutil translúcido */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px); /* Efecto cristal moderno */
+    gap: 15px;
+}
+
+/* Botón de retroceder (Flecha) */
+.back-button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Información del remitente (Nombre y Estado) */
+.chat-header-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-header-info h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.status-indicator {
+     position: absolute; /* Clave para moverlo libremente */
+    top: 15px;           /* Distancia desde el borde superior */
+    right: 8px;   
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.bg-green {
+    background-color: #00e755;
+    box-shadow: 0 0 1px #000000;
+    position: relative;
+}
+
+/* Animación de pulso solo cuando está online */
+.bg-green::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: 50%;
+    position: absolute;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(0.85); opacity: 0; }
+}
+
+.bg-gray {
+    background-color: #94a3b8;
+}
+/* Opcional: animar el punto verde */
+.status-indicator.online .status-dot {
+    box-shadow: 0 0 1px #ff24e2;
+}
+
+/* Si es una wallet larga sin nombre, se ve más pequeña */
+.wallet-address-subtitle {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: monospace;
+}
+
+
+
+
+
+
+
+

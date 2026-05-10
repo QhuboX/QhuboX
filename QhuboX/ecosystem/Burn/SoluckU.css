@@ -1,0 +1,385 @@
+/* ======================================= */
+/* ESTILOS BASE (APLICADOS EN PANTALLAS GRANDES Y ESCRITORIO) */
+/* ======================================= */
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffcc;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    height: 100vh;
+    background-image: linear-gradient(
+        0deg,
+        rgba(0,0,0,0.5),
+        rgba(0,0,0,0.5)
+    ), url('assets/images/fondo-casino.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Botón de conexión */
+#connect-wallet {
+    position: absolute;
+    top: 3.125rem;
+    left: 1.5625rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background: linear-gradient(135deg, #1a1a1a, #131313be);
+    color: #00ffcc;
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 0 15px #00ffcc;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+#connect-wallet:hover {
+    transform: scale(1.05);
+    
+}
+
+/* Contenedor principal de la ruleta (posición central) */
+.ruleta-container {
+    position: absolute;
+    top: 56%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    
+}
+
+/* NUEVO CONTENEDOR FLEX PARA ORGANIZAR JUEGO VERTICALMENTE */
+.ruleta-layout {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    /* CAMBIO CLAVE: AUMENTAMOS EL ESPACIO (GAP) A 3REM */
+    
+}
+
+/* Controles de apuesta (Ahora es el contenedor de #apuesta) */
+.botones {
+  position: relative;
+    top: -1.5rem; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 1.3125rem;
+}
+#apuesta {
+    background: rgba(0, 0, 0, 0.5);
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+    border-radius: 0.5rem;
+    padding: 0.625rem;
+    font-size: 1rem;
+    width: 6.25rem;
+    text-align: center;
+}
+
+/* Botón de Jugar */
+#play {
+    order: 1; /* Posiciona primero (sobre la ruleta) */
+    display: flex;
+    align-items: center;
+    gap: 0.4125rem;
+    padding: 0.5em 2em;
+    font-size: 1rem;
+    font-weight: 800;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    border-radius: 2.5rem;
+    border: 3px solid #d6daa7;
+    background: #0a5604;
+    color: rgb(0, 0, 2);
+    text-shadow:
+        2px 2px 4px rgba(0, 255, 204, 0.991),
+        0 0 6px rgba(158, 164, 82, 0.915);
+    box-shadow:
+        0 0 42px #00010403,
+        0 0 20px #e9e47e,
+        0 0 30px #010009;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.1s ease;
+    backdrop-filter: blur(6px);
+    animation: neonGlow 2s ease infinite;
+}
+
+/* --- REGLA AÑADIDA PARA ADAPTAR EL LOGO AL TEXTO --- */
+#play img {
+    height: 2.5em; /* La altura del logo se ajusta al tamaño de la fuente del botón */
+    width: auto;
+    gap: 0.625rem, 0.625rem;
+}
+/* --- FIN DE LA REGLA AÑADIDA --- */
+
+@keyframes neonGlow {
+    10% {
+        box-shadow:
+            0 0 42px #00ffff,
+            0 0 20px #b077b0,
+            0 0 30px #00ff00;
+    }
+    50% {
+        box-shadow:
+            0 0 40px #b26eb2,
+            0 0 30px #00ffcc,
+            0 0 40px #ffcc00;
+    }
+    100% {
+        box-shadow:
+            0 0 12px #00ffff,
+            0 0 20px #f8adf8,
+            0 0 30px #04a904;
+    }
+}
+#play:hover {
+    transform: translateY(-1px) scale(1);
+    box-shadow:
+        0 0 60px #000710,
+        0 0 30px #4a3cc7,
+        0 0 40px #077307;
+}
+#play:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Ruleta */
+#ruleta {
+    order: 2; /* Posiciona en el medio */
+    width: 30vw; /* Responsive: Ancho basado en el Viewport */
+    min-width: 300px;
+    transform-origin: 50% 50%;
+    transition: transform 7.1s cubic-bezier(0.33, 1, 0.68, 1);
+    
+}
+#ruleta.girando {
+    animation: girarRuleta 7.1s cubic-bezier(0.33, 1, 0.68, 1);
+}
+@keyframes girarRuleta {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(3600deg); 
+    }
+}
+
+/* Estado de la billetera */
+#wallet-status {
+    position: absolute;
+    top: 2.5625rem;
+    right: 2.5rem;
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.625rem;
+    box-shadow: 0 0 10px #00ffcc;
+    display: block;
+}
+
+/* Resultado */
+#resultado {
+    position: absolute;
+    top: 39.125rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.725rem;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.75rem 1rem;
+    border-radius: 0.625rem;
+    box-shadow: 0 0 10px #00ffcc;
+    text-align: center;
+    min-width: 1.5rem;
+    display: none;
+}
+#copyright {
+    position: fixed;
+    bottom: 0.625rem;
+    left: 0.625rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.0);
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    font-family: Arial, sans-serif;
+    z-index: 999;
+}
+#copyright img {
+    height: 1.125rem;
+    margin-right: 0.5rem;
+}
+
+/* Contenedor para los botones de enlaces (Social Links) */
+#social-links-container {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 3.25rem;
+    display: flex;
+    flex-direction: row; 
+    gap: 2.5625rem; 
+    z-index: 1000;
+    
+}
+
+/* --- NUEVO ESTILO DE BOTÓN 3D FLUORESCENTE --- */
+.social-link-3d {
+    display: inline-flex;
+    align-items: center;
+    
+    padding: 0.75rem 0.75rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: #00ffcc;
+    text-decoration: none;
+    border: 1px solid #00ffcc;
+    border-radius: 0.75rem;
+    background: #0000007e;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 204, 0.7);
+    box-shadow: 
+        inset 0 0 8px rgba(0, 255, 204, 0.4),
+        0 0 15px rgba(0, 255, 204, 0.6),
+        0 4px 0 #005a49;
+         
+}
+
+/* Estilo del logo dentro del botón */
+.social-link-3d img {
+    height: 1.2em; 
+    width: auto;
+    align-items: center;
+    
+}
+
+/* Efecto al pasar el cursor por encima */
+.social-link-3d:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 0 0 10px rgba(0, 255, 204, 0.5),
+        0 0 25px rgba(0, 255, 204, 0.8),
+        0 6px 0 #005a49; 
+}
+
+/* Efecto al presionar el botón */
+.social-link-3d:active {
+    transform: translateY(2px);
+    box-shadow: 
+        inset 0 0 5px rgba(0, 255, 204, 0.4),
+        0 0 10px rgba(0, 255, 204, 0.6),
+        0 2px 0 #005a49; 
+}
+
+/* Estilo para el confetti */
+.confetti {
+    position: absolute;
+    transform: rotate(var(--rotation)) translate(var(--x), var(--y)) scale(var(--scale));
+    opacity: var(--opacity);
+    animation: moveConfetti 2s ease-out forwards;
+}
+
+@keyframes moveConfetti {
+    to {
+        transform: translate(var(--x-end), var(--y-end)) rotate(var(--rotation-end)) scale(var(--scale-end));
+        opacity: 0;
+    }
+}
+
+
+/* ======================================= */
+/* MEDIA QUERIES PARA RESPONSIVENESS */
+/* ======================================= */
+
+/* --- Tabletas y pantallas medianas (máx. 1024px) --- */
+@media (max-width: 1024px) {
+    #ruleta {
+        width: 45vw;
+        min-width: 300px;
+    }
+    
+    .ruleta-layout {
+        gap: 1.5rem; /* Reduce el gap en tabletas */
+    }
+    
+    #connect-wallet, #wallet-status {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+    }
+    
+    #connect-wallet {
+        top: 2rem;
+        left: 1rem;
+    }
+    #wallet-status {
+        top: 2rem;
+        right: 1rem;
+    }
+}
+
+/* --- Teléfonos móviles (máx. 768px) --- */
+@media (max-width: 768px) {
+    
+    .ruleta-layout {
+        gap: 0.5rem;
+    }
+    
+    #ruleta {
+        width: 80vw;
+        min-width: unset;
+    }
+
+    .ruleta-container {
+        top: 45%;
+    }
+
+    #play {
+        font-size: 0.9rem;
+        padding: 0.4em 1.5em;
+    }
+    #play img {
+        height: 2em;
+    }
+
+    #resultado {
+        bottom: 0.5rem;
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+        height: 35px;
+    }
+    
+    #connect-wallet {
+        position: absolute;
+        top: 6%;
+        margin-left: 10px;
+    }
+    #wallet-status {
+        position: absolute;
+        top: 4.6%;
+        margin-right: 10px;
+    }
+    
+    #copyright {
+        font-size: 0.75rem;
+        bottom: 0.5rem;
+        left: 0.5rem;
+    }
+
+    #social-links-container {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        gap: 0.5rem;
+        flex-direction: column; 
+    }
+    .social-link-3d {
+        font-size: 0.75rem;
+        padding: 0.5rem 1rem;
+    }
+}

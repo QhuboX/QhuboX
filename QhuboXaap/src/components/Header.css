@@ -1,0 +1,100 @@
+/* Header.css */
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 20px;
+    background-color: #9b11db8f;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(8px); 
+}
+
+.header-left {
+    display: flex;
+    align-items: left;
+  margin-left: 1%;
+}
+
+.app-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Aumenté un poco el gap para que el texto y el logo no estén tan pegados */
+}
+
+.app-logo img {
+    width: 40px; /* Ajustado a 40px para que encaje mejor en el header sin desbordar */
+    height: 40px;
+    object-fit: contain; /* Asegura que la imagen no se deforme */
+    display: block;
+    margin: 0; /* ELIMINADOS margin-top y margin-left que rompían la alineación */
+}
+
+.app-logo h1 {
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    letter-spacing: 0.1rem;
+    font-weight: 300;
+    margin: 0; /* CRUCIAL: Quita el margen por defecto del h1 para que se centre verticalmente con el logo */
+    line-height: 1; /* Ayuda a que la caja de texto se alinee de forma exacta */
+}
+/* --- INTEGRACIÓN DE ESTILOS MODERNOS --- */
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaciado entre iconos */
+    background: rgba(255, 255, 255, 0.05); /* Cápsula moderna */
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(146, 83, 175, 0.2);
+}
+
+.wallet-button, .wallet-minimal-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ffffff;
+   
+    padding: 5px;
+    border-radius: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.wallet-button:hover, .wallet-minimal-btn:hover {
+    color: #9253af;
+    background: rgba(146, 83, 175, 0.1);
+    border-bottom: 2px solid #141414; 
+    
+}
+
+.wallet-button svg, .wallet-minimal-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Estilo para el Logo de Wallet Conectada */
+.is-connected {
+    color: #00ffa3 !important; /* Verde Neón Moderno */
+    filter: drop-shadow(0 0 5px rgba(0, 255, 163, 0.5));
+}
+
+.status-glow {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 6px;
+    height: 6px;
+    background: #00ffa3;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ffa3;
+    border: 1px solid #161515;
+}

@@ -1,0 +1,4 @@
+huggingface-hub>=0.25.0
+gradio==4.44.1
+python-dotenv
+modelscope-studio

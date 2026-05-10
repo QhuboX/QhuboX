@@ -1,0 +1,65 @@
+.kiara-modal-overlay {
+ position: absolute;
+    top: 55px; /* Empuja el modal hacia abajo justo donde termina el header */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 55px); /* Le restamos la altura del header para que no se desborde por abajo */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    z-index: 10; /* Se mantiene por debajo del z-index: 50 del header por seguridad */
+}
+
+.kiara-modal-content {
+   width: 100% !important;
+    height: 100% !important;
+    
+    max-width: 400px !important;
+    max-height: 100% !important; /* Cambiamos 95vh por 100% para que respete al contenedor padre */
+    
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: none;
+}
+.kiara-modal-content > * {
+    flex-grow: 1;
+    flex-shrink: 0; /* Prohíbe que el contenido se "aplaste" */
+    width: 100%;
+    height: 100%;
+}
+.kiara-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+
+
+.kiara-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+

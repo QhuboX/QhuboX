@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sAIgnalx</title>
+    <link rel="stylesheet" href="siris.css">
+</head>
+<body>
+     <canvas id="techHiveCurve"></canvas>
+
+ 
+    <div class="btc-background-provider">
+    <canvas id="btcChartCanvas"></canvas>
+    <div id="btcRealTimePrice" class="btc-price-tag"></div>
+</div>
+    <canvas id="sniperRange"></canvas>
+    
+   
+    
+  <div class="scene">
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-row">
+                <img src="media/logo.png" alt="Logo" class="main-logo">
+                <h1 class="brand-name">sAIgnalx</h1><span class="version-tag">||Free v2.0</span>
+            </div>
+            <p class="typing-effect">
+                The Only AI Signals Bot Built for Delta Snipers<br> chart 1 to 15 min.
+            </p>
+        </div>
+    </div>
+
+    <div class="cube" id="cube">
+        <div class="face front">
+            <canvas class="face-matrix"></canvas>
+            <div class="face-content">
+                <div class="face-title">💎 AI Signals Bot</div>
+                <div class="grid-container" id="face-0"></div>
+            </div>
+        </div>
+
+        <div class="face right">
+            <canvas class="face-matrix"></canvas>
+            <div class="face-content">
+                <div class="face-title">🔥 AI Signals Bot</div>
+                <div class="grid-container" id="face-1"></div>
+            </div>
+        </div>
+
+        <div class="face back">
+            <canvas class="face-matrix"></canvas>
+            <div class="face-content">
+                <div class="face-title">⚡ AI Signals Bot</div>
+                <div class="grid-container" id="face-2"></div>
+            </div>
+        </div>
+
+        <div class="face left">
+            <canvas class="face-matrix"></canvas>
+            <div class="face-content">
+                <div class="face-title">🌊 AI Signals Bot</div>
+                <div class="grid-container" id="face-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <label>Speed</label>
+        <input type="range" id="speedRange" min="2" max="30" value="15">
+        <button id="playPauseBtn" class="sniper-btn">PAUSE</button>
+        <button id="deployBtn" class="sniper-btn">DEPLOY</button>
+    </div>
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script src="script.js"></script>
+    
+    <script src="face-matrix.js"></script>    
+        
+        <script src="techHiveCurve.js"></script>
+</body>
+</html>

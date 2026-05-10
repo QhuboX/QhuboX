@@ -1,0 +1,110 @@
+.chat-list-container {
+    padding: 10px;
+}
+
+.chat-list-title {
+    color: #f8fbfd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    padding-left: 15px; 
+    display: inline-block; 
+    font-size: 1.5em; 
+}
+
+.chat-list-content {
+    height: calc(100vh - 80px); 
+    overflow-y: auto;
+    padding-right: 5px;
+}
+.chat-list-content p {
+    color: #dad4d4;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0), -1px -1px 1px rgb(0, 0, 0);
+    text-align: left;
+    margin-top: 1px;
+    padding-left: 15px;
+}
+.no-chats {
+    text-align: center;
+    color: #1e1d1d;
+    margin-top: 50px;
+}
+
+.chat-items {
+    list-style: none;
+    padding: 0;
+}
+
+.chat-item {
+    position: relative;
+    background-color: #0d0d0d11;
+    padding: 3px 15px;
+    top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 12px;
+}
+
+.chat-item:hover {
+    background-color: #47464600;
+}
+
+.chat-name {
+    font-weight: bold;
+    color: #fffdfd;
+    margin-bottom: 5px;
+}
+
+.last-message {
+    color: #fffcfc;
+    font-size: 0.9em;
+    display: block;
+    max-width: 85%; 
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+}
+/* Estilo para la X de borrado */
+.delete-chat-btn {
+    position: absolute; /* Clave para moverlo libremente */
+    top: 8px;           /* Distancia desde el borde superior */
+    right: 8px;         /* Distancia desde el borde derecho */
+    background: transparent;
+    border: none;
+    color: #888; 
+    font-size: 16px;    /* Un poco más pequeña para que se vea elegante */
+    font-weight: bold;
+    padding: 5px;
+    cursor: pointer;
+    line-height: 1;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    z-index: 10; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+}
+
+/* Efecto al pasar el mouse por encima del chat */
+.chat-item:hover .delete-chat-btn {
+    color: #ff4d4d; /* Se vuelve roja cuando el usuario se acerca al chat */
+}
+
+/* Efecto al pasar el mouse directamente sobre la X */
+.delete-chat-btn:hover {
+    background-color: rgba(255, 77, 77, 0.1); /* Fondo rosado suave */
+    transform: scale(1.1);
+    color: #ff1a1a !important;
+}
+
+/* Ajuste para móviles: que sea un poco más grande para tocar con el dedo */
+@media (max-width: 768px) {
+    .delete-chat-btn {
+        font-size: 20px;
+        width: 40px;
+        height: 40px;
+        color: #ff4d4d; /* Siempre visible en móviles */
+    }
+}

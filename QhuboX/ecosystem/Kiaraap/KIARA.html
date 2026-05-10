@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kiara</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="footer.css">
+    
+</head>
+<body>
+    <header class="barra-superior">
+        <div class="nav-links">
+            <a href="/contact.html"target="_blank">Contact</a>
+            <a href="/support.html"target="_blank">Support</a>
+            <a href="/QhuboX.html"target="_blank">QhuboX</a>
+        </div>
+    </header>
+    <div id="copyright">
+        &copy; 2026 || QhuboX, All Rights Reserved
+    </div>
+<!-- Botones sociales -->
+    <div id="social-links-container">
+        <a href="#" target="_blank" class="social-link-3d">
+            <img src="assets/icons/X.png" alt="">
+            <span></span>
+        </a>
+
+        <a href="/ecosystem/QhuboX.html " class="social-link-3d">
+            <img src="assets/icons/icono_link.svg" alt="">
+            <span></span>
+        </a>
+    </div>
+    <div class="logo-container">
+        <img src="assets/logos/mentalpad.png" alt="MentalPad Logo" class="logo-top">
+        <span class="logo-text">Kiaraap</span>
+    </div>
+    <button class="boton-3d2">Your Crypto investment Notebook</button>
+
+    <div class="pad-wrapper">
+        <div class="pad">
+            <section class="screen screen-1">
+                <header>
+                    <h1>Portfolio</h1>
+                    <button id="addCryptoBtn">Add</button>
+                </header>
+                <div id="portfolioList"></div>
+            </section>
+            
+            <div class="pad-spine"></div>
+            
+            <section class="screen screen-2">
+                <button id="backBtn" class="back-button">Hide</button>
+                <div id="coinDetails"></div>
+                <canvas id="priceChart"></canvas>
+            </section>
+            
+            <div id="cryptoFormModal" class="hidden">
+                <form id="cryptoForm">
+                    <input type="text" placeholder="Ticker (e.g. BTC)" required />
+                    <input type="date" required />
+                    <input type="number" placeholder="Purchase Price" step="any" required />
+                    <input type="number" placeholder="Amount" step="any" required />
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="scripts/api.js"></script>
+    <script type="module" src="scripts/ui.js"></script>
+    <script type="module" src="scripts/app.js"></script>
+</body>
+</html>

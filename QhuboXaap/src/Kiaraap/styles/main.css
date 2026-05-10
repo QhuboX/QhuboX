@@ -1,0 +1,21 @@
+/* CORRECTED CSS for `styles/main.css` - NavBar VISIBLE en Desktop y Fija/Centrada en Móvil */
+
+body {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+    margin: 0;
+    overflow-x: hidden; 
+    background-image:
+        radial-gradient(circle at center, rgba(0, 0, 0, 0.594), rgba(0, 0, 0, 0.553)),
+        url('../assets/fondo.png');
+    
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+
+

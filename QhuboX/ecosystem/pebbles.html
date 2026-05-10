@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pebbles</title>
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <style>
+        :root {
+            --bg: #05070a;
+            --panel-bg: #0f1216;
+            --accent: #f0b90b;
+            --text: #eaecef;
+            --text-dim: #848e9c;
+            --border: #1e2329;
+            --up: #00f825;
+            --down: #ff3b3b;
+            --solana-1: #14f195;
+            --solana-2: #9945ff;
+        }
+
+       /* --- ESTILOS BASE Y ESTRUCTURA --- */
+body, html {
+    margin: 0; padding: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 60px;
+    background: var(--panel-bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 100;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 1.1rem;
+}
+
+/* --- TICKER --- */
+.ticker-container {
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 10px;
+}
+
+.ticker-wrapper {
+    display: inline-block;
+     animation:  ticker 220s linear infinite; padding-left: 100%; 
+}
+
+.ticker-container:hover .ticker-wrapper {
+    animation-play-state: paused;
+}
+
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+.ticker-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 15px;
+    cursor: pointer;
+    border-right: 1px solid rgb(27, 27, 27);
+    font-size: 1.15rem;
+    gap: 8px;
+   
+}
+
+.ticker-item span:nth-child(2) { border-radius: 4px; background-color: #0000000c; }
+.ticker-item img {align-items: center; width: 30px; height: 30px; border-radius: 50%; background-color: #161616ec; }
+
+/* --- MAIN LAYOUT --- */
+main {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    flex-grow: 1;
+    height: calc(100vh - 110px);
+}
+
+/* --- BUBBLE CANVAS --- */
+#bubble-container {
+    position: relative;
+    overflow: hidden;
+    background-image:
+        linear-gradient(to right, rgba(153, 69, 255, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(20, 241, 149, 0.15) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: meshGlow 10s ease-in-out infinite alternate;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 15px rgba(20, 241, 149, 0.15);
+    margin: 10px;
+    border-radius: 12px;
+    box-sizing: border-box; 
+}
+
+#bubble-container::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at center, transparent 10%, rgba(5, 7, 10, 0.8) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+#bubble-container::before {
+    content: 'QhuboX';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10vw;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.04);
+    letter-spacing: 2rem;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+@keyframes meshGlow {
+    0% { background-color: #05070a; }
+    50% { background-color: #0a0514; }
+    100% { background-color: #050e0c; }
+}
+
+/* --- PEBBLES (BURBUJAS) --- */
+.pebble {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+    border-radius: 40% 60% 50% 50% / 60% 40% 50% 50%;
+    animation: morph 10s ease-in-out infinite alternate;
+    user-select: none;
+    transition: box-shadow 0.3s ease, border 0.3s ease, transform 0.3s ease;
+}
+
+.pebble::after {
+    content: '';
+    position: absolute;
+    top: 15%; left: 20%;
+    width: 25%; height: 25%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    filter: blur(2px);
+    pointer-events: none;
+}
+
+@keyframes morph {
+    0% { border-radius: 40% 60% 50% 50% / 60% 40% 50% 50%; }
+    50% { border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%; }
+    100% { border-radius: 60% 40% 70% 30% / 40% 50% 50% 60%; }
+}
+
+/* Contenido interno de la burbuja */
+.pebble-icon-container {
+    width: 38px; height: 38px;
+    border-radius: 50%; background: #0000000c;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; margin-bottom: 4px;
+}
+.pebble-icon-container img { width: 80%; height: 80%; object-fit: contain; }
+.pebble-symbol { font-weight: bold; font-size: 0.75rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.pebble-price { font-size: 0.8rem; font-weight: 500; margin-top: 1px; margin-bottom: 1px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+.pebble-change { font-size: 0.95rem; font-weight: bold; }
+
+/* --- TERMINAL & INFO --- */
+  #terminal {
+
+            background: var(--panel-bg);
+
+            border-left: 1px solid var(--border);
+
+            padding: 15px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow: hidden;
+
+            z-index: 101;
+
+        }
+
+
+
+        .coin-title-wrap {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 5px;
+
+        }
+
+        #det-logo {
+
+            width: 28px;
+
+            height: 28px;
+
+            border-radius: 50%;
+
+            display: none;
+
+        }
+
+
+
+        #chart-container {
+
+            flex-shrink: 0;
+
+            height: min(300px, 30vh);
+
+            max-height: 40vh;
+
+            overflow: hidden;
+
+            background: #000;
+
+            border-radius: 8px;
+
+            border: 1px solid var(--border);
+
+            margin: 10px 0;
+
+        }
+
+
+
+        .extra-info-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 8px;
+
+            margin-top: 10px;
+
+            font-size: 0.75rem;
+
+        }
+
+
+
+        .info-card { background: rgba(255,255,255,0.03); padding: 8px; border-radius: 6px; border: 1px solid var(--border); }
+
+
+
+        /* Estilos para el buscador y sugerencias */
+
+        .search-wrapper { position: relative; margin-top: 15px; }
+
+        input[type="text"] {
+
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+
+            color: white; padding: 10px 15px; border-radius: 8px; outline: none; box-sizing: border-box;
+
+        }
+
+        #search-results {
+
+            position: absolute; bottom: 100%; left: 0; width: 100%;
+
+            background: var(--panel-bg); border: 1px solid var(--border);
+
+            max-height: 200px; overflow-y: auto; border-radius: 8px;
+
+            display: none; z-index: 110; margin-bottom: 5px;
+
+        }
+
+        .search-item {
+
+            padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.8rem;
+
+        }
+
+        .search-item:hover { background: rgba(255,255,255,0.05); }
+
+        .search-item img { width: 16px; height: 16px; border-radius: 50%; }
+
+
+
+        #notification-container { position: fixed; top: 70px; right: 20px; z-index: 1000; }
+
+        .toast {
+
+            background: var(--panel-bg); border-left: 4px solid var(--accent); color: white;
+
+            padding: 12px 20px; margin-bottom: 10px; border-radius: 4px; font-size: 0.85rem;
+
+            animation: slideIn 0.3s ease-out; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+
+        }
+
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+/* --- FOOTER --- */
+footer {
+
+            height: 50px;
+
+            background: var(--panel-bg);
+
+            border-top: 1px solid var(--border);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 0 20px;
+
+            font-size: 0.75rem;
+
+            z-index: 100;
+
+        }
+
+        .footer-left a { color: var(--text-dim); text-decoration: none; transition: 0.3s; }
+
+        .footer-left a:hover { color: var(--accent); }
+
+        .social-container { display: flex; gap: 15px; align-items: center; }
+
+        .social-container img { width: 18px; height: 18px; filter: grayscale(1) brightness(1.5); transition: 0.3s; }
+
+        .social-container img:hover { filter: grayscale(0) brightness(1); transform: scale(1.1); }
+
+/* --- RESPONSIVE TABLETS (≤ 1024px) --- */
+@media (max-width: 1024px) {
+    main { grid-template-columns: 1fr 300px; }
+}
+
+/* --- RESPONSIVE MÓVIL (≤ 768px) --- */
+@media (max-width: 768px) {
+    body, html { overflow-y: auto; height: auto; }
+    main { display: flex; flex-direction: column; height: auto; }
+    header, footer { flex-direction: column; height: auto; padding: 10px; gap: 8px; }
+
+    #bubble-container {
+        height: 50vh; min-height: 280px;
+        margin: 5px; flex-shrink: 0;
+    }
+
+    #terminal { border-left: none; border-top: 1px solid var(--border); min-height: 350px; }
+
+    /* Reducción de elementos internos de la pebble */
+    .pebble-icon-container { width: 24px; height: 24px; margin-bottom: 2px; } /* De 30px a 24px */
+    .pebble-symbol { font-size: 0.55rem; } /* De 0.65rem a 0.55rem */
+    .pebble-price { font-size: 0.55rem; }  /* De 0.65rem a 0.55rem */
+    .pebble-change { font-size: 0.45rem; } /* De 0.55rem a 0.45rem */
+}
+
+/* --- MÓVIL PEQUEÑO (≤ 480px) --- */
+@media (max-width: 480px) {
+    /* Mini pebbles para pantallas muy pequeñas */
+    .pebble-icon-container { width: 18px; height: 18px; margin-bottom: 1px; } /* De 22px a 18px */
+    .pebble-symbol { font-size: 0.45rem; } 
+    .pebble-price { font-size: 0.45rem; }
+    .pebble-change { font-size: 0.4rem; }
+
+    #chart-container { height: 180px; }
+    .extra-info-grid { grid-template-columns: 1fr; }
+    
+    #bubble-container::before { font-size: 15vw; letter-spacing: 0.5rem; }
+}
+
+    </style>
+</head>
+<body>
+
+    <div id="notification-container"></div>
+
+    <header>
+        <div class="header-logo">
+            <img src="icons/bubble.png" alt="Logo" style="width:24px; height:24px;">
+            <span>PEBBLES</span>
+        </div>
+        <div class="ticker-container">
+            <div id="ticker" class="ticker-wrapper"></div>
+        </div>
+        <button onclick="fetchData(); notify('Data Updated','Markets refreshed')" style="background:none; border:1px solid var(--border); color:white; cursor:pointer; border-radius:50%; width:30px; height:30px;">↻</button>
+    </header>
+
+    <main>
+        <div id="bubble-container"></div>
+
+        <aside id="terminal">
+            <div class="coin-title-wrap">
+                <img id="det-logo" src="" alt="icon">
+                <h2 id="det-name" style="margin:0; color: var(--accent); font-size: 1.2rem;">Select a Crypto</h2>
+            </div>
+            
+            <div id="det-stats" style="margin: 10px 0; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;"></div>
+            
+            <div id="chart-container"><div id="tv_chart" style="height: 100%;"></div></div>
+            
+            <div class="extra-info-grid" id="extra-info">
+                <div class="info-card">ATH: <br><b id="ath-val">-</b></div>
+                <div class="info-card">7d Change: <br><b id="7d-val">-</b></div>
+                <div class="info-card">Supply: <br><b id="supply-val">-</b></div>
+                <div class="info-card">Sentiment: <br><b id="sentiment-val">-</b></div>
+            </div>
+
+            <div id="coin-description" style="font-size: 0.82rem; color: var(--text-dim); line-height: 1.3; margin-top: 10px;"></div>
+
+            <div class="search-wrapper">
+                <div id="search-results"></div>
+                <input type="text" id="search" placeholder="Search any Crypto (eg: Solana, PEPE)..." oninput="searchGlobal()">
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <div class="footer-left">
+            <a href="/QhuboXlabs.html" target="_blank">&copy; 2026 || QhuboX, All Rights Reserved.</a>
+        </div>
+        <div class="footer-right">
+            <div class="social-container">
+                <a href="/ecosystem/QhuboXecosystem.html"><img src="Kiaraap/assets/icons/icono_link.svg" alt="home"></a>
+                <a href="#" target="_blank"><img src="Kiaraap/assets/icons/icono_x.svg" alt="X"></a>
+                <a href="https://discord.com" target="_blank"><img src="icons/discord.png" alt="Discord"></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const gemColors = [
+            'rgba(30, 80, 180, 0.7)', 'rgba(180, 40, 120, 0.7)', 'rgba(210, 150, 40, 0.7)', 
+            'rgba(40, 140, 80, 0.7)', 'rgba(110, 50, 160, 0.7)', 'rgba(60, 170, 210, 0.7)', 
+            'rgba(160, 40, 40, 0.7)', 'rgba(180, 180, 180, 0.5)', 'rgba(80, 60, 50, 0.7)',
+        ];
+
+        let coinsData = [];
+        let pebbles = [];
+        let searchTimeout;
+        const container = document.getElementById('bubble-container');
+
+        function notify(title, msg) {
+            const nc = document.getElementById('notification-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<strong>${title}</strong><br>${msg}`;
+            nc.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        async function fetchData() {
+            try {
+                // fetch a broader set and then filter unwanted assets
+                const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=80&page=1&sparkline=false&price_change_percentage=7d');
+                const fetched = await response.json();
+
+                // Exclusions: explicit symbols/names, stablecoins and any coin whose name starts with 'W'
+                const excludeSymbols = new Set(['usdc','usdt','xmr','usds','usdt0']);
+                const excludeNameSubstr = [
+                    'figure heloc','binance bridged usdt','coinbase wrapped btc','lido staked ether','wrapped steth',
+                    'paypal usd','ethena staked usde','meme','memecore','mantle','tether gold','ethena usde','hyperliquid','usdt0'
+                ];
+
+                // common stablecoin symbols to filter robustly
+                const stableSymbols = new Set(['usdt','usdc','busd','dai','tusd','usdp','usdn','usdx','gusd','usdk','fei','frax']);
+
+                function isExcluded(c) {
+                    if (!c || !c.name) return true;
+                    const name = (c.name || '').toLowerCase();
+                    const symbol = (c.symbol || '').toLowerCase();
+                    if (excludeSymbols.has(symbol)) return true;
+                    if (stableSymbols.has(symbol)) return true;
+                    for (const s of excludeNameSubstr) if (name.includes(s)) return true;
+                    // exclude names that explicitly mention stable, tether gold, or start with W
+                    if (name.startsWith('w')) return true;
+                    if (name.includes('stable') || name.includes('tether gold') || name.includes('stablecoin')) return true;
+                    return false;
+                }
+
+                // Attempt to get Binance spot-listed base assets so we only include coins tradeable on BINANCE spot (for TradingView BINANCE:SYMBOLUSDT)
+                let binanceBaseSet = null;
+                try {
+                    const binRes = await fetch('https://api.binance.com/api/v3/exchangeInfo');
+                    const binData = await binRes.json();
+                    binanceBaseSet = new Set(binData.symbols
+                        .filter(s => s.status === 'TRADING' && Array.isArray(s.permissions) ? s.permissions.includes('SPOT') : true)
+                        .map(s => s.baseAsset.toLowerCase())
+                    );
+                } catch (e) {
+                    console.warn('Could not fetch Binance exchangeInfo, proceeding without strict Binance filter', e);
+                }
+
+                // keep only allowed coins and (if available) only those listed on Binance spot
+                coinsData = fetched.filter(c => {
+                    if (isExcluded(c)) return false;
+                    if (binanceBaseSet) return binanceBaseSet.has((c.symbol||'').toLowerCase());
+                    return true;
+                });
+
+                initTicker();
+                initBubbles();
+            } catch (e) { notify('Error', 'Connection failed'); }
+        }
+
+        function initTicker() {
+            const ticker = document.getElementById('ticker');
+            ticker.innerHTML = '';
+            [...coinsData, ...coinsData].forEach(coin => {
+                const div = document.createElement('div');
+                div.className = 'ticker-item';
+                div.onclick = () => showDetails(coin.id, coin.symbol);
+                div.innerHTML = `
+                    <span style="display:inline-block;width:20px;height:20px;border-radius:50%; background:#18181810;padding:2px;box-sizing:content-box;overflow:hidden;margin-right:6px;">
+                        <img src="${coin.image}" alt="${coin.symbol}" style="width:100%;height:100%;object-fit:contain;display:block;">
+                    </span>
+                    ${coin.symbol.toUpperCase()} 
+                    <span style="color:${coin.price_change_percentage_24h>=0?'var(--up)':'var(--down)'};margin-left:6px;">
+                        $${coin.current_price.toLocaleString()}
+                    </span>`;
+                ticker.appendChild(div);
+            });
+        }
+
+      function initBubbles() {
+    container.innerHTML = '';
+    pebbles = [];
+    const w = container.clientWidth, h = container.clientHeight;
+    
+    // 1. Detección estricta de móvil
+    const isMobile = window.innerWidth <= 768;
+    
+    // 2. Sin límites: 30 burbujas para todos
+    const maxBubbles = 30; 
+    
+    // 3. MULTIPLICADOR DIFERENCIADO
+    // En PC/Tablet (1.0) se ven grandes. En móvil (0.55) se reducen casi a la mitad.
+    const sizeMultiplier = isMobile ? 0.55 : 1.0; 
+
+    coinsData.slice(0, maxBubbles).forEach((coin) => {
+        // 4. VALORES ORIGINALES GRANDES (Para PC y Tablets)
+        // Mantenemos el rango de 110px a 150px que luce bien en pantallas grandes
+        let baseSize = (coin.symbol === 'btc') 
+            ? 150 
+            : Math.max(110, Math.min(145, Math.abs(coin.price_change_percentage_24h) * 8 + 110));
+        
+        // Aquí ocurre la magia: si es móvil, ese 110px se convierte en ~60px
+        let size = Math.round(baseSize * sizeMultiplier);
+        
+        const change = coin.price_change_percentage_24h || 0;
+        const isPositive = change >= 0;
+        const borderColor = isPositive ? 'var(--up)' : 'var(--down)';
+        const displayPrice = coin.current_price >= 1 ? coin.current_price.toLocaleString() : coin.current_price;
+
+        const el = document.createElement('div');
+        el.className = 'pebble';
+        el.style.width = el.style.height = size + 'px';
+        el.style.backgroundColor = gemColors[Math.floor(Math.random() * gemColors.length)];
+        el.style.border = isMobile ? `1px solid ${borderColor}` : `2px solid ${borderColor}`;
+        
+        // Sombra más sutil en móvil para no saturar
+        el.style.boxShadow = isMobile 
+            ? `inset -2px -2px 6px rgba(0,0,0,0.4), 0 0 8px ${isPositive ? 'rgba(0, 248, 37, 0.3)' : 'rgba(255, 59, 59, 0.3)'}`
+            : `inset -5px -5px 15px rgba(0,0,0,0.4), 0 0 15px ${isPositive ? 'rgba(0, 248, 37, 0.5)' : 'rgba(255, 59, 59, 0.5)'}`;
+
+        el.innerHTML = `
+            <div class="pebble-icon-container"><img src="${coin.image}" alt="${coin.symbol}"></div>
+            <div class="pebble-symbol">${coin.symbol.toUpperCase()}</div>
+            <div class="pebble-price">$${displayPrice}</div>
+            <div class="pebble-change" style="color:${borderColor}">${change.toFixed(2)}%</div>
+        `;
+        
+        el.onclick = () => { showDetails(coin.id, coin.symbol); };
+        
+        const pObj = { 
+            el, 
+            x: Math.random() * (w - size) + size/2, 
+            y: Math.random() * (h - size) + size/2, 
+            radius: size/2, 
+            dx: (Math.random() - 0.5) * (isMobile ? 1.0 : 1.5), 
+            dy: (Math.random() - 0.5) * (isMobile ? 1.0 : 1.5)
+        };
+        
+        container.appendChild(el);
+        pebbles.push(pObj);
+    });
+}
+        // NUEVA FUNCIÓN: Buscar cualquier cripto en la API
+        async function searchGlobal() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const resultsBox = document.getElementById('search-results');
+            
+            if (query.length < 2) {
+                resultsBox.style.display = 'none';
+                return;
+            }
+
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(async () => {
+                try {
+                    const res = await fetch(`https://api.coingecko.com/api/v3/search?query=${query}`);
+                    const data = await res.json();
+                    
+                    if (data.coins && data.coins.length > 0) {
+                        resultsBox.innerHTML = '';
+                        resultsBox.style.display = 'block';
+                        data.coins.slice(0, 8).forEach(coin => {
+                            const div = document.createElement('div');
+                            div.className = 'search-item';
+                                div.innerHTML = `<span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#fff;padding:2px;box-sizing:content-box;vertical-align:middle;overflow:hidden;margin-right:8px;">
+                                    <img src="${coin.thumb}" width="100%" height="100%" style="object-fit:contain;display:block;">
+                                </span><span>${coin.name} (${coin.symbol})</span>`;
+                            div.onclick = () => {
+                                showDetails(coin.id, coin.symbol);
+                                resultsBox.style.display = 'none';
+                                document.getElementById('search').value = '';
+                                notify('Asset Found', coin.name);
+                            };
+                            resultsBox.appendChild(div);
+                        });
+                    }
+                } catch (e) {}
+            }, 300);
+        }
+
+        async function showDetails(coinId, symbol) {
+    // 1. Limpieza inmediata y Feedback visual
+    const statsDiv = document.getElementById('det-stats');
+    const descDiv = document.getElementById('coin-description');
+    statsDiv.innerHTML = 'Cargando datos...';
+    descDiv.innerText = 'Buscando información detallada...';
+
+    // 2. Actualización del Gráfico de TradingView
+    // Eliminamos el contenido previo para forzar el refresco
+    document.getElementById('tv_chart').innerHTML = ''; 
+    new TradingView.widget({
+        "autosize": true,
+        "symbol": `BINANCE:${symbol.toUpperCase()}USDT`,
+        "interval": "60",
+        "theme": "dark",
+        "style": "1",
+        "container_id": "tv_chart",
+        "hide_side_toolbar": false,
+        "allow_symbol_change": true,
+        "locale": "en"
+    });
+
+    try {
+        // 3. Petición a la API con manejo de errores
+        const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}?market_data=true&sparkline=false`);
+        
+        if (!res.ok) throw new Error('Error en la API (Rate Limit)');
+        
+        const data = await res.json();
+        const mData = data.market_data;
+
+        // 4. Actualizar Logo y Nombre
+        const logoImg = document.getElementById('det-logo');
+        logoImg.src = data.image.small;
+        logoImg.style.display = 'block';
+        document.getElementById('det-name').innerText = data.name;
+
+        // 5. Actualizar Estadísticas Principales (Grid superior)
+        statsDiv.innerHTML = `
+            <div class="info-card">Market Cap:<br><b>$${mData.market_cap.usd ? (mData.market_cap.usd / 1e9).toFixed(2) + 'B' : 'N/A'}</b></div>
+            <div class="info-card">Price:<br><b>$${mData.current_price.usd.toLocaleString()}</b></div>
+        `;
+
+        // 6. Actualizar Grid Inferior (ATH, 7d, Supply, Sentiment)
+        document.getElementById('ath-val').innerText = `$${mData.ath.usd.toLocaleString()}`;
+        
+        const c7d = mData.price_change_percentage_7d || 0;
+        const el7d = document.getElementById('7d-val');
+        el7d.innerText = `${c7d.toFixed(2)}%`;
+        el7d.style.color = c7d >= 0 ? 'var(--up)' : 'var(--down)';
+
+        const supply = mData.circulating_supply;
+        document.getElementById('supply-val').innerText = supply ? (supply / 1e6).toFixed(1) + 'M' : 'N/A';
+
+        const sentiment = data.sentiment_votes_up_percentage;
+        document.getElementById('sentiment-val').innerText = sentiment ? `${sentiment}% Bulls` : 'N/A';
+
+        // 7. Descripción (con fallback por si no hay texto)
+        const descEn = data.description.en;
+        descDiv.innerHTML = descEn 
+            ? descEn.split('. ')[0] + '.' // Solo la primera frase para no saturar
+            : 'No hay descripción adicional disponible para este activo.';
+
+    } catch (error) {
+        console.error("Error actualizando terminal:", error);
+        notify('API Limit', 'Demasiadas peticiones. Espera un momento.');
+        statsDiv.innerHTML = '<span style="color:var(--down)">Error al cargar datos</span>';
+    }
+}
+
+        function updatePhysics() {
+    const w = container.clientWidth, h = container.clientHeight;
+    if(w === 0) return requestAnimationFrame(updatePhysics);
+    
+    pebbles.forEach((p, i) => {
+        p.x += p.dx; p.y += p.dy;
+
+        // CORRECCIÓN: Limitar posición (Clamping)
+        // Si la pantalla se achica, forzamos a la burbuja a entrar
+        // para que no se quede atrapada fuera de los bordes.
+        
+        // Eje X
+        if (p.x - p.radius < 0) {
+            p.x = p.radius;         // Forzar adentro izquierda
+            p.dx = Math.abs(p.dx);  // Rebotar a la derecha
+        } else if (p.x + p.radius > w) {
+            p.x = w - p.radius;     // Forzar adentro derecha
+            p.dx = -Math.abs(p.dx); // Rebotar a la izquierda
+        }
+
+        // Eje Y
+        if (p.y - p.radius < 0) {
+            p.y = p.radius;         // Forzar adentro arriba
+            p.dy = Math.abs(p.dy);  // Rebotar abajo
+        } else if (p.y + p.radius > h) {
+            p.y = h - p.radius;     // Forzar adentro abajo
+            p.dy = -Math.abs(p.dy); // Rebotar arriba
+        }
+
+        // Colisiones entre burbujas (Código original mantenido)
+        for (let j = i + 1; j < pebbles.length; j++) {
+            let p2 = pebbles[j];
+            let dx = p2.x - p.x, dy = p2.y - p.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            let min = p.radius + p2.radius;
+            if (dist < min) {
+                const angle = Math.atan2(dy, dx);
+                const overlap = min - dist;
+                p.x -= (overlap * Math.cos(angle)) / 2; p.y -= (overlap * Math.sin(angle)) / 2;
+                p2.x += (overlap * Math.cos(angle)) / 2; p2.y += (overlap * Math.sin(angle)) / 2;
+                let tx = p.dx; p.dx = p2.dx; p2.dx = tx;
+                let ty = p.dy; p.dy = p2.dy; p2.dy = ty;
+            }
+        }
+        
+        // Renderizado
+        p.el.style.transform = `translate(${p.x - p.radius}px, ${p.y - p.radius}px)`;
+    });
+    requestAnimationFrame(updatePhysics);
+}
+
+        fetchData();
+        updatePhysics();
+        
+        // Cerrar resultados al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-wrapper')) {
+                document.getElementById('search-results').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

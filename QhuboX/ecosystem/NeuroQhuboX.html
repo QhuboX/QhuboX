@@ -1,0 +1,746 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroQhuboX free v4.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f2fe; --accent: #13f5f5c7; --success: #00ff88; --danger: #ff4b2b;
+            --bg: #030712; --glass: rgba(255, 255, 255, 0.03); --glass-border: rgba(255, 255, 255, 0.1); --text: #f8fafc;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: radial-gradient(circle at 0% 0%, #111827 0%, #030712 100%);
+            color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 10px;
+            overflow-x: hidden; 
+        }
+        .glass-shell {
+            width: 100%; max-width: 1100px; background: var(--glass); backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); border-radius: 40px; padding: 30px; position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .nav-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+.logo { 
+    font-weight: 800; 
+    font-size: 1.3rem; 
+    /* Blanco suave con 90% de opacidad */
+    color: rgba(255, 255, 255, 0.9); 
+    /* Espaciado moderno */
+    letter-spacing: 1.5px;
+    text-transform: uppercase; /* Opcional: le da un look más premium */
+    
+    /* Reseteo total del degradado anterior */
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    -webkit-text-fill-color: initial;
+}
+
+select.lang-picker { 
+    background: rgba(17, 17, 17, 0.726); /* Cambiado a juego con el estilo glass */
+    color: rgba(255, 255, 255, 0.8); 
+    border: 1px solid var(--glass-border); 
+    padding: 6px 12px; 
+    border-radius: 10px; 
+    outline: none; 
+    font-size: 0.7rem;
+    backdrop-filter: blur(5px);
+}
+        
+        #questions-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+
+        .opt-btn { 
+            flex:1; padding:10px; border-radius:10px; border: 1px solid var(--glass-border); 
+            background: rgba(255,255,255,0.05); color: #94a3b8; cursor:pointer; 
+            transition: 0.2s; font-weight: 600; font-size: 0.8rem;
+        }
+        .opt-btn.active { 
+            background: linear-gradient(135deg, var(--accent), var(--primary)); 
+            color: #000; border-color: transparent; font-weight: 800;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .dashboard-grid { display: grid; grid-template-columns: 280px 1fr; gap: 25px; }
+        .stat-box { text-align: center; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid var(--glass-border); margin-bottom: 10px; }
+        .score-big { font-size: 3rem; font-weight: 800; color: var(--primary); }
+        
+        .weekly-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 60px; margin-top: 20px; gap: 6px; }
+        .bar { flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        
+        /* Rampa Ascendente */
+        .bar:nth-child(1) { height: 25%; } .bar:nth-child(2) { height: 38%; } .bar:nth-child(3) { height: 52%; }
+        .bar:nth-child(4) { height: 65%; } .bar:nth-child(5) { height: 78%; } .bar:nth-child(6) { height: 88%; } .bar:nth-child(7) { height: 100%; }
+
+        .bar.active { background: linear-gradient(to top, var(--accent), var(--primary)); box-shadow: 0 0 15px var(--primary); border-color: transparent; transform: scaleX(1.1); }
+
+        .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; max-width: 450px;margin: 0 auto;}
+        .day-label { font-size: 0.6rem; text-align: center; opacity: 0.5; font-weight: 800; }
+        .day { aspect-ratio: 1.2; background: rgba(255,255,255,0.03); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; border: 1px solid var(--glass-border); }
+        .day.today { border-color: var(--primary); color: var(--primary); font-weight: 800; }
+        .day.done { background: var(--success); color: #000; font-weight: 800; border: none; }
+        
+        .mission-card { background: linear-gradient(135deg, rgba(0, 132, 255, 0.37), rgba(0, 242, 254, 0.1)); padding: 15px; border-radius: 20px; border: 1px solid var(--glass-border); margin-bottom: 15px; }
+        .mission-card h3 { font-size: 1rem; margin: 10px 0; color: var(--primary); }
+        .mission-card p { font-size: 0.85rem; opacity: 0.9; line-height: 1.4; }
+
+        .btn-cta { width: 100%; background: linear-gradient(90deg, var(--accent), var(--primary)); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 8px; transition: 0.3s; }
+        .btn-cta:hover { filter: brightness(1.2); transform: translateY(-2px); }
+        .hidden { display: none !important; }
+
+        .clock-box { margin-top: 20px; text-align: center; border-top: 1px solid var(--glass-border); padding-top: 35px; }
+        .clock-time { 
+    font-size: 1.9rem; 
+    margin: 0; 
+    font-weight: 800; 
+    color: var(--primary); 
+    letter-spacing: 1px;
+    /* Mueve visualmente hacia arriba sin afectar a los demás */
+    transform: translateY(-15px); 
+}
+
+.clock-label { 
+    font-size: 0.9rem; 
+    opacity: 0.6; 
+    margin: 0;
+    /* Mueve la etiqueta también para mantener la cohesión */
+    transform: translateY(-15px);
+}
+        
+        .energy-selector { display: flex; gap: 5px; margin: 15px 0; }
+        .energy-btn { flex: 1; padding: 8px; font-size: 0.7rem; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #ccc; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 600; }
+        .energy-btn.active { background: var(--primary); color: #000; font-weight: 800; border-color: transparent; box-shadow: 0 0 10px var(--primary); }
+
+        /* --- TUS AJUSTES DE POSICIONAMIENTO --- */
+
+        .logo-container {
+            position: fixed;
+            top: 20px;
+            left: 2%;
+            display: flex;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .logo-top {
+            width: 90px; 
+            height: auto;
+            opacity: 0.9;
+        }
+
+        .logo-text {
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            letter-spacing: 0.3rem;
+            font-weight: 300;
+        }
+
+        .barra-superior {
+            position: fixed;
+            top: 20px;
+            right: 35px;
+            z-index: 2000;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 8px 12px;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* --- FIN AJUSTES --- */
+
+        #copyright {
+            position: fixed;
+            top: 94%;
+            left: 2%;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #b9b8b8;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        #social-links-container {
+            position: fixed;
+            bottom: 1.25rem;
+            right: 3.25rem;
+            display: flex;
+            flex-direction: row; 
+            gap: 2.5625rem; 
+            z-index: 1000;
+        }
+
+        .social-link-3d {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem;
+            border: 1px solid #5f5f5f;
+            border-radius: 0.75rem;
+            background: #0000009a;
+            transition: transform 0.1s ease, box-shadow 0.2s ease;
+        }
+
+        .social-link-3d img {
+            height: 1.2em; 
+            width: auto;
+        }
+
+        @media (max-width: 1250px) { 
+            body { 
+                flex-direction: column; 
+                justify-content: flex-start; 
+                padding-top: 100px;
+                overflow-y: auto; 
+            }
+            .logo-container { 
+                position: absolute; 
+                top: 10px; 
+                left: 50%; 
+                transform: translateX(-50%); 
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo-text { font-size: 1.5rem; letter-spacing: 0.1rem; }
+            .logo-top { width: 50px; }
+            .barra-superior { 
+                position: absolute; 
+                top: 80px; 
+                right: auto; 
+                left: 50%; 
+                transform: translateX(-50%); 
+            }
+            .glass-shell { margin-top: 60px; padding: 20px; border-radius: 20px; }
+            #questions-container { grid-template-columns: 1fr; } 
+            .dashboard-grid { grid-template-columns: 1fr; }
+            #copyright { position: relative; top: auto; left: auto; padding: 20px 0; justify-content: center; }
+            #social-links-container { position: relative; bottom: auto; right: auto; justify-content: center; padding-bottom: 20px; gap: 1rem; }
+        }
+        .social-link-3d img {
+    height: 1.2em; 
+    width: auto;
+    align-items: center;
+    
+}
+
+/* Efecto al pasar el cursor por encima */
+.social-link-3d:hover {
+    transform: translateY(-2px);
+    
+}
+.nav-links a {
+    text-decoration: none;
+    color: #a7a5a5;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 8px 12px;
+    
+    
+    margin: 0 10px; /* Espacio entre enlaces en desktop */
+}
+    </style></head><body>
+    <div class="logo-container">
+        <img src="media/neuro.png" alt="MentalPad Logo" class="logo-top">
+        <span class="logo-text"></span>
+    </div>
+
+    <header class="barra-superior">
+        <nav class="nav-links">
+            <a href="/support.html" target="_blank">Support</a>
+        </nav>
+    </header>
+
+    <div id="copyright">
+        &copy; 2026 || QhuboX, All Rights Reserved.
+    </div>
+
+    <div id="social-links-container">
+        <a href="#" target="_blank" class="social-link-3d">
+            <img src="Kiaraap/assets/icons/icono_x.svg" alt="">
+        </a>
+        <a href="/ecosystem/QhuboXecosystem.html" class="social-link-3d">
+            <img src="Kiaraap/assets/icons/icono_link.svg" alt="">
+        </a>
+    </div>
+
+    <div class="glass-shell">
+        <nav class="nav-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="logo">NEUROQhuboX free v4.0</div>
+                <img src="media/neuro.png" alt="Logo" style="height: 28px; width: auto; filter: drop-shadow(0 0 5px var(--primary));">
+            </div>
+            <select class="lang-picker" id="langSelect" onchange="translateUI(this.value)">
+                <option value="en" selected>English</option>
+                <option value="es">Español</option>
+            </select>
+        </nav>
+
+        <section id="test-view">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h1 id="txt-title">---</h1>
+                <p id="txt-subtitle">---</p>
+            </div>
+            <div id="questions-container"></div>
+            <button class="btn-cta" id="txt-btn-analyze" onclick="calculateResults()">---</button>
+        </section>
+
+        <section id="dashboard-view" class="hidden">
+            <div class="dashboard-grid">
+                <div class="sidebar">
+                    <div class="stat-box">
+                        <p id="txt-level-label" style="font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase;">---</p>
+                        <div class="score-big" id="res-score">0</div>
+                        <p id="res-status" style="font-weight: 800; margin-top: 5px; font-size: 0.9rem;"></p>
+                        <div class="weekly-chart" id="weekly-progress"></div>
+                    </div>
+                    <button class="btn-cta" onclick="logTask()" id="txt-btn-log">---</button>
+                    <button class="btn-cta" style="background:none; border:1px solid var(--danger); color:var(--danger); font-size: 0.7rem; padding: 10px; margin-top: 20px;" onclick="resetAll()" id="txt-btn-reset">---</button>
+                    <div class="clock-box">
+                        <div class="clock-label">SYSTEM TIME (SYNCED)</div>
+                        <div class="clock-time" id="real-time-clock">--:--:--</div>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <div class="mission-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <small id="txt-mission-tag" style="color: var(--primary); font-weight: 800; font-size: 0.6rem;">---</small>
+                            <small id="txt-energy-label" style="opacity:0.5; font-size:0.6rem;">---</small>
+                        </div>
+                        <div class="energy-selector">
+                            <button class="energy-btn" onclick="setEnergy('high')" id="btn-high">HIGH (Move)</button>
+                            <button class="energy-btn" onclick="setEnergy('med')" id="btn-med">MED (Org)</button>
+                            <button class="energy-btn" onclick="setEnergy('low')" id="btn-low">LOW (Rest)</button>
+                        </div>
+                        <h3 id="daily-task-title">---</h3>
+                        <p id="daily-task-desc">---</p>
+                    </div>
+                    <div id="cal-month-year" style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem; margin-bottom: 10px;">---</div>
+                    <div class="calendar" id="calendar-gen"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+<div id="custom-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); z-index:99999; align-items:center; justify-content:center;">
+    <div style="background:rgba(20,20,20,0.8); border:1px solid var(--danger); backdrop-filter:blur(20px); padding:25px; border-radius:15px; text-align:center; max-width:260px; box-shadow:0 10px 40px rgba(0,0,0,0.8);">
+        <h3 style="margin:0 0 10px 0; font-size:1rem; color:#fff; text-transform:uppercase; letter-spacing:1px;">Confirm Reset</h3>
+        <p style="font-size:0.75rem; color:rgba(255,255,255,0.6); margin-bottom:20px;">This action will wipe all your progress. Proceed?</p>
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <button onclick="closeModal()" style="background:rgba(255,255,255,0.1); color:white; border:none; padding:10px 15px; border-radius:6px; font-size:0.7rem; cursor:pointer; font-weight:700;">CANCEL</button>
+            <button onclick="confirmReset()" style="background:var(--danger); color:white; border:none; padding:10px 15px; border-radius:6px; font-size:0.7rem; cursor:pointer; font-weight:700;">RESET ALL</button>
+        </div>
+    </div>
+</div>
+    <script>
+        const taskDatabase = {
+            es: {
+                high: [
+                    {t:"Mover el esqueleto (20 min)", d:"Haz ráfagas de ejercicio rápido (30s a tope, 30s descanso). ¿POR QUÉ? Despierta tu cerebro."},
+                    {t:"Limpieza Relámpago (15 min)", d:"Pon una alarma y despeja solo el suelo de tu cuarto. ¿POR QUÉ? Calma el caos visual."},
+                    {t:"Ducha de Choque", d:"Alterna agua fría y caliente al final de la ducha. ¿POR QUÉ? Es un reinicio del sistema."},
+                    {t:"Caminata sin Pantalla", d:"Camina 20 min sin mirar el móvil. ¿POR QUÉ? Reduce la ansiedad visual."},
+                    {t:"Reto de Fuerza", d:"Mueve 5 cosas pesadas. ¿POR QUÉ? El esfuerzo muscular te aterriza."},
+                    {t:"Baile Ridículo", d:"Pon 3 canciones movidas y baila. ¿POR QUÉ? Libera tensión acumulada."},
+                    {t:"Escaleras al Éxito", d:"Sube y baja escaleras 5 veces rápido. ¿POR QUÉ? Quema la inquietud motora."},
+                    {t:"Boxeo al Aire", d:"Lanza puñetazos al aire durante 5 min. ¿POR QUÉ? Descarga la frustración física."},
+                    {t:"Limpieza Express", d:"Lava platos a máxima velocidad por 10 min. ¿POR QUÉ? Te saca del bucle mental."},
+                    {t:"Salto de Cuerda", d:"Salta durante 2 min sin parar. ¿POR QUÉ? Organiza tu sistema sensorial."},
+                    {t:"Zancadas", d:"Ve de una habitación a otra haciendo zancadas. ¿POR QUÉ? Despierta la atención."},
+                    {t:"Elongación", d:"Estírate intentando tocar el techo. ¿POR QUÉ? Abre tu postura y te alerta."},
+                    {t:"Carga Pesada", d:"Ponte una mochila con libros y camina. ¿POR QUÉ? Da una señal de calma al cerebro."},
+                    {t:"Sprint", d:"Corre en el sitio 1 min a tope. ¿POR QUÉ? Corta los pensamientos intrusivos."},
+                    {t:"Color Organize", d:"Ordena una estantería solo por colores. ¿POR QUÉ? Gratificación visual inmediata."},
+                    {t:"Cambio de Muebles", d:"Mueve un mueble de sitio. ¿POR QUÉ? Refresca tu motivación."},
+                    {t:"Limpieza de Espejos", d:"Limpia todos los espejos. ¿POR QUÉ? El movimiento circular es relajante."},
+                    {t:"Equilibrio", d:"Aguanta en un pie mientras te lavas los dientes. ¿POR QUÉ? Foco físico único."},
+                    {t:"Aplauso Rítmico", d:"Sigue el ritmo de una canción con palmas. ¿POR QUÉ? Sincroniza pensamientos."},
+                    {t:"Grito Sordo", d:"Grita contra una almohada. ¿POR QUÉ? Libera presión interna."},
+                    {t:"Lanzar y Atrapar", d:"Lanza una pelota contra la pared. ¿POR QUÉ? Mejora la coordinación y enfoque."},
+                    {t:"Plancha", d:"Aguanta 30 segundos en plancha. ¿POR QUÉ? El esfuerzo total calla el ruido mental."},
+                    {t:"Flexiones Pared", d:"Haz 20 flexiones apoyado en la pared. ¿POR QUÉ? Presión articular relajante."},
+                    {t:"Sacudir Alfombras", d:"Lleva una alfombra fuera y sacúdela. ¿POR QUÉ? Esfuerzo físico catártico."},
+                    {t:"Obstáculos", d:"Salta sobre cojines rápido. ¿POR QUÉ? Gamificar el movimiento lo hace divertido."},
+                    {t:"Sentadilla Pared", d:"Apóyate en la pared sentado en el aire. ¿POR QUÉ? El quemazón te trae al ahora."},
+                    {t:"Limpiar Ventanas", d:"Limpia un solo cristal bien. ¿POR QUÉ? Mejora tu perspectiva mental."},
+                    {t:"Desordenar/Ordenar", d:"Tira un cajón al suelo y ordénalo. ¿POR QUÉ? Control total sobre el caos."},
+                    {t:"Puntillas", d:"Cruza la casa andando de puntillas. ¿POR QUÉ? Requiere equilibrio y foco total."},
+                    {t:"Abdominales Bici", d:"Haz 20 repeticiones rápido. ¿POR QUÉ? Conecta ambos hemisferios."},
+                    {t:"Agua Helada", d:"30 segundos de agua fría al final. ¿POR QUÉ? Dispara dopamina natural."}
+                ],
+                med: [
+                    {t:"Inbox Zero", d:"Borra correos sin leerlos. Solo limpia. ¿POR QUÉ? Quitar pendientes visuales."},
+                    {t:"Mapa de Ideas", d:"Dibuja un proyecto con flechas. ¿POR QUÉ? Tu cerebro piensa en imágenes."},
+                    {t:"Agrupar Tareas", d:"Haz todos los pagos seguidos. ¿POR QUÉ? Evita el agotamiento por cambio."},
+                    {t:"Vaciado Cerebral", d:"Escribe todo lo que te preocupa. ¿POR QUÉ? Reduce la ansiedad de olvido."},
+                    {t:"Prioridades", d:"Separa lo urgente de lo que puede esperar. ¿POR QUÉ? Evita el pánico de decisión."},
+                    {t:"Modo Avión", d:"Pon el móvil lejos por 30 min. ¿POR QUÉ? Elimina micro-interrupciones."},
+                    {t:"Escritorio Limpio", d:"Quita todo de tu mesa. ¿POR QUÉ? Menos objetos, menos distracciones."},
+                    {t:"Regla 2 Min", d:"Haz ya lo que tarde menos de 2 min. ¿POR QUÉ? Evita la acumulación."},
+                    {t:"Vision Board", d:"Mira fotos de lo que quieres lograr. ¿POR QUÉ? Recordar el 'para qué'."},
+                    {t:"Pomodoro", d:"Trabaja 25 min y descansa 5. ¿POR QUÉ? Saber que hay un final ayuda a empezar."},
+                    {t:"Lista No-Hacer", d:"Escribe qué NO vas a tocar hoy. ¿POR QUÉ? Permiso para ignorar distracciones."},
+                    {t:"Audio-Notas", d:"Graba ideas en vez de escribirlas. ¿POR QUÉ? El cerebro va más rápido que la mano."},
+                    {t:"Cuenta Bancaria", d:"Mira tus gastos 5 min. ¿POR QUÉ? Tomar conciencia reduce la evitación."},
+                    {t:"Escritorio Digital", d:"Ordena tus iconos en una carpeta. ¿POR QUÉ? El orden digital calma."},
+                    {t:"Preparar Ropa", d:"Elige el outfit de mañana. ¿POR QUÉ? Ahorra una decisión matutina."},
+                    {t:"Menú Simple", d:"Decide qué comerás hoy y mañana. ¿POR QUÉ? Evita el pánico alimenticio."},
+                    {t:"Cerrar Pestañas", d:"Cierra el navegador. ¿POR QUÉ? Cada pestaña roba atención."},
+                    {t:"Configurar App", d:"Pon a punto esa app de ayuda. ¿POR QUÉ? Facilita el trabajo futuro."},
+                    {t:"Plan de 3", d:"Elige solo 3 cosas para hoy. ¿POR QUÉ? Número alcanzable y motivador."},
+                    {t:"Cartera", d:"Tira tickets viejos. ¿POR QUÉ? Resultado de orden inmediato."},
+                    {t:"Lectura Técnica", d:"Lee 5 páginas de aprendizaje. ¿POR QUÉ? Mejora la resistencia mental."},
+                    {t:"Dar Gracias", d:"Manda un mensaje de agradecimiento. ¿POR QUÉ? Enfoque positivo."},
+                    {t:"Borrar Fotos", d:"Borra 20 capturas inútiles. ¿POR QUÉ? Reduce el ruido digital."},
+                    {t:"Suscripciones", d:"Cancela un servicio que no uses. ¿POR QUÉ? Control de finanzas."},
+                    {t:"Botiquín", d:"Tira medicinas caducadas. ¿POR QUÉ? Tarea necesaria que da paz."},
+                    {t:"Dibujo Rápido", d:"Dibuja un objeto 5 min. ¿POR QUÉ? Frena la impulsividad."},
+                    {t:"Etiquetar", d:"Pon nombre a una carpeta. ¿POR QUÉ? El orden externo ayuda al interno."},
+                    {t:"Analizar Fallo", d:"Piensa en un error sin juzgarte. ¿POR QUÉ? Aprender la lógica del fallo."},
+                    {t:"Planear Pausa", d:"Decide qué harás el finde. ¿POR QUÉ? Tener una recompensa a la vista."},
+                    {t:"Cables", d:"Desenreda tus cables. ¿POR QUÉ? Cables enredados = mente enredada."},
+                    {t:"Afilar Herramientas", d:"Limpia tu teclado o pinceles. ¿POR QUÉ? Valorar tu equipo de trabajo."}
+                ],
+                low: [
+                    {t:"Respiración 4-4-4", d:"Inhala, aguanta, suelta. ¿POR QUÉ? Engaña al cuerpo para relajarse."},
+                    {t:"Ayuno Digital", d:"Suelta el móvil 1 hora. ¿POR QUÉ? Descanso de receptores de dopamina."},
+                    {t:"Escaneo Corporal", d:"Siente tus pies y manos. ¿POR QUÉ? Te devuelve a la realidad física."},
+                    {t:"Siesta 10 Min", d:"Cierra los ojos un momento. ¿POR QUÉ? Limpia la basura mental del día."},
+                    {t:"Mirar Árboles", d:"Observa el movimiento lento. ¿POR QUÉ? Calma el sistema nervioso."},
+                    {t:"Té Consciente", d:"Bebe algo caliente sintiendo el vapor. ¿POR QUÉ? Reduce la ansiedad física."},
+                    {t:"Ruido Blanco", d:"Escucha lluvia 10 min. ¿POR QUÉ? Tapa los pensamientos ruidosos."},
+                    {t:"Garabatos", d:"Raya un papel sin pensar. ¿POR QUÉ? Descarga motora sin juicio."},
+                    {t:"Masaje Manos", d:"Usa crema y presiona tus palmas. ¿POR QUÉ? Calma el cerebro."},
+                    {t:"Cuenta Atrás", d:"Cuenta de 100 a 0 de 3 en 3. ¿POR QUÉ? Ocupa la parte lógica."},
+                    {t:"Texturas", d:"Toca algo suave y algo frío. ¿POR QUÉ? Los sentidos te traen al presente."},
+                    {t:"Postura Niño", d:"Apoya la frente en el suelo. ¿POR QUÉ? Baja el pulso al instante."},
+                    {t:"Vela", d:"Mira una llama fija 3 min. ¿POR QUÉ? Entrena la atención sostenida."},
+                    {t:"Olores", d:"Huele café o perfume fuerte. ¿POR QUÉ? Vía rápida para cambiar el ánimo."},
+                    {t:"Agua Fría", d:"Mójate ojos y frente. ¿POR QUÉ? Activa el reflejo de calma."},
+                    {t:"3 Gratitudes", d:"Anota 3 cosas buenas. ¿POR QUÉ? Entrena ver lo positivo."},
+                    {t:"Música Lo-Fi", d:"Sonidos rítmicos sin voz. ¿POR QUÉ? Evita distracciones por letras."},
+                    {t:"Abrazo 20s", d:"Abraza un cojín o mascota. ¿POR QUÉ? Libera oxitocina (hormona paz)."},
+                    {t:"Palmas en Ojos", d:"Tápate los ojos con las manos. ¿POR QUÉ? Descanso visual total."},
+                    {t:"Ficción", d:"Lee 2 páginas de un cuento. ¿POR QUÉ? Saca la mente de tus problemas."},
+                    {t:"Tarareo", d:"Haz 'mmm' y siente la vibración. ¿POR QUÉ? Estimula el nervio vago."},
+                    {t:"Ver Pájaros", d:"Sigue el vuelo de un pájaro. ¿POR QUÉ? Conexión con ritmos naturales."},
+                    {t:"Pies en Agua", d:"Agua tibia con sal. ¿POR QUÉ? Ayuda a dormir mejor."},
+                    {t:"Compasión", d:"Dite: 'Hago lo que puedo'. ¿POR QUÉ? Reduce la autocrítica TDA."},
+                    {t:"Mandala", d:"Colorea algo simple. ¿POR QUÉ? Induce un estado de meditación."},
+                    {t:"Cuello Lento", d:"Mueve la cabeza despacio. ¿POR QUÉ? Suelta la tensión acumulada."},
+                    {t:"Fotos Felices", d:"Mira recuerdos positivos. ¿POR QUÉ? Inyecta dopamina real."},
+                    {t:"Descalzo", d:"Siente el suelo 2 min. ¿POR QUÉ? Ayuda a sentirte estable."},
+                    {t:"Poema 3 Líneas", d:"Escribe algo que rime. ¿POR QUÉ? Creatividad sin presión."},
+                    {t:"Silencio", d:"2 minutos de nada. ¿POR QUÉ? Medicina para la sobreestimulación."},
+                    {t:"Luz Baja", d:"Baja el brillo de tu entorno. ¿POR QUÉ? Avisa al cerebro que toca dormir."}
+                ]
+            },
+            en: {
+                high: [
+                    {t:"Shake it Off (20 min)", d:"Quick bursts of exercise. WHY? Wakes up the brain."},
+                    {t:"Blitz Clean (15 min)", d:"Clear your floor. WHY? Calms visual chaos."},
+                    {t:"Shock Shower", d:"Hot/Cold water cycles. WHY? Nerve system reset."},
+                    {t:"Screen-Free Walk", d:"Walk 20 min without phone. WHY? Relaxes anxiety."},
+                    {t:"Strength Challenge", d:"Move heavy objects. WHY? Muscle effort grounds you."},
+                    {t:"Ridiculous Dance", d:"Play 3 songs and dance. WHY? Releases tension."},
+                    {t:"Stair Master", d:"Run stairs 5 times. WHY? Burns restless energy."},
+                    {t:"Shadow Boxing", d:"Punch the air for 5 min. WHY? Discharge frustration."},
+                    {t:"Kitchen Blitz", d:"Fast dishwashing. WHY? Breaks mental loops."},
+                    {t:"Jump Rope", d:"Jump for 2 min. WHY? Organizes sensory system."},
+                    {t:"Lunge Around", d:"Lunges between rooms. WHY? Wakes up attention."},
+                    {t:"Aggressive Stretch", d:"Reach for the ceiling. WHY? Alertness boost."},
+                    {t:"Weighted Walk", d:"Walk with a heavy backpack. WHY? Calming signals."},
+                    {t:"In-Place Sprint", d:"Run 1 min fast. WHY? Stops intrusive thoughts."},
+                    {t:"Color Organize", d:"Sort by color only. WHY? Visual reward."},
+                    {t:"Furniture Swap", d:"Move one chair or desk. WHY? Fresh motivation."},
+                    {t:"Mirror Polish", d:"Clean mirrors. WHY? Circular motions relax."},
+                    {t:"One-Leg Balance", d:"Balance while brushing teeth. WHY? Physical focus."},
+                    {t:"Rhythmic Clap", d:"Clap to the beat. WHY? Synchronizes thoughts."},
+                    {t:"Pillow Scream", d:"Release internal pressure. WHY? Prevents explosion."},
+                    {t:"Toss and Catch", d:"Ball against wall. WHY? Focuses coordination."},
+                    {t:"Power Plank", d:"30s plank. WHY? Silences mental noise."},
+                    {t:"Wall Pushups", d:"20 reps. WHY? Joint pressure stimulus."},
+                    {t:"Rug Shake", d:"Shake a rug hard. WHY? Cathartic effort."},
+                    {t:"Obstacle Course", d:"Jump cushions. WHY? Fun movement."},
+                    {t:"Wall Sit", d:"Leg burn. WHY? Forces presence."},
+                    {t:"Window Wipe", d:"Clean one window perfectly. WHY? Clear perspective."},
+                    {t:"Dump and Sort", d:"Sort a drawer. WHY? Chaos control."},
+                    {t:"Tip-Toe Walk", d:"Balance focus. WHY? Different muscle activation."},
+                    {t:"Bicycle Crunches", d:"20 reps fast. WHY? Connects hemispheres."},
+                    {t:"Ice Blast", d:"30s cold water. WHY? Dopamine spike."}
+                ],
+                med: [
+                    {t:"Inbox Zero", d:"Clear emails. WHY? Removes visual to-dos."},
+                    {t:"Idea Mapping", d:"Sketch a project. WHY? Brain thinks in images."},
+                    {t:"Task Batching", d:"Calls/Payments at once. WHY? Saves mental battery."},
+                    {t:"Brain Dump", d:"Write everything down. WHY? Reduces fear of forgetting."},
+                    {t:"Priority Matrix", d:"Urgent vs Wait. WHY? Helps decision making."},
+                    {t:"Airplane Mode", d:"No phone 30 min. WHY? Stops micro-interruptions."},
+                    {t:"Clear Desk", d:"One task only. WHY? Fewer distractions."},
+                    {t:"2-Min Rule", d:"Do it now. WHY? Prevents pile-up."},
+                    {t:"Vision Board", d:"Look at goals. WHY? Remember your 'why'."},
+                    {t:"Time Blocks", d:"25 on / 5 off. WHY? End is in sight."},
+                    {t:"To-Don't List", d:"Ignore these tasks. WHY? Guilt-free focus."},
+                    {t:"Voice Notes", d:"Record instead of writing. WHY? Speed of thought."},
+                    {t:"Spending Review", d:"Check bank 5 min. WHY? Facing reality."},
+                    {t:"Digital Tidy", d:"Folders only. WHY? Calm mind."},
+                    {t:"Outfit Prep", d:"Choose clothes. WHY? One less morning decision."},
+                    {t:"Meal Plan", d:"3 days of food. WHY? No dinner panic."},
+                    {t:"Tab Purge", d:"Close browser tabs. WHY? Energy saving."},
+                    {t:"App Set-Up", d:"One helpful tool. WHY? Easier future."},
+                    {t:"Rule of 3", d:"3 items only. WHY? Winnable number."},
+                    {t:"Wallet Clean", d:"Toss receipts. WHY? Immediate order."},
+                    {t:"Technical Read", d:"5 pages. WHY? Focus stamina."},
+                    {t:"Thank You Note", d:"Send one text. WHY? Positive focus."},
+                    {t:"Photo Purge", d:"Delete 20 screenshots. WHY? Digital noise reduction."},
+                    {t:"Subscription Check", d:"Cancel one service. WHY? Money control."},
+                    {t:"Medicine Check", d:"Expired items out. WHY? Peace of mind."},
+                    {t:"Observation Sketch", d:"Draw 5 min. WHY? Slows impulsivity."},
+                    {t:"Labeling", d:"Name a box. WHY? External order helps."},
+                    {t:"Mistake Analysis", d:"No judgment thinking. WHY? Error logic."},
+                    {t:"Plan a Break", d:"Weekend reward. WHY? Motivation."},
+                    {t:"Cable Tidy", d:"Untangle cords. WHY? Tangled thoughts."},
+                    {t:"Sharpen Tool", d:"Clean keyboard/gear. WHY? Value your work."}
+                ],
+                low: [
+                    {t:"4-4-4 Breath", d:"Inhale, hold, exhale. WHY? Nervous system hack."},
+                    {t:"Screen Fast", d:"No phone 1 hour. WHY? Dopamine rest."},
+                    {t:"Body Scan", d:"Feel toes to head. WHY? Physical reality."},
+                    {t:"10-Min Nap", d:"Reset button. WHY? Clears mental trash."},
+                    {t:"Cloud Watching", d:"Slow movement. WHY? Calms nervous system."},
+                    {t:"Mindful Tea", d:"Feel the heat. WHY? Reduces anxiety."},
+                    {t:"White Noise", d:"Rain sounds. WHY? Drowns out noise."},
+                    {t:"Free Doodling", d:"Scribble. WHY? Motor discharge."},
+                    {t:"Hand Massage", d:"Use lotion. WHY? Calms the brain."},
+                    {t:"Reverse Count", d:"100 to 0 by 3s. WHY? Logical brain focus."},
+                    {t:"Sense Texture", d:"Soft vs Cold. WHY? Sensory grounding."},
+                    {t:"Child's Pose", d:"Forehead on floor. WHY? Lowers heart rate."},
+                    {t:"Candle Gaze", d:"Flame watch 3 min. WHY? Attention training."},
+                    {t:"Strong Smells", d:"Coffee/Perfume. WHY? Instant mood shift."},
+                    {t:"Cold Splash", d:"Face wash. WHY? Diving reflex calm."},
+                    {t:"3 Wins", d:"Note 3 good things. WHY? Positive training."},
+                    {t:"Lyric-Less Music", d:"Jazz/Lo-Fi. WHY? No distractions."},
+                    {t:"20s Hug", d:"Pillow/Pet. WHY? Oxytocin release."},
+                    {t:"Eye Cover", d:"Palm rest. WHY? Visual nerve rest."},
+                    {t:"Fiction Read", d:"2 pages. WHY? Escape problems."},
+                    {t:"Soft Humming", d:"Feel vibration. WHY? Vagus nerve stimulation."},
+                    {t:"Bird Watching", d:"Nature rhythm. WHY? Slows you down."},
+                    {t:"Foot Soak", d:"Warm salt water. WHY? Better sleep."},
+                    {t:"Affirmation", d:"'I do what I can'. WHY? Less self-criticism."},
+                    {t:"Mandala", d:"Color designs. WHY? Flow state."},
+                    {t:"Neck Release", d:"Slow movement. WHY? Tension release."},
+                    {t:"Old Photos", d:"Happy memories. WHY? Real dopamine."},
+                    {t:"Barefoot", d:"Feel the floor. WHY? Stability."},
+                    {t:"3-Line Poem", d:"Rhyme for fun. WHY? No pressure creativity."},
+                    {t:"Pure Silence", d:"2 min of nothing. WHY? Sensory medicine."},
+                    {t:"Dim Lights", d:"Pre-sleep prep. WHY? Sleep signal."}
+                ]
+            }
+        };
+
+        const i18n = {
+            en: {
+                title: "Cognitive Profile", subtitle: "Scientific Assessment v4.0", btn_analyze: "Analyze Neuro-Type",
+                btn_log: "Log Mission", btn_reset: "Reset Data", level_label: "Executive Load",
+                mission_tag: "SCIENTIFIC PROTOCOL", status: ["Optimal", "Mild", "Moderate", "Significant"],
+                questions: [
+                    "Difficulty finishing final details of a project?",
+                    "Difficulty remembering appointments?",
+                    "Do you fidget excessively with hands/feet?",
+                    "Difficulty organizing tasks that require order?",
+                    "Do you avoid tasks requiring mental effort?",
+                    "Do you feel 'on the go' driven by a motor?"
+                ],
+                months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                energy: "ENERGY LEVEL"
+            },
+            es: {
+                title: "Perfil Cognitivo", subtitle: "Evaluación Científica v4.0", btn_analyze: "Analizar Tipo",
+                btn_log: "Registrar Misión", btn_reset: "Reiniciar", level_label: "Carga Ejecutiva",
+                mission_tag: "PROTOCOLO CIENTÍFICO", status: ["Óptimo", "Leve", "Moderado", "Severo"],
+                questions: [
+                    "¿Dificultad para terminar detalles finales?",
+                    "¿Dificultad para recordar citas?",
+                    "¿Mueve excesivamente manos o pies?",
+                    "¿Dificultad para organizar tareas ordenadas?",
+                    "¿Evita tareas de gran esfuerzo mental?",
+                    "¿Se siente impulsado por un motor?"
+                ],
+                months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                days: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+                energy: "NIVEL DE ENERGÍA"
+            }
+        };
+
+        let currentLang = 'en', scores = [0,0,0,0,0,0], userData = JSON.parse(localStorage.getItem('neuro_v4_0')) || null;
+        let currentEnergy = 'med';
+
+        function translateUI(lang) {
+            currentLang = lang;
+            const t = i18n[lang] || i18n['en'];
+            document.getElementById('txt-title').innerText = t.title;
+            document.getElementById('txt-subtitle').innerText = t.subtitle;
+            document.getElementById('txt-btn-analyze').innerText = t.btn_analyze;
+            if(userData) renderDashboard(); else renderQuestions();
+        }
+
+        function renderQuestions() {
+            const c = document.getElementById('questions-container'); c.innerHTML = '';
+            const t = i18n[currentLang] || i18n['en'];
+            t.questions.forEach((q, i) => {
+                const card = document.createElement('div');
+                card.style = "background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 15px; padding: 15px;";
+                card.innerHTML = `<p style="font-size:0.8rem; margin-bottom:10px; font-weight:600;">${q}</p><div style="display:flex; gap:5px;">` + 
+                    [0,1,2,3,4].map(v => `<button class="opt-btn ${scores[i]===v?'active':''}" onclick="setScore(${i},${v})">${v}</button>`).join('') + `</div>`;
+                c.appendChild(card);
+            });
+        }
+
+        function setScore(i,v) { scores[i]=v; renderQuestions(); }
+
+        function calculateResults() {
+            const sum = scores.reduce((a,b)=>a+b,0);
+            // lvl: 0 (Óptimo) a 3 (Severo)
+            userData = { 
+                lvl: sum > 18 ? 3 : sum > 12 ? 2 : sum > 6 ? 1 : 0, 
+                completed: [], 
+                dateSet: new Date().toISOString() 
+            };
+            localStorage.setItem('neuro_v4_0', JSON.stringify(userData)); 
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            document.getElementById('test-view').classList.add('hidden');
+            document.getElementById('dashboard-view').classList.remove('hidden');
+            const t = i18n[currentLang] || i18n['en'];
+            
+            document.getElementById('res-score').innerText = userData.lvl;
+            document.getElementById('res-status').innerText = t.status[userData.lvl];
+            document.getElementById('txt-btn-log').innerText = t.btn_log;
+            document.getElementById('txt-btn-reset').innerText = t.btn_reset;
+            document.getElementById('txt-level-label').innerText = t.level_label;
+            document.getElementById('txt-mission-tag').innerText = t.mission_tag;
+            document.getElementById('txt-energy-label').innerText = t.energy;
+
+            // LÓGICA AUTO-TAREA SEGÚN TEST
+            if (!window.initialEnergySet) {
+                if (userData.lvl >= 3) currentEnergy = 'low';
+                else if (userData.lvl === 2) currentEnergy = 'med';
+                else currentEnergy = 'high';
+                window.initialEnergySet = true;
+            }
+
+            const now = new Date();
+            const dayOfMonth = now.getDate();
+            const monthIdx = now.getMonth();
+            const year = now.getFullYear();
+            document.getElementById('cal-month-year').innerText = `${t.months[monthIdx]} ${year}`;
+            
+            const firstDay = new Date(year, monthIdx, 1).getDay();
+            const daysInMonth = new Date(year, monthIdx + 1, 0).getDate();
+            const cal = document.getElementById('calendar-gen'); cal.innerHTML = '';
+            
+            t.days.forEach(d => {
+                const lbl = document.createElement('div'); lbl.className = 'day-label';
+                lbl.innerText = d; cal.appendChild(lbl);
+            });
+
+            for(let i=0; i < firstDay; i++) cal.appendChild(document.createElement('div'));
+            for(let i=1; i<=daysInMonth; i++) {
+                const d = document.createElement('div');
+                const dateKey = `${year}-${monthIdx}-${i}`;
+                const isDone = userData.completed.includes(dateKey);
+                d.className = `day ${i===dayOfMonth?'today':''} ${isDone?'done':''}`;
+                d.innerText = i;
+                cal.appendChild(d);
+            }
+            
+            renderWeeklyChart();
+            setEnergy(currentEnergy);
+            startClock();
+        }
+
+        function setEnergy(level) {
+            currentEnergy = level;
+            const now = new Date();
+            const dayIndex = (now.getDate() - 1) % 31;
+            const db = taskDatabase[currentLang] || taskDatabase['en'];
+            const tasksAtLevel = db[level] || taskDatabase['en'][level];
+            const task = tasksAtLevel[dayIndex] || tasksAtLevel[0];
+
+            document.getElementById('daily-task-title').innerText = task.t;
+            document.getElementById('daily-task-desc').innerText = task.d;
+            
+            document.querySelectorAll('.energy-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${level}`).classList.add('active');
+        }
+
+        function renderWeeklyChart() {
+            const chart = document.getElementById('weekly-progress');
+            chart.innerHTML = ''; 
+            for (let i = 0; i < 7; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                if (userData && userData.completed.includes(`bar-${i}`)) {
+                    bar.classList.add('active');
+                }
+                chart.appendChild(bar);
+            }
+        }
+
+        function logTask() {
+            if (!userData) return;
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const day = now.getDate();
+            const dayOfWeek = now.getDay();
+            const dateKey = `${year}-${month}-${day}`;
+            
+            if (!userData.completed.includes(dateKey)) {
+                userData.completed.push(dateKey);
+                if(!userData.completed.includes(`bar-${dayOfWeek}`)) {
+                    userData.completed.push(`bar-${dayOfWeek}`);
+                }
+                localStorage.setItem('neuro_v4_0', JSON.stringify(userData));
+                renderDashboard(); 
+            }
+        }
+
+        function startClock() {
+            if(window.clockInterval) clearInterval(window.clockInterval);
+            window.clockInterval = setInterval(() => {
+                const now = new Date();
+                document.getElementById('real-time-clock').innerText = now.toLocaleTimeString([], { hour12: false });
+            }, 1000);
+        }
+
+       function resetAll() {
+    // Solo mostramos el modal que está flotando fuera del grid
+    document.getElementById('custom-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('custom-modal').style.display = 'none';
+}
+
+function confirmReset() {
+    localStorage.removeItem('neuro_v4_0');
+    location.reload();
+}
+        
+        translateUI('en');
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+.smartbook-modal-overlay {
+    position: absolute;
+    top: 55px; /* Empuja el modal hacia abajo justo donde termina el header */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 55px); /* Le restamos la altura del header para que no se desborde por abajo */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    z-index: 10; /* Se mantiene por debajo del z-index: 50 del header por seguridad */
+}
+
+
+.smartbook-modal-content {
+ width: 100% !important;
+    height: 100% !important;
+    
+    max-width: 400px !important;
+    max-height: 100% !important; /* Cambiamos 95vh por 100% para que respete al contenedor padre */
+    
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: none;
+}
+.smartbook-modal-content > * {
+      flex-grow: 1;
+    flex-shrink: 0; /* Prohíbe que el contenido se "aplaste" */
+    width: 100%;
+    height: 100%;
+}
+.smartbook-close-btn {
+   position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(12, 15, 26, 0.92);
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.smartbook-close-btn:hover {
+    
+    background: rgba(255, 255, 255, 0.1);
+       color: #b638ff;
+
+}
+.smartbook-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}

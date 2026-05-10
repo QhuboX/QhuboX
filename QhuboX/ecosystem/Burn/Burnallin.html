@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoluckU</title>
+    <!-- Polyfills para compatibilidad, aunque pueden causar el error "Buffer is not defined" -->
+    <script>
+        var global = window;
+        var Buffer = require("buffer/").Buffer;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.91.0/lib/index.iife.min.js"></script>
+
+    <!-- Fuente de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="solucku.css">
+</head>
+<body>
+    
+    <h2 id="wallet-status">Wallet not connected</h2>
+    <button id="connect-wallet">Conect Wallet</button>
+
+    <div class="ruleta-container">
+        <div class="botones">
+            <input type="number" id="apuesta" value="0.03" min="0.03" max="1000000">
+            <button id="play">
+                <img src="assets/images/6.png" alt="Solana Logo">
+                BURN Crypto!
+            </button>
+        </div>
+        <img id="ruleta" src="assets/images/61.png" alt="Ruleta" />
+    </div>
+
+    <div id="resultado"></div>
+    <div id="confetti-container"></div>
+    
+
+    <!-- Copyright con logo -->
+    <div id="copyright">
+        <img src="assets/images/logo.svg" alt="" class="logo">
+         &copy; 2026 || QhuboX, Inc. All rights reserved
+    </div>
+
+    <!-- Botones sociales -->
+    <div id="social-links-container">
+        <a href="/QhuboX.html" class="social-link-3d">
+            <img src="assets/images/6.png" alt="">
+            <span></span>
+        </a>
+
+        <a href="#" target="_blank" class="social-link-3d">
+            <img src="assets/images/icono_x.svg" alt="">
+            <span></span>
+        </a>
+
+        <a href="/ecosystem/QhuboX.html "  class="social-link-3d">
+            <img src="assets/images/icono_link.svg" alt="">
+            <span></span>
+        </a>
+    </div>
+
+    <!-- Carga tu script principal -->
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+

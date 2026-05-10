@@ -1,0 +1,26 @@
+{
+  "name": "qhubex-terminal-backend",
+  "version": "2.0.0",
+  "description": "QhuboX Terminal — Solana SPL Trading Backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["solana", "trading", "spl", "qhubex"],
+  "author": "QhuboX",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@solana/web3.js": "^1.98.4",
+    "axios": "^1.13.2",
+    "bs58": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "eventsource": "^4.1.0",
+    "express": "^5.2.1",
+    "node-fetch": "^2.7.0",
+    "socket.io": "^4.8.3",
+    "ws": "^8.18.3"
+  }
+}

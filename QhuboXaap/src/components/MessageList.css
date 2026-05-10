@@ -1,0 +1,79 @@
+/* src/components/MessageList.css */
+
+.message-list-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    color: #eeebeb;
+    background-color: #00000007;
+    min-height: 0;
+}
+
+.message-bubble {
+    max-width: 50%;
+    margin: 1px 10px;
+    padding: 0.01px 35px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    font-size: 1.1em;
+}
+
+.message-bubble.received {
+    background-color: #2a37f3f3; 
+    color: #ffffff;
+    align-self: flex-start;
+    border-bottom-left-radius: 1%;
+}
+
+.message-bubble.sent {
+    background-color:#8d01ffef;
+    align-self: flex-end;
+    border-bottom-right-radius: 1%;
+}
+
+.empty-chat-message {
+    text-align: center;
+    color: #f8f3f3;
+    margin-top: 50px;
+}
+
+.audio-message-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.audio-message-content p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.audio-message-content audio {
+    width: 100%;
+    max-width: 250px;
+    height: 30px;
+}
+
+audio::-webkit-media-controls-panel {
+    background-color: #f1f3f4;
+    color: #1915fc41;
+    border-radius: 5px;
+}
+audio::-webkit-media-controls-play-button {
+    color: #007bff;
+}
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: #393434;
+}
+audio::-webkit-media-controls-timeline {
+    border-radius: 10px;
+    height: 10px;
+}
+audio::-webkit-media-controls-volume-slider {
+    width: 50px;
+}

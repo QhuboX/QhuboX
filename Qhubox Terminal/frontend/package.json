@@ -1,0 +1,26 @@
+{
+  "name": "qhubex-terminal",
+  "version": "2.0.0",
+  "description": "QhuboX Terminal — Solana SPL Trading Platform",
+  "private": true,
+  "scripts": {
+  "dev": "next dev -p 3001",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint"
+},
+  "dependencies": {
+    "@solana/web3.js": "^1.98.4",
+    "@solana/spl-token": "^0.4.9",
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}

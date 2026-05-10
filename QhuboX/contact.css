@@ -1,0 +1,128 @@
+:root {
+    --color-primary: #4f46e5; /* Indigo */
+    --color-primary-light: #eef2ff; /* Indigo-50 */
+    --color-text-dark: #1f2937; /* Gray-800 */
+    --color-text-medium: #4b5563; /* Gray-600 */
+    --color-background: #f7f9fb; /* Fondo muy suave */
+    --shadow-main: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Fuente moderna */
+    background-color: var(--color-background);
+    min-height: 100vh;
+    /* Centrado Flexbox: Responsivo y fácil */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. Estructura y Capas (pantalla-contacto) */
+/* -------------------------------------------------------------------------- */
+
+.pantalla-contacto {
+    /* El contenedor principal actúa como la capa más externa (sombra/marco) */
+    width: 100%;
+    max-width: 44rem; /* Ancho máximo para desktop */
+    margin: 0 auto;
+    position: relative;
+    padding: 1rem; /* Espacio entre el borde de la capa y el contenido */
+}
+
+/* Capa 1: El marco exterior con efecto 3D */
+.pantalla-contacto::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-primary-light); /* Un color claro para el marco */
+    border-radius: 1.5rem; /* Esquinas redondeadas */
+    z-index: 1; /* Detrás del contenido */
+    transform: rotate(-1deg) scale(1.02); /* Pequeña rotación y escala para efecto de "capa" */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-out;
+}
+
+/* Capa 2: La tarjeta interior (contenido-contacto) */
+.contenido-contacto {
+    position: relative; /* Necesario para que esté por encima de ::before */
+    background-color: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-main);
+    padding: 3rem 2rem; /* Relleno generoso */
+    text-align: center;
+    z-index: 2; /* Encima de la Capa 1 */
+    border: 1px solid #e5e7eb; /* Borde sutil */
+    transition: all 0.3s ease-out;
+}
+
+/* Efecto Hover: Resaltar la figura */
+.pantalla-contacto:hover .contenido-contacto {
+    transform: translateY(-4px); /* Se levanta un poco */
+    box-shadow: 30px 40px -8px rgba(0, 0, 0, 0.15);
+}
+
+.pantalla-contacto:hover::before {
+    transform: rotate(-1.5deg) scale(1.03); /* El marco se mueve un poco también */
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. Tipografía y Componentes */
+/* -------------------------------------------------------------------------- */
+
+h1 {
+    font-size: 3rem; /* 48px */
+    font-weight: 800; /* Extra bold */
+    color: var(--color-text-dark);
+    margin-bottom: 0.5rem;
+}
+
+/* Esto asegura que los enlaces antiguos NO se vean aunque sigan en el HTML */
+.nav-links {
+    display: none;
+}
+
+.correo-contacto {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 3rem; /* Aumentamos el margen ya que no hay enlaces debajo */
+}
+
+/* Enlace Volver a Home */
+.volver {
+    display: inline-flex;
+    align-items: center;
+    /* Retiramos el margen superior ya que el correo ya tiene un margen considerable */
+    /* margin-top: 2.5rem; */ 
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-medium);
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.volver:hover {
+    color: var(--color-primary);
+    transform: translateX(-4px);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. Responsive (Media Queries) */
+/* -------------------------------------------------------------------------- */
+
+@media (min-width: 768px) {
+    .contenido-contacto {
+        padding: 4rem 3rem; /* Más relleno en pantallas grandes */
+    }
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | QhuboX</title>
+    <!-- Inter Font (for modern design) --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+
+    <!-- CSS (Unified Styles) --><style>
+        /* -------------------------------------------------------------------------- */
+        /* 1. Variables and Reset */
+        /* -------------------------------------------------------------------------- */
+        :root {
+            --color-primary: #4f46e5; /* Indigo */
+            --color-primary-hover: #4338ca; /* Indigo 700 */
+            --color-primary-light: #eef2ff; /* Indigo-50 */
+            --color-text-dark: #1f2937; /* Gray-800 */
+            --color-text-medium: #4b5563; /* Gray-600 */
+            --color-background: #f7f9fb; /* Very soft background */
+            --shadow-main: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; /* Modern font */
+            background-color: var(--color-background);
+            min-height: 100vh;
+            /* Flexbox Centering: Responsive and easy */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem; /* Increase padding to prevent collision with fixed logo */
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* 2. Structure and Layers (contact-screen) */
+        /* -------------------------------------------------------------------------- */
+
+        .pantalla-contacto {
+            /* The main container acts as the outermost layer (shadow/frame) */
+            width: 100%;
+            max-width: 44rem; /* Max width for desktop */
+            margin: 0 auto;
+            position: relative;
+            padding: 1rem; /* Space between the layer edge and the content */
+        }
+
+        /* Layer 1: The outer frame with 3D effect */
+        .pantalla-contacto::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--color-primary-light); /* A light color for the frame */
+            border-radius: 1.5rem; /* Rounded corners */
+            z-index: 1; /* Behind the content */
+            transform: rotate(-1deg) scale(1.02); /* Small rotation and scale for "layer" effect */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Layer 2: The inner card (contenido-contacto) */
+        .contenido-contacto {
+            position: relative; /* Necessary to be above ::before */
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-main);
+            padding: 3rem 2rem; /* Generous padding */
+            text-align: center;
+            z-index: 2; /* Above Layer 1 */
+            border: 1px solid #e5e7eb; /* Subtle border */
+            transition: all 0.3s ease-out;
+        }
+
+        /* Hover Effect: Highlight the figure */
+        .pantalla-contacto:hover .contenido-contacto {
+            transform: translateY(-4px); /* Lifts up slightly */
+            box-shadow: 30px 40px -8px rgba(0, 0, 0, 0.15);
+        }
+
+        .pantalla-contacto:hover::before {
+            transform: rotate(-1.5deg) scale(1.03); /* The frame also moves slightly */
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* 3. Typography and Components */
+        /* -------------------------------------------------------------------------- */
+
+        h1 {
+            font-size: 3rem; /* 48px */
+            font-weight: 800; /* Extra bold */
+            color: var(--color-text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        /* This ensures old links are NOT visible even if they remain in the HTML */
+        .nav-links {
+            display: none;
+        }
+
+        .correo-contacto {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 3rem; /* Increase margin since there are no links below */
+        }
+
+        /* Back to Home Link */
+        .volver {
+            display: inline-flex;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text-medium);
+            text-decoration: none;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .volver:hover {
+            color: var(--color-primary);
+            transform: translateX(-4px);
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* 5. Logo in Top Left Corner (Fixed and Responsive) */
+        /* -------------------------------------------------------------------------- */
+        .logo-header {
+            position: fixed; /* Fixed on screen */
+            top: 1.5rem; /* Separation from the top edge */
+            left: 1.5rem; /* Separation from the left edge */
+            display: flex; /* To align the image and text */
+            align-items: center;
+            text-decoration: none; /* Removes underline */
+            z-index: 100; /* Ensures it's above everything */
+            transition: opacity 0.3s;
+        }
+
+        .logo-header:hover {
+            opacity: 0.85;
+        }
+
+        .logo-header img {
+            width: 2rem; /* Logo size */
+            height: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .logo-header span {
+            font-size: 1.25rem; /* Text size (Desktop) */
+            font-weight: 800;
+            color: var(--color-text-dark);
+            letter-spacing: -0.02em;
+        }
+        
+        /* -------------------------------------------------------------------------- */
+        /* 4. Responsive (Media Queries) */
+        /* -------------------------------------------------------------------------- */
+        
+        @media (max-width: 640px) {
+            /* Adjusting logo text size for mobile */
+            .logo-header {
+                /* Slightly reduce padding on mobile, but keep it fixed */
+                top: 1rem; 
+                left: 1rem;
+            }
+            .logo-header span {
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .contenido-contacto {
+                padding: 4rem 3rem; /* More padding on large screens */
+            }
+        }
+        
+        /* -------------------------------------------------------------------------- */
+        /* 6. Copy Button and Feedback (Existing section relocated) */
+        /* -------------------------------------------------------------------------- */
+
+        .email-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            margin-bottom: 3rem;
+            position: relative; /* For positioning the copy message */
+        }
+
+        .btn-copy {
+            background-color: var(--color-primary-light);
+            color: var(--color-primary);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            line-height: 1; /* To align the SVG well */
+        }
+
+        .btn-copy:hover {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .btn-copy:active {
+            transform: scale(0.95);
+        }
+
+        /* SVG icon inside the button */
+        .btn-copy svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: block;
+        }
+
+        /* Copy Message */
+        .copy-message {
+            position: absolute;
+            top: -2.5rem; /* Positions the message above the button */
+            background-color: #22c55e; /* Success green color */
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none; /* Ensures it doesn't interfere with the click */
+        }
+        
+        .copy-message.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- FIXED LOGO ELEMENT: Link with the image and text -->
+    <a class="logo-header">
+        <!-- UPDATED PATH -->
+        <img src="media/6.png" alt="QhuboX Logo">
+        <span>QhuboX</span>
+    </a>
+    
+    <div class="pantalla-contacto">
+        <div class="contenido-contacto">
+            <h1>Contact</h1>
+
+            <div class="email-container">
+                <p class="correo-contacto" id="emailToCopy">contact@QhuboX.dev</p>
+
+                <!-- Copy Button with SVG -->
+                <button class="btn-copy" onclick="copyEmail()" title="Copy email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                    </svg>
+                </button>
+                <div id="copyFeedback" class="copy-message">Copied!</div>
+            </div>
+
+            <a href="QhuboXwallet.html" class="volver">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- JavaScript for the copy function --><script>
+        function copyEmail() {
+            const emailText = document.getElementById('emailToCopy').innerText;
+            const feedbackElement = document.getElementById('copyFeedback');
+
+            // 1. Use document.execCommand('copy') for security in iframe environments (like this one)
+            const tempInput = document.createElement('input');
+            document.body.appendChild(tempInput);
+            tempInput.value = emailText;
+            tempInput.select();
+
+            try {
+                document.execCommand('copy');
+                
+                // 2. Show visual feedback
+                feedbackElement.classList.add('visible');
+                setTimeout(() => {
+                    feedbackElement.classList.remove('visible');
+                }, 1500);
+
+            } catch (err) {
+                console.error('Could not copy text:', err);
+            }
+            
+            document.body.removeChild(tempInput);
+        }
+    </script>
+</body>
+</html>

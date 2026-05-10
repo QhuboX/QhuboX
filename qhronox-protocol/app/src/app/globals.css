@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+:root {
+  --qhx-gold: #b8a96a;
+  --qhx-gold-light: #d4c47a;
+  --qhx-gold-dark: #8a7a40;
+  --qhx-bg: #080c14;
+  --qhx-bg2: #0d1320;
+  --qhx-bg3: #111928;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--qhx-bg);
+  color: #e8edf5;
+  font-family: var(--font-syne, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Wallet Adapter Modal Override ───────────────────────────────────────── */
+.wallet-adapter-modal-wrapper {
+  background: #0d1320 !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 16px !important;
+}
+
+.wallet-adapter-modal-title {
+  color: #e8edf5 !important;
+  font-family: var(--font-syne, system-ui) !important;
+  font-weight: 700 !important;
+}
+
+.wallet-adapter-button {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 10px !important;
+  color: #e8edf5 !important;
+  font-family: var(--font-syne, system-ui) !important;
+  transition: all 0.15s !important;
+}
+
+.wallet-adapter-button:hover {
+  background: rgba(184, 169, 106, 0.1) !important;
+  border-color: rgba(184, 169, 106, 0.3) !important;
+}
+
+.wallet-adapter-modal-list-more {
+  color: var(--qhx-gold) !important;
+}
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.03) 25%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* ── Mono font utility ───────────────────────────────────────────────────── */
+.font-mono {
+  font-family: var(--font-mono, 'Space Mono', monospace) !important;
+}
+
+/* ── Number input cleanup ────────────────────────────────────────────────── */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
