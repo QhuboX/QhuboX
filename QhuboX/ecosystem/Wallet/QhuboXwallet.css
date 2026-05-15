@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 
-/* **AJUSTE CLAVE 1:** El body ocupa el 100% del viewport y NO tiene scroll propio. */
+/* El body ocupa el 100% del viewport y NO tiene scroll propio. */
 body {
     font-family: 'Poppins', sans-serif;
     color: #333;
@@ -19,18 +19,17 @@ body {
 .parallax-wrapper {
     height: 100%; /* ✅ dejar crecer */
     overflow: visible; /* ✅ no controla scroll */
-    perspective: none; /* NEUTRALIZADO: Eliminamos la perspectiva */
-    transform-style: flat; /* NEUTRALIZADO: Eliminamos la preservación 3D */
-   background-color: #000000; 
-   padding: 22px 0;
+    perspective: none; 
+    transform-style: flat; 
+    background-color: #000000; 
+    padding: 22px 0;
 }
 
 .parallax-group {
     position: relative;
-    height: 100vh; /* ✅ altura real para activar scroll */
-    transform-style: flat; /* NEUTRALIZADO: Eliminamos la preservación 3D */
+    height: 100vh; 
+    transform-style: flat; 
 }
-
 
 .parallax-layer {
     position: absolute;
@@ -43,50 +42,36 @@ body {
     align-items: center;
     padding: 100px 0%;
     pointer-events: none; 
-    
 }
 
 /* Definición de la profundidad y velocidad */
 .layer-1 {
-    
-    background:
-        
-        linear-gradient(0deg, rgba(0, 0, 0, 0.169), rgba(0, 0, 0, 0.174)),
-        /* La imagen de fondo real */
-        url("imahe/fon1.jpg");
-
-    
-    background-size: cover; /* Asegura que la imagen cubra toda la capa */
-    background-position: center; /* Centra la imagen */
-
-    
-    z-index: 0; /* Capa más lejana */
-    
-    /* NEUTRALIZADO: El elemento ya no se mueve en Z ni se escala. */
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.169), rgba(0, 0, 0, 0.174)), url("imahe/fon1.png");
+    background-size: cover; 
+    background-position: center; 
+    z-index: 0; 
     transform: translateZ(0) scale(1);
 }
 
 .layer-2 {
-    /* Fondo medio (Velocidad media) */
     background: rgba(255, 255, 255, 0.1); 
     z-index: 0;
-    /* NEUTRALIZADO: El elemento ya no se mueve en Z ni se escala. */
     transform: translateZ(0) scale(1); 
 }
 
 .layer-3 {
-    /* Capa de contenido frontal (Velocidad normal/0) */
     background: transparent;
     z-index: 0;
-    transform: translateZ(0); /* Queda como estaba */
+    transform: translateZ(0); 
     pointer-events: auto; 
 }
+
 .hero-content {
     text-align: center;
-    border: 2px solid #7979797b;
+    border: 2px solid #9aeaf859;
     gap: 20px;
     padding: 40px;
-    background: linear-gradient(to bottom, #0d06d6e4, #740526ec);
+    background: linear-gradient(to bottom, #6193ffef, #ff40f5ec);
     border-radius: 20px;
     box-shadow: 2px 15px 30px rgb(0, 0, 0);
     max-width: 800px;
@@ -96,23 +81,23 @@ body {
 
 /* Tipografía de escritorio */
 .hero-content h1 {
-     font-family: 'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 3em;
-    color: #0a0a0aef;
-    text-shadow: 0 5px 40px rgb(0, 0, 0);
+    color: #0a0a0a;
+    text-shadow: 0 5px 20px rgb(0, 0, 0);
     margin-bottom: 20px;
-    
 }
+
 .hero-content p {
     font-size: 1.2em;
     color: #000000;
     margin-bottom: 30px;
 }
+
 .content-block h2 {
     font-size: 2.2em;
     color: #457b9d;
 }
-
 
 /* ---------------------------------- */
 /* CABECERA, BOTONES Y FOOTER */
@@ -135,7 +120,22 @@ body {
 .logo-area { display: flex; align-items: center; }
 .logo-img { height: 50px; margin-right: 10px; }
 .logo-text { font-size: 1.8em; font-weight: 700; color: #e6e6e6; }
-.nav-links a { text-decoration: none; color: #b7babbd7; font-weight: 600; margin-left: 25px; transition: color 0.3s; }
+
+.nav-links a { 
+    text-decoration: none; 
+    color: #b7babbd7; 
+    font-weight: 600; 
+    margin-left: 25px; 
+    transition: color 0.3s; 
+    font-family: 'Courier New', Courier, monospace;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
 .social-bar-top img { height: 20px; margin-left: 15px; opacity: 0.7; }
 .btn { padding: 12px 30px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
 .btn-primary { background-color: #6f007ed1; color: white; box-shadow: 0 0 10px #050506; }
@@ -154,28 +154,15 @@ body {
 
 .feature-grid {
     display: flex;
-    /* CAMBIO CLAVE: Fuerza la disposición vertical en todas las resoluciones */
     flex-direction: column; 
-    /* Centrar la columna de cartas dentro del contenedor */
     align-items: center; 
-    gap: 30px; /* Espacio vertical entre las cartas */
+    gap: 30px; 
     margin: 40px 0;
 }
-.nav-links a {
-    text-decoration: none;
-    color: #8e8e8ec8;
-    font-family: 'Courier New', Courier, monospace;
-    padding: 8px 12px;
-    border-radius: 4px;
-    margin: 0 10px;
-}
-.nav-links a:hover {
-    color: #ffffff;
-}
+
 .feature-card {
-    /* Eliminamos 'flex: 1' y establecemos un ancho máximo razonable para la columna */
-    max-width: 600px; /* Ancho máximo para que no se extiendan demasiado en escritorio */
-    width: 100%; /* Asegura que la carta ocupe todo el ancho disponible hasta el max-width */
+    max-width: 600px; 
+    width: 100%; 
     padding: 20px;
     border-radius: 10px;
     background-color: #ffffff;
@@ -185,211 +172,139 @@ body {
 .long-filler-content {
     margin-top: 50px;
 }
+
+/* ---------------------------------- */
+/* FILLER SECTIONS (IMÁGENES) */
+/* ---------------------------------- */
+
 .filler-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-    width: 50%; /* Ancho predeterminado para escritorio */
-    background-color: #a8dadc;
+    width: 70%;
+    aspect-ratio: 16 / 9; 
+    margin: 40px auto;
     background-size: cover;
     background-position: center;
+    min-height: auto; 
 }
 
-/* --- MEDIA QUERY para Pantallas Pequeñas (600px o menos) --- */
-@media (max-width: 850px) {
-    .filler-section {
-       
-        margin: 20px 0; /* Mantiene margen vertical, elimina el lateral */
-        
-        width: 90%; /* Asegura que ocupe todo el ancho */
-        padding: 20px 25px; 
-    }
-
-
-    .filler-section.img-1 {
-        height: 230px !important; 
-        width: 90% !important;
-        margin-bottom: 0 40px;
-    }
-
-    .filler-section.img-2 {
-        height: 320px !important; 
-         width: 112% !important;
-    }
-
-    .filler-section.img-3 {
-        height: 400px !important; 
-        
-        /* 1. Ancho del 115% (tal como lo has definido) */
-        width: 118% !important;
-        
-        /* 2. Posicionamiento: Permite mover el elemento con 'left' */
-        position: relative; /* Clave para que 'left' funcione */
-
-        /* 3. Centrado Horizontal: */
-        /* Mueve el punto de inicio del elemento a la mitad de la pantalla (50%) */
-        left: 50%; 
-        
-        /* 4. Transformación: Mueve el elemento hacia la izquierda el 50% de su propio ANCHO (115% en este caso) */
-        /* Esto cancela la mitad del ancho del elemento, centrándolo. */
-        transform: translateX(-50%);
-    }
-}
-  
 .filler-section.img-1 {
-    background-image: url('imahe/fon1.jpg');
+    background-image: url('imahe/fon1.png');
     z-index: 1;
-    box-shadow: 0 2px 10px rgb(0, 0, 0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 .filler-section.img-2 {
     background-image: url('imahe/imag.png');
-    box-shadow: 0 2px 10px rgb(0, 0, 0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 .filler-section.img-3 {
     background-image: url('imahe/image9.png');
-    box-shadow: 0 2px 10px rgb(0, 0, 0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
-
-
-@media (max-width: 600px) {
-    
-    .feature-grid {
-        display: block; 
-    }
-}
-
 
 footer {
     width: 100%;
     padding: 15px 0;
     text-align: center;
-    
     color: #d2d2d2e8;
     font-size: 0.9em;
     background: linear-gradient(to bottom, #131313, #181818b9);
-
     box-shadow: 0 -2px 6px rgb(0, 0, 0);
 }
 
+/* ---------------------------------- */
+/* MEDIA QUERIES */
+/* ---------------------------------- */
+
 /* Para pantallas medianas (tabletas, max-width: 900px) */
 @media (max-width: 900px) {
-    /* Ajustes generales */
     .main-header {
         flex-direction: column;
         padding: 15px 25px;
         gap: 30px;
     }
     .parallax-layer {
-        padding:50px 10%;
+        padding: 50px 10%;
         margin-top: 25%;
-        
     }
-
     .nav-links a {
         margin-left: 15px;
         font-size: 0.9em;
     }
-.nav-links a:hover {
-    color: #ffffff;
-    }
-    /* Reducción de títulos */
     .hero-content h1 {
         font-size: 2.5em;
     }
-
     .content-block h2 {
         font-size: 1.8em;
     }
 }
 
+/* --- MEDIA QUERY para Filler Sections en Tabletas/Móviles --- */
+@media (max-width: 850px) {
+    .filler-section {
+        width: 90%; /* Ocupa más ancho en pantallas pequeñas */
+        min-height: 230px; /* Altura adaptada */
+        margin: 20px auto; /* Se mantiene SIEMPRE centrado */
+        padding: 20px; 
+    }
+}
+
+/* Ajustes adicionales intermedios (max-width: 780px) */
 @media (max-width: 780px) {
-    /* Ajustes generales */
+    /* Mismos ajustes que en 900px, pero mantenidos por si necesitas añadir reglas específicas aquí */
     .main-header {
         flex-direction: column;
         padding: 15px 25px;
         gap: 30px;
     }
     .parallax-layer {
-        padding:50px 10%;
+        padding: 50px 10%;
         margin-top: 25%;
-        
-    }
-
-    .nav-links a {
-        margin-left: 15px;
-        font-size: 0.9em;
-    }
-    .nav-links a:hover {
-        color: #ffffff;
-    }
-    /* Reducción de títulos */
-    .hero-content h1 {
-        font-size: 2.5em;
-    }
-
-    .content-block h2 {
-        font-size: 1.8em;
     }
 }
 
 /* Para pantallas pequeñas (móviles, max-width: 600px) */
 @media (max-width: 600px) {
-    
-    /* --- Cabecera y Navegación --- */
     .main-header {
         flex-direction: column;
         align-items: flex-start;
         padding: 10px 20px;
         height: auto;
     }
-
     .logo-area {
         margin-bottom: 10px;
     }
-
     .nav-links {
         display: none; 
     }
-    
     .social-bar-top {
         position: absolute;
         top: 15px;
         right: 20px;
     }
-
-    /* --- Contenido Principal --- */
     .parallax-layer {
         padding: 50px 5%;
     }
-
-    /* Reducción drástica de títulos para caber en la pantalla */
     .hero-content h1 {
         font-size: 1.8em;
     }
-
     .hero-content p {
         font-size: 0.9em;
     }
-
-    /* Botones apilados */
     .call-to-action-group {
         flex-direction: column;
         gap: 10px;
     }
-    
     .btn {
         padding: 10px 20px;
         width: 100%; 
     }
-
-    /* Ajuste para móviles para que la carta no se estire demasiado */
-    .feature-card {
-        max-width: 100%; /* Asegura que ocupe todo el espacio en pantallas pequeñas */
+    .feature-grid {
+        display: block; 
     }
-
+    .feature-card {
+        max-width: 100%; 
+    }
     .content-block {
         padding: 40px 20px;
     }
