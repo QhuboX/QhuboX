@@ -3,49 +3,44 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoluckU</title>
-    <!-- Polyfills para compatibilidad, aunque pueden causar el error "Buffer is not defined" -->
-    <script>
-        var global = window;
-        var Buffer = require("buffer/").Buffer;
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.91.0/lib/index.iife.min.js"></script>
-
-    <!-- Fuente de Google Fonts -->
+    <title>QHUBX Incinerator</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Enlace al archivo CSS externo -->
-    <link rel="stylesheet" href="solucku.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
     <h2 id="wallet-status">Wallet not connected</h2>
-    <button id="connect-wallet">Conect Wallet</button>
+    <div id="qhubx-balance" style="display: none; color: #ff4444; position: absolute; top: 6.3rem; right: 2.5rem; font-size: 0.9rem; background: rgba(0,0,0,0.6); padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid #ff4444;">
+        Balance: Loading...
+    </div>
+    <button id="connect-wallet">Connect Wallet</button>
 
     <div class="ruleta-container">
-        <div class="botones">
-            <input type="number" id="apuesta" value="0.03" min="0.03" max="1000000">
-            <button id="play">
-                <img src="assets/images/6.png" alt="Solana Logo">
-                BURN Crypto!
-            </button>
+        <div class="ruleta-layout">
+            <div class="botones">
+                <label for="apuesta" style="font-size: 1rem; color: #fff; text-shadow: 0 0 5px #ff4444;">Amount to BURN (QHUBX):</label>
+                <input type="number" id="apuesta" value="100" min="1" step="1">
+                <button id="play">
+                    <img src="assets/images/6.png" alt="Solana Logo">
+                    BURN Crypto!
+                </button>
+            </div>
+            <img id="ruleta" src="assets/images/61.png" alt="Incinerador" />
         </div>
-        <img id="ruleta" src="assets/images/61.png" alt="Ruleta" />
     </div>
 
     <div id="resultado"></div>
     <div id="confetti-container"></div>
     
-
-    <!-- Copyright con logo -->
     <div id="copyright">
         <img src="assets/images/logo.svg" alt="" class="logo">
-         &copy; 2026 || QhuboX, Inc. All rights reserved
+         &copy; 2026 || QhuboX, All rights reserved.
     </div>
 
-    <!-- Botones sociales -->
     <div id="social-links-container">
         <a href="/QhuboX.html" class="social-link-3d">
             <img src="assets/images/6.png" alt="">
@@ -57,17 +52,12 @@
             <span></span>
         </a>
 
-        <a href="/ecosystem/QhuboX.html "  class="social-link-3d">
+        <a href="/ecosystem/QhuboX.html" class="social-link-3d">
             <img src="assets/images/icono_link.svg" alt="">
             <span></span>
         </a>
     </div>
 
-    <!-- Carga tu script principal -->
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
-
-
-
-
