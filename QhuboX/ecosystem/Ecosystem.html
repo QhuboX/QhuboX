@@ -1,244 +1,396 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta charset="UTF-8" />
-  <title>QhuboXEcosystemapp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>QhuboX  OS</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="footer.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-
-
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
 </head>
+<body>
 
+<!-- ═══════════════════════════════════════════
+     DESKTOP ROOT
+═══════════════════════════════════════════ -->
+<div id="desktop">
 
-  
- 
-    
+  <!-- Nebula decorative blobs -->
+  <div class="nebula n1"></div>
+  <div class="nebula n2"></div>
+  <div class="nebula n3"></div>
 
-     
-  <div class="texto-power">
-     <span>Powered by</span> 
+  <!-- ── GADGETS ── -->
 
+  <!-- Clock gadget -->
+  <div class="gadget" id="gadgetClock">
+    <div id="gClockTime">--:--</div>
+    <div id="gClockDate">Loading...</div>
+    <div id="gClockDay">---</div>
   </div>
-    <!-- Copyright con logo -->
 
-    <div id="copyright">
-        <a href="/QhuboX.html" target="_blank">&copy; 2026 || QhuboX, All Rights Reserved.</a>
-        
+  <!-- Weather gadget -->
+  <div class="gadget" id="gadgetWeather">
+    <div class="g-section-label">Weather</div>
+    <div id="gwTemp" class="gw-temp">--°</div>
+    <div id="gwDesc" class="gw-desc">Fetching...</div>
+    <div id="gwLoc" class="gw-loc">📍 Locating...</div>
+    <div class="gw-row">
+      <div class="gw-mini">
+        <div class="gw-mini-val" id="gwHumidity">--%</div>
+        <div class="gw-mini-lbl">Humidity</div>
+      </div>
+      <div class="gw-mini">
+        <div class="gw-mini-val" id="gwWind">-- km/h</div>
+        <div class="gw-mini-lbl">Wind</div>
+      </div>
+      <div class="gw-mini">
+        <div class="gw-mini-val" id="gwFeels">--°</div>
+        <div class="gw-mini-lbl">Feels like</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solana price gadget — REAL TIME -->
+  <div class="gadget" id="gadgetSol">
+    <div class="g-section-label">Solana</div>
+    <div class="sol-price-row">
+      <span class="sol-logo">◎</span>
+      <div>
+        <div class="sol-price" id="solPrice">$--</div>
+        <div class="sol-change" id="solChange">-- %</div>
+      </div>
+    </div>
+    <div class="sol-sparkline" id="solSparkline"></div>
+    <div class="sol-label-row">
+      <span class="gw-mini-lbl">24h Volume</span>
+      <span class="gw-mini-val" id="solVol">—</span>
+    </div>
+  </div>
+
+  <!-- Crypto token search result gadget (hidden until a token is selected) -->
+  <div class="gadget" id="gadgetCryptoResult" style="display:none;">
+    <div class="sol-price-row" style="margin-bottom:4px">
+      <span class="sol-logo" id="crIcon" style="font-size:13px;font-weight:700;letter-spacing:-0.5px;min-width:28px;text-align:center">--</span>
+      <div style="flex:1">
+        <div style="font-size:11px;font-weight:500;color:var(--text-1)" id="crName">Token</div>
+        <div class="g-section-label" style="margin-bottom:0" id="crLabel">TOKEN</div>
+      </div>
+      <button id="crCloseBtn" style="background:none;border:none;color:var(--text-3);font-size:13px;cursor:pointer;padding:0 2px;line-height:1">✕</button>
+    </div>
+    <div class="sol-price-row" style="margin-bottom:8px">
+      <div>
+        <div class="sol-price" id="crPrice">$--</div>
+        <div class="sol-change" id="crChange">-- %</div>
+      </div>
+    </div>
+    <div class="sol-sparkline" id="crSparkline"></div>
+    <div class="cr-detail-grid">
+      <div class="gw-mini"><div class="gw-mini-val" id="crMcap">—</div><div class="gw-mini-lbl">Mkt Cap</div></div>
+      <div class="gw-mini"><div class="gw-mini-val" id="crVol">—</div><div class="gw-mini-lbl">Vol 24h</div></div>
+      <div class="gw-mini"><div class="gw-mini-val" id="crHigh">—</div><div class="gw-mini-lbl">24h High</div></div>
+      <div class="gw-mini"><div class="gw-mini-val" id="crLow">—</div><div class="gw-mini-lbl">24h Low</div></div>
+    </div>
+  </div>
+
+  <!-- ── DESKTOP ICON AREA ── -->
+  <main id="desktopArea">
+
+    <!-- QhuboX Project — keeps original function, adds image -->
+    <div class="desktop-icon" data-app="QhuboX Project">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#7b2ff744,#4a1a8a22)">
+        <img src="assets/logo.png" alt="QhuboX" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="di-emoji-fb" style="display:none">📁</span>
+      </div>
+      <div class="di-label">QhuboX Project</div>
     </div>
 
-  <div class="header-container">
-  <div id="logoHeader">
-    <img src="assets/logo.png" alt="QhuboXlabsLABs" id="logoImg" class="animatable-logo">
+    <div class="desktop-icon" data-url="ecosystem/sAIgnalX/sAIgnalX.html" data-app="sAIgnalX">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#00d2ff44,#007aa022)">
+        <img src="icons/analytics.png" alt="sAIgnalX" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="di-emoji-fb" style="display:none">📊</span>
+      </div>
+      <div class="di-label">sAIgnalX</div>
+    </div>
+
+    <div class="desktop-icon" data-url="http://127.0.0.1:7860" data-app="DEV Turing">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#ff6b9d44,#a0204a22)">
+        <img src="/imahe/m.png" alt="DEV Turing" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="di-emoji-fb" style="display:none">🤖</span>
+      </div>
+      <div class="di-label">DEV Turing</div>
+    </div>
+
+    <div class="desktop-icon" data-url="http://localhost:3001" data-app="QhuboX Terminal">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#1a1a2e88,#0d0d1a44)">
+        <img src="icons/icon.png" alt="Terminal" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="di-emoji-fb" style="display:none">⌨️</span>
+      </div>
+      <div class="di-label">Terminal</div>
+    </div>
+
+    <div class="desktop-icon" data-url="http://localhost:5174/" data-app="Sollower">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#28ca4144,#145a1e22)">
+        <img src="icons/Dao.png" alt="Sollower" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="di-emoji-fb" style="display:none">🌿</span>
+      </div>
+      <div class="di-label">Sollower</div>
+    </div>
+
+    <div class="desktop-icon" data-url="/ecosystem/Burn/Burnallin.html" data-app="Burnow">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#ff7b0044,#8a2c0022)">
+        <img src="/imahe/Gem.png" alt="Burnow" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="di-emoji-fb" style="display:none">🔥</span>
+      </div>
+      <div class="di-label">Burnow</div>
+    </div>
+
+    <div class="desktop-icon" data-url="NeuroQhuboX.html" data-app="NeuroQhuboX">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#ff6b9d44,#7b102044)">
+        <img src="media/neuro.png" alt="NeuroQhuboX" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="di-emoji-fb" style="display:none">🧠</span>
+      </div>
+      <div class="di-label">NeuroQhuboX</div>
+    </div>
+
+    <div class="desktop-icon" data-url="pebbles.html" data-app="Pebbles">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#aa66ff44,#501a8022)">
+        <img src="icons/bubble.png" alt="Pebbles" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="di-emoji-fb" style="display:none">🫧</span>
+      </div>
+      <div class="di-label">Pebbles</div>
+    </div>
+
+  </main>
+
+  <!-- ── START MENU ── -->
+  <nav id="startMenu" role="dialog" aria-label="Start Menu" aria-hidden="true">
+    <div class="sm-search-row">
+      <span class="sm-search-icon">🔍</span>
+      <input type="text" id="smSearchInput" placeholder="Search apps, files, settings..." autocomplete="off" />
+    </div>
+    <div class="sm-section-title">Pinned</div>
+    <div class="sm-app-grid" id="smPinnedGrid"></div>
+    <div class="sm-section-title" style="margin-top:14px">Recent</div>
+    <div class="sm-app-grid" id="smRecentGrid"></div>
+
+    <!-- Help section -->
+    <div class="sm-section-title" style="margin-top:16px;border-top:0.5px solid var(--glass-border-subtle);padding-top:14px">Help</div>
+    <div class="sm-help-list">
+      <a class="sm-help-item" href="mailto:support@qhubox.io">
+        <span class="sm-help-icon">🎧</span><span>Contact Support</span>
+      </a>
+      <a class="sm-help-item" href="#" id="smTermsBtn">
+        <span class="sm-help-icon">📄</span><span>Terms &amp; Conditions</span>
+      </a>
+      <a class="sm-help-item" href="https://qhubox.io" target="_blank" rel="noopener">
+        <span class="sm-help-icon">🌐</span><span>QhuboX Website</span>
+      </a>
+      <a class="sm-help-item" href="https://x.com/QhuboX" target="_blank" rel="noopener">
+        <span class="sm-help-icon">𝕏</span><span>X (Twitter)</span>
+      </a>
+      <a class="sm-help-item" href="https://instagram.com/qhubox" target="_blank" rel="noopener">
+        <span class="sm-help-icon">📸</span><span>Instagram</span>
+      </a>
+      <a class="sm-help-item" href="https://discord.gg/qhubox" target="_blank" rel="noopener">
+        <span class="sm-help-icon">💬</span><span>Discord</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── CRYPTO SEARCH SPOTLIGHT ── -->
+  <div id="spotlight" role="search" aria-label="Crypto Search" aria-hidden="true">
+    <div class="sp-row">
+      <span class="sp-icon-search">🔍</span>
+      <input type="text" id="spInput" placeholder="Search any crypto or token..." autocomplete="off" />
+      <kbd class="sp-esc">ESC</kbd>
+    </div>
+    <div class="sp-results" id="spResults"></div>
   </div>
-  <div id="texto-superior-izquierdo">QhuboX Ecosystem</div>
-</div>
 
-     
-  
-  
+  <!-- ── MULTI-WINDOW LAYER ── -->
+  <div id="windowsLayer"></div>
 
-<!-- Weather & Time Widget -->
-<div id="widgetClimaHora" class="default"> <div id="ubicacionLocal"></div>
-    <div id="horaLocal"></div>
-    <div id="climaTempDescription"></div> </div>
+  <!-- ── APP WINDOW (legacy overlay — hidden, kept for HTML compatibility) ── -->
+  <div id="winOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="window" id="mainWindow">
+      <div class="win-titlebar">
+        <button class="win-action-btn wab-min"   id="winMinBtn"   title="Minimize (_)">_</button>
+        <button class="win-action-btn wab-max"   id="winMaxBtn"   title="Contraer / Expandir (▢)">▢</button>
+        <button class="win-action-btn wab-close" id="winCloseBtn" title="Cerrar (X)">✕</button>
+      </div>
+      <div class="win-body" id="winBody"></div>
+    </div>
+  </div>
 
-
-
-  
-
-
-
-  
-      
-  <div class="scroll-wrapper" id="scrollWrapper">
-    <div class="scroll-container">
- 
-</div>
-
-  
-
-    
-     
-       
-       
-<section class="pagina fondo-inicio" id="inicio">
-  
-  
-
-
-
-
-
-
-
-
-
-<!-- ment4al tv -->
-
-<div class="player-toggle">
-    <button id="openPlayerBtn" class="hologram-button">
-        <img src="icons/tv-icon.png" alt="Play TV" class="player-icon">
-        <span>AI Assistant</span>
-    </button>
-</div>
-
-<div id="chatWindow" class="chat-container hidden">
-   
+ <!-- ── AI ASSISTANT WINDOW ── -->
+  <div id="aiWindow" class="aichat-container hidden">
+    <div class="chat-titlebar">
+      <span>✦ AI Assistant</span>
+      <button id="aiCloseBtn" class="chat-close-btn" aria-label="Close AI Assistant">✕</button>
+    </div>
     <div class="chat-body">
-        <iframe src="http://localhost:8000/" allow="clipboard-write"></iframe>
+      <iframe src="http://localhost:8000/" allow="clipboard-write" title="AI Assistant"></iframe>
     </div>
-</div>
+  </div>
 
+  <!-- ── WALLET / CHAT WINDOW (same size/position as AI modal) ── -->
+  <div id="walletChatWindow" class="chat-container hidden">
+    <div class="chat-titlebar">
+      <span id="walletChatTitle">💳 QhuboX Wallet</span>
+      <button id="walletChatCloseBtn" class="chat-close-btn" aria-label="Close">✕</button>
+    </div>
+    <div class="chat-body">
+      <iframe id="walletChatIframe" src="http://localhost:5173/" allow="clipboard-write" title="QhuboX Wallet &amp; Chat"></iframe>
+    </div>
+  </div>
 
-<!-- holograma -->
+  <!-- ── WALLPAPER SWITCHER ── -->
+  <div id="wallpaperPanel" class="wp-panel" style="display:none">
+    <div class="wp-panel-title">🖼 Change Wallpaper</div>
+    <div class="wp-options">
+      <div class="wp-opt active" data-wp="1">
+        <div class="wp-preview wp-prev-1"></div>
+        <span>Nebula</span>
+      </div>
+      <div class="wp-opt" data-wp="2">
+        <div class="wp-preview wp-prev-2"></div>
+        <span>Forest</span>
+      </div>
+      <div class="wp-opt" data-wp="3">
+        <div class="wp-preview wp-prev-3"></div>
+        <span>Ember</span>
+      </div>
+    </div>
+  </div>
 
-       <div class="hologram-startup">
- 
-
-
- </div>
-       
-<div class=>
-  <img  />
-</div>
-  <button class="mobile-button">
-  <span class="badge">4</span>
-</button>
   
-  
-   
 
-<div id="mobile-trigger" class="mobile-button">
-  <img src="icons/staking.png" alt="Abrir ventana" />
-</div>
+  <!-- ── NOTIFICATION PANEL ── -->
+  <div id="mobile-window" class="mobile-popup hidden">
 
+    <div class="mobile-header">
+      <img src="icons/staking.png" alt="QhuboX" class="mobile-logo" onerror="this.style.display='none'">
+      <span class="mobile-title">QhuboX — Live Feed</span>
+      <button id="notifMarkAllRead" class="notif-mark-btn" title="Mark all read">✓ All read</button>
+    </div>
 
+    <div class="notif-tabs">
+      <button class="notif-tab active" data-src="all">All</button>
+      <button class="notif-tab" data-src="x">𝕏 Twitter</button>
+      <button class="notif-tab" data-src="discord">Discord</button>
+      <button class="notif-tab" data-src="system">System</button>
+    </div>
 
-<!-- Ventana flotante -->
-<div id="mobile-window" class="mobile-popup hidden">
-  <div class="mobile-header">
-    <img src="icons/staking.png" alt="Logo" class="mobile-logo" />
-    <span class="mobile-title">Message from QhuboX Ecosystem</span>
+    <div id="notifFeed" class="notif-feed">
+      <div class="notif-loading">
+        <span class="notif-spinner"></span>
+        <span>Loading feed...</span>
+      </div>
+    </div>
+
+    <div class="notif-footer">
+      <span id="notifLastUpdate">—</span>
+      <button id="notifRefreshBtn" class="notif-refresh-btn">↻ Refresh</button>
+    </div>
+
   </div>
-  <div class="mobile-body">
-    <div class="holo-message">Hello, welcome to the QhuboX Ecosystem.</div>
-    <div class="holo-message">The QhuboX Ecosystem is an INNOVATIVE ecosystem created to support users' common actions and daily tasks, focused on the development of intuitive, accessible, and essential decentralized applications that drive real mass adoption on the on-chain.</div>
-    <div class="holo-message">Discover the ecosystem that drives and redefines how the  decentralized applications reach everyone, everywhere.</div>
-    <div class="holo-message">Join us! and the Solana Network to drive the global growth of the ecosystem.</div>
+
+  <!-- ── TASKBAR / DOCK ── -->
+  <footer id="taskbar">
+
+    <!-- Left: Start + Crypto Search -->
+    <div class="tb-left">
+      <button id="startBtn" aria-label="Start Menu" title="Start">✦</button>
+      <div id="searchBarBtn" role="button" tabindex="0" aria-label="Search crypto" title="Search any crypto or token (Ctrl+Space)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <span>Search Crypto</span>
+      </div>
+    </div>
+
+    <!-- Center: Dock -->
+    <div class="tb-center" id="tbDock">
+
+      <div class="dock-item" data-app="QhronoX Protocol" data-tip="QhronoX Protocol" data-url="http://localhost:3000" style="--dc:#7b2ff7">
+        <img src="icons/QhronoX.png" alt="QhronoX" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">🕐</span>
+      </div>
+
+      <div class="dock-item" id="walletDockBtn" data-app="Qhubox Wallet" data-tip="Wallet-Chat" style="--dc:#00d2ff">
+        <img src="icons/exchang.png" alt="Wallet" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">💳</span>
+      </div>
+
+      
+
+      <div class="dock-item" data-app="QhuboX Terminal" data-tip="Terminal" data-url="http://localhost:3001" style="--dc:#8888bb">
+        <img src="icons/icon.png" alt="Terminal" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">⌨️</span>
+      </div>
+
+      <div class="dock-item" data-app="sAIgnalX" data-tip="sAIgnalX" data-url="ecosystem/sAIgnalX/sAIgnalX.html" style="--dc:#00d2ff">
+        <img src="icons/analytics.png" alt="sAIgnalX" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">📊</span>
+      </div>
+
+      <div class="dock-sep"></div>
+
+      <div class="dock-item" data-app="Sollower" data-tip="Sollower" data-url="http://localhost:5174/" style="--dc:#28ca41">
+        <img src="icons/Dao.png" alt="Sollower" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">🌿</span>
+      </div>
+
+      <div class="dock-item" data-app="Burnow" data-tip="Burnow" data-url="/ecosystem/Burn/Burnallin.html" style="--dc:#ff7b00">
+        <img src="icons/Gem.png" alt="Burnow" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">🔥</span>
+      </div>
+
+      <div class="dock-item" data-app="Pebbles" data-tip="Pebbles" data-url="pebbles.html" style="--dc:#aa66ff">
+        <img src="icons/bubble.png" alt="Pebbles" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">🫧</span>
+      </div>
+
+      <div class="dock-item" data-app="NeuroQhuboX" data-tip="NeuroQhuboX" data-url="NeuroQhuboX.html" style="--dc:#ff6b9d">
+        <img src="media/neuro.png" alt="NeuroQhuboX" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">🧠</span>
+      </div>
+
+      <div class="dock-item" data-app="DEV Turing" data-tip="DEV Turing" data-url="http://127.0.0.1:7860" style="--dc:#64b4ff">
+        <img src="icons/ml.png" alt="DEV Turing" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">🤖</span>
+      </div>
+
+      <div class="dock-sep"></div>
+
+      <div class="dock-item" data-app="AI Assistant" data-tip="AI Assistant" style="--dc:#7b2ff7" id="aiDockBtn">
+        <img src="icons/ai.png" alt="AI" class="dock-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="dock-emoji" style="display:none">✦</span>
+      </div>
+
+    </div>
+
+    <!-- Right: Notifications + Wallpaper + Clock -->
+    <div class="tb-right">
+      <button class="tray-btn" id="notifTrayBtn" title="Notifications" aria-label="Notifications">🔔</button>
+      <button class="tray-btn" id="wallpaperBtn" title="Change Wallpaper" aria-label="Change Wallpaper">🖼</button>
+      <div id="tbClock">
+        <div id="tbTime">--:--</div>
+        <div id="tbDate">---</div>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Copyright -->
+  <div id="copyright">
+    <a href="/QhuboX.html" target="_blank" rel="noopener">© 2026 QhuboX — All Rights Reserved</a>
   </div>
 
-  </div>
+</div><!-- /#desktop -->
 
-
-
-    
-  <h2>
-    <button class="boton-3d2">Reaching everyone, everywhere</button>
-  </h2>
-
-  <div class="icon-grid">
-    <div class="icon-wrapper">
-      <a href=" http://localhost:3000" target="_blank" class="icon-card">
-        <img src="/imahe/c.png" alt="C" />
-      </a>
-      <div class="icon-label">QhronoX Protocol</div>
-    
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="http://localhost:5173/" target="_blank" class="icon-card">
-        <img src="icons/exchang.png" alt="Exchange" />
-      </a>
-      <div class="icon-label">Qhubox Wallet</div>
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="http://localhost:5173" target="_blank" class="icon-card">
-        <img src="icons/staking.png" alt="Staking" />
-      </a>
-      <div class="icon-label">QhuboX Chat</div>
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="http://localhost:3001" target="_blank" class="icon-card">
-        <img src="icons/icon.png" alt="NFT" />
-      </a>
-      <div class="icon-label">QhuboX<br>Terminal</div>
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="http://localhost:5174/" target="_blank" class="icon-card">
-        <img src="icons/Dao.png" alt="DAO" />
-      </a>
-      <div class="icon-label">Sollower</div>
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="ecosystem/sAIgnalX/sAIgnalX.html" target="_blank" class="icon-card">
-        <img src="icons/analytics.png" alt="Analytics" />
-      </a>
-      <div class="icon-label">sAIgnalx</div> 
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="http://127.0.0.1:5500/SoluckU.html" target="_blank" class="icon-card">
-        <img src="icons/pilot.png" alt="Pilot" />
-      </a>
-      <div class="icon-label">Royal Titanium</div>
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="pebbles.html" target="_blank" class="icon-card">
-        <img src="icons/bubble.png" alt="Bubble" />
-      </a>
-      <div class="icon-label">Pebbles</div>
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="NeuroQhuboX.html" target="_blank" class="icon-card">
-        <img src="media/neuro.png" alt="Neuro" />
-      </a>
-      <div class="icon-label">Neuro<br>QhuboX</div>
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="/ecosystem/Burn/Burnallin.html" target="_blank" class="icon-card">
-        <img src="/imahe/Gem.png" alt="Gem" />
-      </a>
-      <div class="icon-label">Burnow</div>
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="http://127.0.0.1:7860" target="_blank" class="icon-card">
-        <img src="/imahe/m.png" alt="M" />
-      </a>
-      <div class="icon-label">DEV Turing</div>
-    </div>
-
-    <div class="icon-wrapper">
-      <a href="/ecosystem/Kiaraap/KIARA.html" target="_blank" class="icon-card">
-        <img src="icons/wallet.png" alt="Wallet" />
-      </a>
-      <div class="icon-label">Kiaraap</div>
-    </div>
-  </div>
-</section>
-
-
-       
-
-    
-  
- 
-  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-<script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js"></script>
-
-    <script src="script.js"></script>
-
+<script src="script.js"></script>
 </body>
-
 </html>

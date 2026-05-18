@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QhuboX Player</title>
+    <title>QhuboX Player — Local & Crypto</title>
     
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
@@ -14,8 +14,8 @@
             --bg: #030407;
             --surface: #080c14;
             --surface2: #0d1220;
-            --border: rgba(255, 255, 255, 0.404);
-            --border-active: rgba(120,200,255,0.3);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(74, 240, 200, 0.3);
             --accent: #4af0c8;
             --accent2: #7eb8f7;
             --accent3: #f07af0;
@@ -24,10 +24,8 @@
             --text: #e2e8f0;
             --text-dim: #d7d7ff;
             --header-h: 38px;
-            --neon-green: #4af0c8;
-            --safe-margin: 36px;
-            --radius: 10px;
-            --glow: 0 0 20px rgba(74,240,200,0.12);
+            --radius: 12px;
+            --glow: 0 0 25px rgba(74,240,200,0.15);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -117,12 +115,12 @@
         /* ── Brand ── */
         .top-brand {
             position: fixed; top: calc(var(--header-h) + 18px);
-            left: var(--safe-margin);
+            left: 36px;
             display: flex; align-items: center; gap: 10px; z-index: 900;
         }
-        #logoImg { width: 48px; gap: 10px; height: auto; filter: drop-shadow(0 0 8px rgba(74,240,200,0.4)); }
+        #logoImg { width: 48px; height: auto; filter: drop-shadow(0 0 8px rgba(74,240,200,0.4)); }
         #texto-superior-izquierdo {
-            font-family:    monospace;
+            font-family: monospace;
             font-weight: 800; font-size: 0.78rem;
             letter-spacing: 4px; color: white;
             text-transform: uppercase;
@@ -133,7 +131,7 @@
 
         .nav-links {
             position: fixed; top: calc(var(--header-h) + 23px);
-            right: var(--safe-margin);
+            right: 36px;
             display: flex; gap: 22px; z-index: 900;
         }
         .nav-links a {
@@ -148,11 +146,11 @@
         .container {
             height: 100vh; display: flex; flex-direction: column;
             justify-content: space-between; align-items: center;
-            padding: 65px var(--safe-margin) 30px;
+            padding: 90px 36px 30px;
         }
 
         .player-wrapper {
-            width: 100%; max-width: 920px; flex-grow: 1;
+            width: 100%; max-width: 960px; flex-grow: 1;
             display: flex; flex-direction: column; justify-content: center;
             position: relative; z-index: 10;
         }
@@ -160,210 +158,74 @@
         /* ── Video Player ── */
         .video-js {
             border-radius: var(--radius); overflow: hidden;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.04),
-                        0 0 60px rgba(74,240,200,0.05),
+            border: 1px solid var(--border);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.02),
+                        0 0 60px rgba(74,240,200,0.03),
                         0 40px 80px rgba(0,0,0,0.8);
-            background-color: #000;
+            background-color: #020305;
         }
 
         /* ── Controls Row ── */
         .controls-row {
-            display: flex; align-items: center; gap: 2px;
-            margin-top: 10px; flex-wrap: wrap; justify-content: center;
+            display: flex; align-items: center; justify-content: space-between;
+            margin-top: 16px; gap: 20px;
         }
-
-        .btn-nav {
-            background: var(--surface); border: 1px solid var(--border);
-            color: var(--text-dim); padding: 7px 18px; cursor: pointer;
-            border-radius: 6px;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.52rem; letter-spacing: 1.5px; text-transform: uppercase;
-            transition: all 0.2s;
-            display: none; /* hidden until channels loaded */
-        }
-        .btn-nav.visible { display: inline-flex; align-items: center; gap: 6px; }
-        .btn-nav:hover { border-color: var(--border-active); color: var(--accent); box-shadow: var(--glow); }
-        .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
         /* ── LOCAL FILE BUTTON ── */
         .btn-local {
-            background: linear-gradient(135deg, rgba(74,240,200,0.08), rgba(126,184,247,0.08));
-            border: 1px solid rgba(74,240,200,0.2);
-            color: wheat; padding: 7px 20px; cursor: pointer;
-            border-radius: 6px;
+            background: linear-gradient(135deg, rgba(74,240,200,0.1), rgba(126,184,247,0.1));
+            border: 1px solid rgba(74,240,200,0.3);
+            color: #fff; padding: 10px 24px; cursor: pointer;
+            border-radius: 8px;
             font-family: 'DM Mono', monospace;
-            font-size: 0.52rem; letter-spacing: 1.5px; text-transform: uppercase;
-            transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+            font-size: 0.65rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.25s ease; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
-        .btn-local:hover { background: rgba(74,240,200,0.12); box-shadow: 0 0 20px rgba(74,240,200,0.15); }
-        .btn-local svg { width: 11px; height: 11px; }
+        .btn-local:hover { 
+            background: rgba(74,240,200,0.18); 
+            border-color: var(--accent);
+            box-shadow: var(--glow);
+            transform: translateY(-1px);
+        }
+        .btn-local svg { width: 14px; height: 14px; color: var(--accent); }
 
         #localFileInput { display: none; }
 
-        /* ── Category Grid ── */
-        .cat-grid { margin-bottom: 15px; display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
-
-        .cat-item {
-            position: relative; display: flex; align-items: center; gap: 0;
-        }
-
-        .btn-cat {
-            padding: 6px 16px; border-radius: 6px;
-            border: 1px solid var(--border);
-            background: black;
-            color: whitesmoke; cursor: pointer;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.62rem; letter-spacing: 1px; text-transform: uppercase;
-            transition: all 0.2s;
-        }
-        .btn-cat:hover { border-color: rgba(255,255,255,0.12); color: var(--text); }
-        .btn-cat.active {
-            background: var(--accent); color: #000; border-color: var(--accent);
-            font-weight: 700; box-shadow: 0 0 16px rgba(74,240,200,0.25);
-        }
-        .btn-cat.empty {
-            border-style: dashed; border-color: rgba(255,255,255,0.08);
-            color: var(--muted); background: transparent;
-        }
-        .btn-cat.empty:hover { border-color: rgba(74,240,200,0.2); color: var(--text-dim); }
-
-        /* Config icon on each cat button */
-        .btn-cfg {
-            background: none; border: none; cursor: pointer;
-            color: white; padding: 0 5px 0 2px;
-            font-size: 0.8rem; transition: 0.2s; line-height: 1;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 0 6px 6px 0;
-            height: 27px;
-            width: 25px;
-            border: 1px solid wheat;
-            border-left: none;
-            background: var(--surface);
-            margin-left: -1px;
-        }
-        .btn-cfg:hover { color: var(--accent); border-color: rgba(74,240,200,0.2); }
-        .btn-cat.active + .btn-cfg { border-color: var(--accent); background: rgba(74,240,200,0.08); }
-
-        /* ── Modal ── */
-        .modal-overlay {
-            display: none; position: fixed; inset: 0; z-index: 5000;
-            background: rgba(0,0,0,0.75); backdrop-filter: blur(12px);
-            align-items: center; justify-content: center;
-        }
-        .modal-overlay.open { display: flex; }
-
-        .modal {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 28px 28px 24px;
-            width: 90%; max-width: 480px;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.03),
-                        0 40px 80px rgba(0,0,0,0.9),
-                        0 0 60px rgba(74,240,200,0.06);
-            animation: slideUp 0.25s ease;
-        }
-        @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
-
-        .modal h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 0.85rem; font-weight: 700;
-            letter-spacing: 2px; text-transform: uppercase;
-            color: var(--accent); margin-bottom: 22px;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .modal h3::before {
-            content: ''; display: block;
-            width: 3px; height: 14px; background: var(--accent);
-            border-radius: 2px;
-        }
-
-        .field-group { margin-bottom: 16px; }
-        .field-label {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.5rem; letter-spacing: 2px;
-            color: var(--text-dim); text-transform: uppercase; margin-bottom: 7px;
-            display: block;
-        }
-
-        .field-input {
-            width: 100%;
-            background: var(--surface2); border: 1px solid var(--border);
-            border-radius: 7px; color: var(--text);
-            font-family: 'DM Mono', monospace; font-size: 0.7rem;
-            padding: 10px 13px; outline: none; transition: 0.2s;
-        }
-        .field-input:focus { border-color: var(--border-active); box-shadow: 0 0 0 3px rgba(74,240,200,0.06); }
-
-        textarea.field-input { resize: vertical; min-height: 110px; line-height: 1.6; }
-
-        .modal-hint {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.48rem; letter-spacing: 0.5px;
-            color: var(--dim); margin-bottom: 18px; line-height: 1.8;
-        }
-        .modal-hint code { color: var(--accent2); background: rgba(126,184,247,0.08); padding: 1px 5px; border-radius: 3px; }
-
-        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
-
-        .btn-save {
-            background: var(--accent); color: #000; border: none;
-            padding: 9px 22px; border-radius: 7px; cursor: pointer;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.55rem; font-weight: 700; letter-spacing: 1.5px;
-            text-transform: uppercase; transition: 0.2s;
-        }
-        .btn-save:hover { filter: brightness(1.1); box-shadow: 0 0 16px rgba(74,240,200,0.3); }
-
-        .btn-cancel {
-            background: none; border: 1px solid var(--border); color: var(--text-dim);
-            padding: 9px 18px; border-radius: 7px; cursor: pointer;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.55rem; letter-spacing: 1.5px; text-transform: uppercase;
-            transition: 0.2s;
-        }
-        .btn-cancel:hover { border-color: rgba(255,255,255,0.15); color: var(--text); }
-
-        .btn-clear {
-            background: none; border: 1px solid rgba(240,100,100,0.2); color: rgba(240,100,100,0.5);
-            padding: 9px 14px; border-radius: 7px; cursor: pointer;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.55rem; letter-spacing: 1px; text-transform: uppercase;
-            transition: 0.2s; margin-right: auto;
-        }
-        .btn-clear:hover { border-color: rgba(240,100,100,0.5); color: rgba(240,100,100,0.8); }
-
         /* ── Now Playing strip ── */
         .now-playing {
-            display: flex; align-items: center; gap: 10px;
-            margin-top: 10px; padding: 0 4px;
-            min-height: 22px;
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 16px; background: rgba(8, 12, 20, 0.5);
+            border: 1px solid var(--border); border-radius: 8px; flex-grow: 1;
+            max-width: calc(100% - 220px);
         }
         .np-dot {
             width: 6px; height: 6px; border-radius: 50%;
-            background: var(--accent); flex-shrink: 0;
-            animation: blink 1.2s ease-in-out infinite;
+            background: var(--dim); flex-shrink: 0;
         }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+        .np-dot.active {
+            background: var(--accent);
+            animation: blink 1.2s ease-in-out infinite;
+            box-shadow: 0 0 8px var(--accent);
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        
         .np-text {
             font-family: 'DM Mono', monospace;
-            font-size: 0.52rem; letter-spacing: 0.5px; color: var(--text-dim);
+            font-size: 0.65rem; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.4);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .np-idx {
-            margin-left: auto; font-family: 'DM Mono', monospace;
-            font-size: 0.5rem; color: var(--muted); flex-shrink: 0; letter-spacing: 1px;
-        }
+        .np-text.active { color: var(--text); }
 
         /* ── Footer ── */
         footer {
             width: 100%; display: flex; justify-content: space-between;
-            align-items: center; padding-top: 12px; border-top: 1px solid var(--border);
+            align-items: center; padding-top: 16px; border-top: 1px solid var(--border);
             position: relative; z-index: 10;
         }
         #copyright {
             font-family: 'DM Mono', monospace;
-            font-size: 0.68rem; letter-spacing: 1px; color: beige;
+            font-size: 0.68rem; letter-spacing: 1px; color: rgba(255,255,255,0.5);
         }
         #copyright a { color: var(--dim); text-decoration: none; transition: 0.2s; }
         #copyright a:hover { color: var(--accent); }
@@ -372,45 +234,6 @@
         .social-container img { width: 18px; height: 18px; opacity: 0.3; transition: 0.2s; filter: invert(1); }
         .social-container a:hover img { opacity: 0.8; filter: invert(1) drop-shadow(0 0 4px var(--accent)); transform: scale(1.15); }
 
-        /* ── Channel counter ── */
-        .ch-badge {
-            display: none;
-            background: var(--surface2); border: 1px solid var(--border);
-            border-radius: 6px; padding: 7px 14px;
-            font-family: 'DM Mono', monospace; font-size: 0.52rem;
-            color: var(--text-dim); letter-spacing: 1px;
-            white-space: nowrap;
-        }
-        .ch-badge.visible { display: flex; align-items: center; gap: 6px; }
-        .ch-badge strong { color: var(--accent); font-weight: 500; }
-
-        /* ── Error / Skip notification ── */
-        .skip-toast {
-            position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
-            background: rgba(240,122,122,0.12); border: 1px solid rgba(240,122,122,0.25);
-            color: rgba(240,122,122,0.9);
-            font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1px;
-            padding: 5px 14px; border-radius: 5px; white-space: nowrap;
-            opacity: 0; pointer-events: none; margin-bottom: 8px;
-            transition: opacity 0.3s;
-        }
-        .skip-toast.show { opacity: 1; }
-
-        /* ── Loading state on player ── */
-        .loading-overlay {
-            display: none; position: absolute; inset: 0;
-            align-items: center; justify-content: center;
-            background: rgba(3,4,7,0.7); border-radius: var(--radius);
-            z-index: 50; pointer-events: none;
-        }
-        .loading-overlay.show { display: flex; }
-        .loading-spinner {
-            width: 28px; height: 28px; border-radius: 50%;
-            border: 2px solid rgba(74,240,200,0.15);
-            border-top-color: var(--accent);
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
@@ -418,12 +241,12 @@
 </head>
 <body onload="startApp()">
 
-    <!-- Ambient -->
+    <!-- Ambient Glow Effects -->
     <div class="ambient ambient-1"></div>
     <div class="ambient ambient-2"></div>
     <div class="ambient ambient-3"></div>
 
-    <!-- Ticker -->
+    <!-- Live Crypto Ticker -->
     <header class="market-bar">
         <div class="ticker-label">LIVE MKTS</div>
         <div class="ticker-container">
@@ -432,11 +255,10 @@
         <button class="refresh-btn" onclick="getMarkets(true)">↻ SYNC</button>
     </header>
 
-    <!-- Brand -->
+    <!-- Top Branding -->
     <div class="top-brand">
         <div id="logoHeader">
-            <img src="icons/pilot.png" alt="QhuboX TV" id="logoImg" class="animatable-logo"
-                 onerror="this.style.display='none'">
+            <img src="icons/pilot.png" alt="QhuboX TV" id="logoImg" class="animatable-logo" onerror="this.style.display='none'">
         </div>
         <div id="texto-superior-izquierdo">Green <span>Player</span></div>
     </div>
@@ -446,123 +268,55 @@
         <a href="/support.html" target="_blank">Support</a>
     </div>
 
-    <!-- Main -->
+    <!-- Main Container Layout -->
     <div class="container">
         <div id="playerBox" class="player-wrapper">
+            
+            <!-- VideoJS Container -->
             <video id="vid" class="video-js vjs-default-skin vjs-16-9" controls preload="auto"></video>
 
-            <!-- Now Playing -->
-            <div class="now-playing">
-                <div class="np-dot" id="npDot" style="display:none"></div>
-                <div class="np-text" id="npText">— select a category or open a local file —</div>
-                <div class="np-idx" id="npIdx"></div>
-            </div>
-
-            <!-- Controls -->
-            <div class="controls-row" style="position:relative;">
-                <div class="skip-toast" id="skipToast">⚠ Stream unavailable — skipping…</div>
-
-                <button class="btn-nav" id="btnPrev" onclick="changeChannel(-1)">◀ PREV</button>
-
-                <div class="ch-badge" id="chBadge">
-                    CH <strong id="chCurrent">—</strong> / <span id="chTotal">—</span>
+            <!-- Stripped Down Premium Controls Row -->
+            <div class="controls-row">
+                
+                <!-- Metadata Indicator -->
+                <div class="now-playing">
+                    <div class="np-dot" id="npDot"></div>
+                    <div class="np-text" id="npText">NO LOCAL FILE LOADED — CHOOSE MEDIA TO BEGIN</div>
                 </div>
 
-                <button class="btn-nav" id="btnNext" onclick="changeChannel(1)">NEXT ▶</button>
-
-                <!-- Local file -->
+                <!-- Primary Local File Trigger -->
                 <button class="btn-local" onclick="document.getElementById('localFileInput').click()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <path d="M3 15v4a2 2 0 002 2h14a2 2 0 002-2v-4M12 3v12M7 8l5-5 5 5"/>
                     </svg>
                     OPEN LOCAL FILE
                 </button>
-                <input type="file" id="localFileInput" accept="video/*,audio/*,.m3u,.m3u8,.mkv,.avi,.mp4,.mov,.webm,.mp3,.aac,.flac,.ogg,.wav">
+                <input type="file" id="localFileInput" accept="video/*,audio/*,.mkv,.avi,.mp4,.mov,.webm,.mp3,.aac,.flac,.ogg,.wav">
             </div>
 
-            <!-- Category Buttons -->
-            <div id="catGrid" class="cat-grid"></div>
         </div>
 
+        <!-- Footer -->
         <footer>
             <div id="copyright">
                 <a href="/QhuboX.html" target="_blank">&copy; 2026 — QhuboX, All Rights Reserved.</a>
             </div>
             <div class="social-container">
-                <a href="/ecosystem/QhuboX.html "><img src="Kiaraap/assets/icons/icono_link.svg" alt="home"></a>
+                <a href="/ecosystem/QhuboX.html"><img src="Kiaraap/assets/icons/icono_link.svg" alt="home"></a>
                 <a href="#" target="_blank"><img src="Kiaraap/assets/icons/icono_x.svg" alt="X"></a>
                 <a href="https://discord.com" target="_blank"><img src="icons/discord.png" alt="Discord"></a>
             </div>
         </footer>
     </div>
 
-    <!-- Config Modal -->
-    <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-        <div class="modal" id="modalBox">
-            <h3>Configure Channel Button</h3>
-
-            <div class="field-group">
-                <label class="field-label" for="cfgName">Button label</label>
-                <input class="field-input" id="cfgName" type="text" placeholder="e.g. Sports, Movies, News…" maxlength="20">
-            </div>
-
-            <div class="field-group">
-                <label class="field-label" for="cfgUrl">M3U / Stream URL(s)</label>
-                <textarea class="field-input" id="cfgUrl" placeholder="Paste one or more M3U links, one per line…"></textarea>
-            </div>
-
-            <div class="modal-hint">
-                Accepts <code>.m3u</code> / <code>.m3u8</code> playlist URLs or direct stream URLs.<br>
-                Multiple URLs → first that loads will play. Press <code>NEXT / PREV</code> to browse channels inside the list.
-            </div>
-
-            <div class="modal-actions">
-                <button class="btn-clear" id="btnClear" onclick="clearSlot()">✕ CLEAR</button>
-                <button class="btn-cancel" onclick="closeModal()">CANCEL</button>
-                <button class="btn-save" onclick="saveSlot()">SAVE</button>
-            </div>
-        </div>
-    </div>
-
     <script>
     /* ══════════════════════════════════════════════════
-       STATE
+       STATE MANAGEMENT & ARCHITECTURE
     ══════════════════════════════════════════════════ */
-    const SLOT_COUNT = 6;
-    const STORAGE_KEY = 'QhuboX_slots_v2';
-    const MAX_SKIP = 5;
-
     let player = null;
-    let currentChannelList = [];
-    let currentChannelIndex = 0;
-    let activeSlotIndex = -1;
-    let editingSlotIndex = -1;
-    let isLocalFile = false;
-    let skipCount = 0;
-    let skipTimer = null;
-
-    function defaultSlots() {
-        return Array.from({ length: SLOT_COUNT }, () => ({ name: '', urls: '' }));
-    }
-
-    function loadSlots() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (!raw) return defaultSlots();
-            const parsed = JSON.parse(raw);
-            while (parsed.length < SLOT_COUNT) parsed.push({ name: '', urls: '' });
-            return parsed.slice(0, SLOT_COUNT);
-        } catch { return defaultSlots(); }
-    }
-
-    function saveSlots(slots) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(slots));
-    }
-
-    let slots = loadSlots();
 
     /* ══════════════════════════════════════════════════
-       CRYPTO TICKER
+       WEB3 / CRYPTO TICKER INTEGRATION (RETAINED)
     ══════════════════════════════════════════════════ */
     async function getMarkets(force = false) {
         const now = Date.now();
@@ -571,7 +325,8 @@
         const oneDay = 86400000;
 
         if (!force && cache && lastUpdate && (now - lastUpdate < oneDay)) {
-            renderTicker(JSON.parse(cache)); return;
+            renderTicker(JSON.parse(cache)); 
+            return;
         }
         try {
             const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=40&page=1&sparkline=false');
@@ -602,261 +357,83 @@
     }
 
     /* ══════════════════════════════════════════════════
-       PLAYER INIT
+       CLEAN PLAYER CORE INITIALIZATION
     ══════════════════════════════════════════════════ */
     function startApp() {
         player = videojs('vid', {
             fluid: true,
-            autoplay: 'muted',
+            autoplay: false,
             playbackRates: [0.5, 1, 1.5, 2],
-            html5: { hls: { overrideNative: true }, vhs: { overrideNative: true } }
-        });
-
-        // Smart error handler: auto-skip dead streams, stop after MAX_SKIP
-        player.on('error', () => {
-            player.error(null);
-            if (!isLocalFile && currentChannelList.length > 1) {
-                if (skipCount < MAX_SKIP) {
-                    skipCount++;
-                    showSkipToast();
-                    clearTimeout(skipTimer);
-                    skipTimer = setTimeout(() => changeChannel(1), 1500);
-                } else {
-                    skipCount = 0;
-                    setNowPlaying('⚠ Several channels offline — try NEXT manually', null, null);
-                }
-            } else {
-                setNowPlaying('⚠ Stream unavailable or format not supported', null, null);
+            controlBar: {
+                children: [
+                    'playToggle',
+                    'volumePanel',
+                    'currentTimeDisplay',
+                    'timeDivider',
+                    'durationDisplay',
+                    'progressControl',
+                    'liveDisplay',
+                    'remainingTimeDisplay',
+                    'customControlSpacer',
+                    'playbackRateMenuButton',
+                    'chaptersButton',
+                    'descriptionsButton',
+                    'subtitlesButton',
+                    'captionsButton',
+                    'subsCapsButton',
+                    'audioTrackButton',
+                    'fullscreenToggle'
+                ]
             }
         });
 
-        // Reset skip counter on successful playback
-        player.on('playing', () => {
-            skipCount = 0;
-            clearTimeout(skipTimer);
-            hideSkipToast();
+        // Error Feedback for corrupted or unsupported local assets
+        player.on('error', () => {
+            player.error(null);
+            updateNowPlayingStatus('⚠ ERROR: Local asset corrupted or format unsupported', false);
         });
 
+        // Event listener for local filesystem selection
         document.getElementById('localFileInput').addEventListener('change', handleLocalFile);
 
-        renderCats();
+        // Fetch cryptographic parameters
         getMarkets();
-        updateNavVisibility();
     }
 
     /* ══════════════════════════════════════════════════
-       SKIP TOAST
-    ══════════════════════════════════════════════════ */
-    function showSkipToast() {
-        const t = document.getElementById('skipToast');
-        t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 2500);
-    }
-    function hideSkipToast() {
-        document.getElementById('skipToast').classList.remove('show');
-    }
-
-    /* ══════════════════════════════════════════════════
-       NAV VISIBILITY — shown only when multiple channels
-    ══════════════════════════════════════════════════ */
-    function updateNavVisibility() {
-        const multi = !isLocalFile && currentChannelList.length > 1;
-        document.getElementById('btnPrev').classList.toggle('visible', multi);
-        document.getElementById('btnNext').classList.toggle('visible', multi);
-        document.getElementById('chBadge').classList.toggle('visible', multi);
-        if (multi) {
-            document.getElementById('chCurrent').textContent = currentChannelIndex + 1;
-            document.getElementById('chTotal').textContent = currentChannelList.length;
-        }
-    }
-
-    /* ══════════════════════════════════════════════════
-       LOCAL FILE
+       LOCAL FILE STREAM HANDLER
     ══════════════════════════════════════════════════ */
     function handleLocalFile(e) {
         const file = e.target.files[0];
         if (!file) return;
+
+        // Generate sandboxed local blob binary link
         const url = URL.createObjectURL(file);
-        currentChannelList = [url];
-        currentChannelIndex = 0;
-        activeSlotIndex = -1;
-        isLocalFile = true;
-        skipCount = 0;
-        document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active'));
-        setNowPlaying('📁 ' + file.name, null, null);
-        updateNavVisibility();
+        
+        // Dynamic UI adjustment
+        updateNowPlayingStatus('📁 ' + file.name.toUpperCase(), true);
+
+        // Injection and execution of local stream
         player.src({ src: url, type: file.type || 'video/mp4' });
         player.play().catch(() => {});
+        
+        // Purge memory pointer to input target value
         e.target.value = '';
     }
 
-    /* ══════════════════════════════════════════════════
-       CATEGORY BUTTONS
-    ══════════════════════════════════════════════════ */
-    function renderCats() {
-        const grid = document.getElementById('catGrid');
-        grid.innerHTML = '';
-        slots.forEach((slot, i) => {
-            const item = document.createElement('div');
-            item.className = 'cat-item';
+    function updateNowPlayingStatus(text, isActive) {
+        const textContainer = document.getElementById('npText');
+        const statusDot = document.getElementById('npDot');
 
-            const btn = document.createElement('button');
-            btn.className = 'btn-cat' + (slot.name ? '' : ' empty');
-            btn.id = `cat-btn-${i}`;
-            btn.innerText = slot.name || `+ SLOT ${i + 1}`;
-            btn.onclick = () => selectSlot(i);
-
-            const cfg = document.createElement('button');
-            cfg.className = 'btn-cfg';
-            cfg.title = 'Configure';
-            cfg.innerHTML = `<svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
-            </svg>`;
-            cfg.onclick = (e) => { e.stopPropagation(); openModal(i); };
-
-            item.appendChild(btn);
-            item.appendChild(cfg);
-            grid.appendChild(item);
-        });
-    }
-
-    async function selectSlot(i) {
-        const slot = slots[i];
-        if (!slot.name && !slot.urls) { openModal(i); return; }
-
-        activeSlotIndex = i;
-        isLocalFile = false;
-        currentChannelIndex = 0;
-        skipCount = 0;
-
-        document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active'));
-        document.getElementById(`cat-btn-${i}`)?.classList.add('active');
-
-        setNowPlaying(`Loading ${slot.name}…`, null, null);
-        await loadM3UFromUrls(slot.urls);
-    }
-
-    async function loadM3UFromUrls(rawUrls) {
-        const lines = rawUrls.split('\n').map(l => l.trim()).filter(Boolean);
-        currentChannelList = [];
-
-        for (const urlLine of lines) {
-            if (!urlLine.startsWith('http')) {
-                currentChannelList.push(urlLine); continue;
-            }
-            try {
-                const res = await fetch(urlLine, { signal: AbortSignal.timeout(8000) });
-                const text = await res.text();
-                if (text.includes('#EXTM3U') || text.includes('#EXTINF')) {
-                    currentChannelList.push(...parseM3U(text));
-                } else {
-                    currentChannelList.push(urlLine);
-                }
-            } catch {
-                currentChannelList.push(urlLine);
-            }
+        textContainer.textContent = text;
+        if(isActive) {
+            textContainer.classList.add('active');
+            statusDot.classList.add('active');
+        } else {
+            textContainer.classList.remove('active');
+            statusDot.classList.remove('active');
         }
-
-        updateNavVisibility();
-        playIndex(0);
     }
-
-    function parseM3U(text) {
-        const lines = text.split('\n');
-        const urls = [];
-        for (let i = 0; i < lines.length; i++) {
-            if (lines[i].startsWith('#EXTINF')) {
-                const url = lines[i + 1]?.trim();
-                if (url && url.startsWith('http')) urls.push(url);
-            }
-        }
-        return urls;
-    }
-
-    function playIndex(idx) {
-        if (currentChannelList.length === 0) return;
-        if (idx >= currentChannelList.length) idx = 0;
-        if (idx < 0) idx = currentChannelList.length - 1;
-        currentChannelIndex = idx;
-
-        const src = currentChannelList[idx];
-        player.src({ src, type: guessType(src) });
-        player.play().catch(() => {});
-
-        const label = activeSlotIndex >= 0 ? slots[activeSlotIndex].name : '';
-        setNowPlaying(label ? `${label} · ch ${idx + 1}` : `Channel ${idx + 1}`, idx, currentChannelList.length);
-        updateNavVisibility();
-    }
-
-    function guessType(url) {
-        const u = url.toLowerCase();
-        if (u.includes('.m3u8') || u.includes('hls') || u.includes('chunklist')) return 'application/x-mpegURL';
-        if (u.includes('.mp4')) return 'video/mp4';
-        if (u.includes('.webm')) return 'video/webm';
-        if (u.includes('.ogv')) return 'video/ogg';
-        if (u.includes('.mp3')) return 'audio/mpeg';
-        if (u.includes('.aac')) return 'audio/aac';
-        return 'application/x-mpegURL';
-    }
-
-    function changeChannel(step) {
-        skipCount = 0;
-        clearTimeout(skipTimer);
-        playIndex(currentChannelIndex + step);
-    }
-
-    function setNowPlaying(text, idx, total) {
-        document.getElementById('npDot').style.display = (idx !== null) ? 'block' : 'none';
-        document.getElementById('npText').textContent = text;
-        document.getElementById('npIdx').textContent = (total !== null && total > 1) ? `${idx + 1} / ${total}` : '';
-    }
-
-    /* ══════════════════════════════════════════════════
-       MODAL
-    ══════════════════════════════════════════════════ */
-    function openModal(i) {
-        editingSlotIndex = i;
-        document.getElementById('cfgName').value = slots[i].name || '';
-        document.getElementById('cfgUrl').value = slots[i].urls || '';
-        document.getElementById('modalOverlay').classList.add('open');
-        setTimeout(() => document.getElementById('cfgName').focus(), 100);
-    }
-
-    function closeModal() {
-        document.getElementById('modalOverlay').classList.remove('open');
-        editingSlotIndex = -1;
-    }
-
-    function handleOverlayClick(e) {
-        if (e.target === document.getElementById('modalOverlay')) closeModal();
-    }
-
-    function saveSlot() {
-        if (editingSlotIndex < 0) return;
-        const name = document.getElementById('cfgName').value.trim();
-        const urls = document.getElementById('cfgUrl').value.trim();
-        slots[editingSlotIndex] = { name, urls };
-        saveSlots(slots);
-        closeModal();
-        renderCats();
-        // Auto-load if we just saved the slot
-        if (name && urls) selectSlot(editingSlotIndex);
-    }
-
-    function clearSlot() {
-        if (editingSlotIndex < 0) return;
-        slots[editingSlotIndex] = { name: '', urls: '' };
-        saveSlots(slots);
-        closeModal();
-        renderCats();
-    }
-
-    document.addEventListener('keydown', e => {
-        const modalOpen = document.getElementById('modalOverlay').classList.contains('open');
-        if (e.key === 'Escape') closeModal();
-        if (!modalOpen && e.key === 'ArrowRight') changeChannel(1);
-        if (!modalOpen && e.key === 'ArrowLeft')  changeChannel(-1);
-    });
     </script>
 </body>
 </html>
