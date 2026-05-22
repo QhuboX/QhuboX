@@ -960,7 +960,7 @@ with gr.Blocks(title="DEV Turing", css=CUSTOM_CSS) as demo:
 
       <div class="footer-right">
         <div class="social-container">
-          <a href="/ecosystem/mentalecosystemapp.html"><img src="file/image/home.jpg"    alt="home"></a>
+          <a href="/ecosystem.html"><img src="file/image/home.jpg"    alt="home"></a>
           <a href="#" target="_blank">              <img src="file/image/twitter.png" alt="X"></a>
           <a href="https://discord.com" target="_blank"><img src="file/image/discord.png" alt="Discord"></a>
         </div>
