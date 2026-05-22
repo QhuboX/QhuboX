@@ -1,284 +1,267 @@
-        document.addEventListener('DOMContentLoaded', () => {
-            const canvas = document.getElementById('techHiveCurve');
-            if (!canvas) return;
+document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('techHiveCurve');
+    if (!canvas) return;
 
-            const ctx = canvas.getContext('2d');
-            let width, height, cx, cy;
+    const ctx = canvas.getContext('2d');
+    let width, height, cx, cy;
 
-            let particles = [];
-            let comets = [];
-            let mouseX = width / 2;
-            let mouseY = height / 2;
-            let targetMouseX = width / 2;
-            let targetMouseY = height / 2;
+    let particles = [];
+    let comets = [];
+    let mouseX = width / 2;
+    let mouseY = height / 2;
+    let targetMouseX = width / 2;
+    let targetMouseY = height / 2;
 
-            const config = {
-                particleCount: 220,
-                mouseInfluence: 0.055,
-                baseSpeed: 0.08,
-                parallaxStrength: 0.018
-            };
+    const config = {
+        particleCount: 220,
+        mouseInfluence: 0.0001,    // Reducido drásticamente
+        baseSpeed: 0.00015,        // Movimiento casi estático
+        parallaxStrength: 0.00015  // Efecto de cámara muy leve para no marear
+    };
 
-            function resize() {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-                cx = width / 2;
-                cy = height / 2;
-                mouseX = targetMouseX = cx;
-                mouseY = targetMouseY = cy;
-                initParticles();
-                comets = []; // reinicia cometas al cambiar tamaño
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        cx = width / 2;
+        cy = height / 2;
+        mouseX = targetMouseX = cx;
+        mouseY = targetMouseY = cy;
+        initParticles();
+        comets = []; 
+    }
+
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', (e) => {
+        targetMouseX = e.clientX;
+        targetMouseY = e.clientY;
+    });
+
+    class Particle {
+        constructor() {
+            this.reset();
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+        }
+
+        reset() {
+            this.depth = Math.random() * 0.8 + 0.3;
+            this.size = (Math.random() * 1.8 + 0.4) * this.depth;
+            
+            const side = Math.floor(Math.random() * 4);
+            if (side === 0) { 
+                this.x = Math.random() * width;
+                this.y = -10;
+            } else if (side === 1) { 
+                this.x = width + 10;
+                this.y = Math.random() * height;
+            } else if (side === 2) { 
+                this.x = Math.random() * width;
+                this.y = height + 10;
+            } else { 
+                this.x = -10;
+                this.y = Math.random() * height;
             }
 
-            window.addEventListener('resize', resize);
-            window.addEventListener('mousemove', (e) => {
-                targetMouseX = e.clientX;
-                targetMouseY = e.clientY;
-            });
+            this.baseVx = (Math.random() - 0.5) * config.baseSpeed * this.depth;
+            this.baseVy = (Math.random() - 0.5) * config.baseSpeed * this.depth;
+            
+            this.vx = this.baseVx;
+            this.vy = this.baseVy;
 
-            class Particle {
-                constructor() {
-                    this.reset();
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                }
-
-                reset() {
-                    this.depth = Math.random() * 0.8 + 0.3;
-                    this.size = (Math.random() * 1.8 + 0.4) * this.depth;
-                    
-                    const side = Math.floor(Math.random() * 4);
-                    if (side === 0) { 
-                        this.x = Math.random() * width;
-                        this.y = -10;
-                    } else if (side === 1) { 
-                        this.x = width + 10;
-                        this.y = Math.random() * height;
-                    } else if (side === 2) { 
-                        this.x = Math.random() * width;
-                        this.y = height + 10;
-                    } else { 
-                        this.x = -10;
-                        this.y = Math.random() * height;
-                    }
-
-                    this.baseVx = (Math.random() - 0.5) * config.baseSpeed * this.depth;
-                    this.baseVy = (Math.random() - 0.5) * config.baseSpeed * this.depth;
-                    
-                    this.vx = this.baseVx;
-                    this.vy = this.baseVy;
-
-                    const colorType = Math.random();
-                    if (colorType < 0.55) {
-                        this.r = 220 + Math.random() * 35;
-                        this.g = 235 + Math.random() * 20;
-                        this.b = 255;
-                    } else if (colorType < 0.85) {
-                        this.r = 160 + Math.random() * 60;
-                        this.g = 210 + Math.random() * 45;
-                        this.b = 255;
-                    } else {
-                        this.r = 180 + Math.random() * 50;
-                        this.g = 160 + Math.random() * 40;
-                        this.b = 255;
-                    }
-
-                    this.baseAlpha = (Math.random() * 0.7 + 0.4) * this.depth;
-                    this.alpha = this.baseAlpha;
-                    
-                    this.pulseSpeed = 0.0008 + Math.random() * 0.0015;
-                    this.pulseOffset = Math.random() * Math.PI * 2;
-                }
-
-                update(time) {
-                    const parallaxX = (mouseX - cx) * config.parallaxStrength * this.depth;
-                    const parallaxY = (mouseY - cy) * config.parallaxStrength * this.depth;
-
-                    this.vx = this.baseVx + parallaxX * 0.012;
-                    this.vy = this.baseVy + parallaxY * 0.012;
-
-                    this.x += this.vx;
-                    this.y += this.vy;
-
-                    const pulse = Math.sin(time * this.pulseSpeed + this.pulseOffset) * 0.5 + 0.5;
-                    this.alpha = this.baseAlpha * (0.75 + pulse * 0.25);
-
-                    if (this.x < -30 || this.x > width + 30 || this.y < -30 || this.y > height + 30) {
-                        this.reset();
-                    }
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${this.alpha})`;
-                    ctx.fill();
-
-                    if (this.size > 0.6) {
-                        const gradient = ctx.createRadialGradient(
-                            this.x, this.y, 0,
-                            this.x, this.y, this.size * 5
-                        );
-                        gradient.addColorStop(0, `rgba(${this.r}, ${this.g}, ${this.b}, ${this.alpha * 0.35})`);
-                        gradient.addColorStop(0.6, `rgba(${this.r}, ${this.g}, ${this.b}, ${this.alpha * 0.08})`);
-                        gradient.addColorStop(1, 'rgba(0,0,0,0)');
-                        
-                        ctx.fillStyle = gradient;
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size * 5, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
+            // Paleta de colores de Solana: Morado (#9945FF) y Verde (#14F195)
+            const colorType = Math.random();
+            if (colorType < 0.45) {
+                // Verde Solana
+                this.r = 20;
+                this.g = 241;
+                this.b = 149;
+            } else if (colorType < 0.90) {
+                // Morado Solana
+                this.r = 153;
+                this.g = 69;
+                this.b = 255;
+            } else {
+                // Blanco brillante para estrellas de contraste
+                this.r = 255;
+                this.g = 255;
+                this.b = 255;
             }
 
-            class Comet {
-                constructor() {
-                    this.reset();
-                }
-                reset() {
-                    // Dirección aleatoria (cometas rápidos)
-                    this.angle = Math.random() * Math.PI * 2;
-                    this.speed = 4 + Math.random() * 5;
-                    this.vx = Math.cos(this.angle) * this.speed;
-                    this.vy = Math.sin(this.angle) * this.speed;
-                    this.length = 90 + Math.random() * 110; // longitud de la cola
-                    
-                    // Aparece desde fuera de la pantalla (en dirección opuesta)
-                    const dist = Math.max(width, height) * 0.6;
-                    this.x = cx + Math.cos(this.angle + Math.PI) * dist;
-                    this.y = cy + Math.sin(this.angle + Math.PI) * dist;
-                    
-                    this.life = 1.0;
-                    this.tailAlpha = 0.9;
-                }
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    this.life -= 0.012; // se desvanece rápido
-                    return this.life > 0;
-                }
-                draw() {
-                    const alpha = this.life * this.tailAlpha;
-                    
-                    // Cola (gradiente verde tech brillante)
-                    const tailX = this.x - this.vx * (this.length / this.speed);
-                    const tailY = this.y - this.vy * (this.length / this.speed);
-                    
-                    const tailGradient = ctx.createLinearGradient(this.x, this.y, tailX, tailY);
-                    tailGradient.addColorStop(0, `rgba(180, 255, 140, ${alpha})`);      // cabeza de la cola
-                    tailGradient.addColorStop(0.3, `rgba(80, 255, 100, ${alpha * 0.6})`);
-                    tailGradient.addColorStop(1, `rgba(0, 180, 60, 0)`);               // fin de la cola
-                    
-                    ctx.save();
-                    ctx.globalAlpha = alpha * 0.9;
-                    ctx.strokeStyle = tailGradient;
-                    ctx.lineWidth = 3.5;
-                    ctx.lineCap = 'round';
-                    ctx.shadowBlur = 18;
-                    ctx.shadowColor = '#8aff9f';
-                    ctx.beginPath();
-                    ctx.moveTo(this.x, this.y);
-                    ctx.lineTo(tailX, tailY);
-                    ctx.stroke();
-                    ctx.restore();
-                    
-                    // Cabeza brillante (punto blanco-verde)
-                    ctx.save();
-                    ctx.globalAlpha = alpha;
-                    ctx.shadowBlur = 25;
-                    ctx.shadowColor = '#c0ff9f';
-                    ctx.fillStyle = 'rgba(240, 255, 200, 1)';
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, 2.8, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
-                }
+            this.baseAlpha = (Math.random() * 0.6 + 0.2) * this.depth;
+            this.alpha = this.baseAlpha;
+            
+            this.pulseSpeed = 0.0005 + Math.random() * 0.001;
+            this.pulseOffset = Math.random() * Math.PI * 2;
+        }
+
+        update(time) {
+            // Suavizado del movimiento del mouse
+            mouseX += (targetMouseX - mouseX) * 0.05;
+            mouseY += (targetMouseY - mouseY) * 0.05;
+
+            const parallaxX = (mouseX - cx) * config.parallaxStrength * this.depth;
+            const parallaxY = (mouseY - cy) * config.parallaxStrength * this.depth;
+
+            this.vx = this.baseVx + parallaxX * 0.01;
+            this.vy = this.baseVy + parallaxY * 0.01;
+
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Titileo muy sutil (variación de solo 10% de su opacidad base)
+            const pulse = Math.sin(time * this.pulseSpeed + this.pulseOffset);
+            this.alpha = this.baseAlpha * (0.9 + pulse * 0.1);
+
+            if (this.x < -30 || this.x > width + 30 || this.y < -30 || this.y > height + 30) {
+                this.reset();
             }
+        }
 
-            function initParticles() {
-                particles = [];
-                for (let i = 0; i < config.particleCount; i++) {
-                    particles.push(new Particle());
-                }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${this.alpha})`;
+            ctx.fill();
+
+            // Resplandor sutil adaptado al color de la partícula
+            if (this.size > 0.8) {
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.size * 4
+                );
+                gradient.addColorStop(0, `rgba(${this.r}, ${this.g}, ${this.b}, ${this.alpha * 0.2})`);
+                gradient.addColorStop(1, 'rgba(0,0,0,0)');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 4, 0, Math.PI * 2);
+                ctx.fill();
             }
+        }
+    }
 
-            let time = 0;
+    class Comet {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.angle = Math.random() * Math.PI * 2;
+            this.speed = 3 + Math.random() * 3; // Ligeramente más lentos
+            this.vx = Math.cos(this.angle) * this.speed;
+            this.vy = Math.sin(this.angle) * this.speed;
+            this.length = 80 + Math.random() * 80; 
+            
+            const dist = Math.max(width, height) * 0.6;
+            this.x = cx + Math.cos(this.angle + Math.PI) * dist;
+            this.y = cy + Math.sin(this.angle + Math.PI) * dist;
+            
+            this.life = 1.0;
+            this.tailAlpha = 0.7;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.life -= 0.01; 
+            return this.life > 0;
+        }
+        draw() {
+            const alpha = this.life * this.tailAlpha;
+            
+            const tailX = this.x - this.vx * (this.length / this.speed);
+            const tailY = this.y - this.vy * (this.length / this.speed);
+            
+            // Cola usando el Verde Solana
+            const tailGradient = ctx.createLinearGradient(this.x, this.y, tailX, tailY);
+            tailGradient.addColorStop(0, `rgba(20, 241, 149, ${alpha})`);      
+            tailGradient.addColorStop(0.4, `rgba(20, 241, 149, ${alpha * 0.4})`);
+            tailGradient.addColorStop(1, `rgba(20, 241, 149, 0)`);               
+            
+            ctx.save();
+            ctx.globalAlpha = alpha * 0.8;
+            ctx.strokeStyle = tailGradient;
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#14F195'; // Brillo verde solana
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(tailX, tailY);
+            ctx.stroke();
+            ctx.restore();
+            
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#ffffff';
+            ctx.fillStyle = 'rgba(255, 255, 255, 1)'; // Cabeza blanca
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2.0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+    }
 
-           function animate() {
-                // Limpiamos completamente el lienzo en cada frame para evitar rastros
-                ctx.clearRect(0, 0, width, height);
+    function initParticles() {
+        particles = [];
+        for (let i = 0; i < config.particleCount; i++) {
+            particles.push(new Particle());
+        }
+    }
 
-                // === FONDO ABISAL TECH (MÁXIMA OSCURIDAD) ===
-                // Base negra absoluta para eliminar cualquier residuo de luz
-                ctx.fillStyle = '#000000'; // <- CORREGIDO: antes era '#0000101'
-                ctx.fillRect(0, 0, width, height);
+    let time = 0;
 
-                // 1. Destello central casi invisible (solo para dar volumen)
-                const gradient1 = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(width, height) * 0.5);
-                gradient1.addColorStop(0, 'rgba(0, 40, 15, 0.06)'); 
-                gradient1.addColorStop(1, 'rgba(0, 0, 0, 0)');
-                ctx.fillStyle = gradient1;
-                ctx.fillRect(0, 0, width, height);
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
 
-                // 2. Nebulosa de profundidad (Verde muy frío y oscuro)
-                const nebula = ctx.createRadialGradient(
-                    cx + Math.sin(time * 0.0001) * 150, 
-                    cy + Math.cos(time * 0.0001) * 100, 
-                    0, 
-                    cx, 
-                    cy, 
-                    height * 1.5
-                );
-                nebula.addColorStop(0, 'rgba(0, 120, 70, 0.015)'); 
-                nebula.addColorStop(0.5, 'rgba(0, 40, 20, 0.005)');
-                nebula.addColorStop(1, 'rgba(0, 0, 0, 0)');
-                ctx.fillStyle = nebula;
-                ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = '#000000'; 
+        ctx.fillRect(0, 0, width, height);
 
-                // 3. Viñeta Agresiva (Túnel de oscuridad)
-                const vignette = ctx.createRadialGradient(cx, cy, height * 0.05, cx, cy, Math.max(width, height) * 0.8);
-                vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
-                vignette.addColorStop(0.4, 'rgba(0, 0, 0, 0.6)'); 
-                vignette.addColorStop(0.8, 'rgba(0, 0, 0, 0.95)');
-                vignette.addColorStop(1, '#000000'); 
-                ctx.fillStyle = vignette;
-                ctx.fillRect(0, 0, width, height);
-                
-                // Incremento del tiempo para animaciones
-                time++;
+        const gradient1 = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(width, height) * 0.5);
+        gradient1.addColorStop(0, 'rgba(153, 69, 255, 0.04)'); // Tono morado muy leve en el centro
+        gradient1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = gradient1;
+        ctx.fillRect(0, 0, width, height);
 
-                // Partículas (estrellas)
-                particles.forEach(particle => particle.update(time));
-                particles.forEach(particle => particle.draw());
+        // Nebulosa estática (se multiplicó por 5 en lugar de 150 para que no maree)
+        const nebula = ctx.createRadialGradient(
+            cx + Math.sin(time * 0.0001) * 5, 
+            cy + Math.cos(time * 0.0001) * 5, 
+            0, 
+            cx, 
+            cy, 
+            height * 1.5
+        );
+        nebula.addColorStop(0, 'rgba(20, 241, 149, 0.015)'); // Verde solana de fondo
+        nebula.addColorStop(0.5, 'rgba(153, 69, 255, 0.008)'); // Morado de fondo
+        nebula.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = nebula;
+        ctx.fillRect(0, 0, width, height);
 
-                  // === COMETAS QUE APARECEN CASUALMENTE ===
+        const vignette = ctx.createRadialGradient(cx, cy, height * 0.05, cx, cy, Math.max(width, height) * 0.8);
+        vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        vignette.addColorStop(0.6, 'rgba(0, 0, 0, 0.6)'); 
+        vignette.addColorStop(1, '#000000'); 
+        ctx.fillStyle = vignette;
+        ctx.fillRect(0, 0, width, height);
+        
+        time++;
 
-                // Probabilidad baja para que sean ocasionales
+        particles.forEach(particle => particle.update(time));
+        particles.forEach(particle => particle.draw());
 
-                if (Math.random() < 0.0048 && comets.length < 4) {
+        if (Math.random() < 0.003 && comets.length < 3) {
+            comets.push(new Comet());
+        }
 
-                    comets.push(new Comet());
-
-                }
-
-                // Actualizar y dibujar cometas
-
-                comets = comets.filter(comet => {
-
-                    const alive = comet.update();
-
-                    if (alive) comet.draw();
-
-                    return alive;
-
-                });
-
-
-
-                requestAnimationFrame(animate);
-
-            }
-
-            resize();
-            animate();
+        comets = comets.filter(comet => {
+            const alive = comet.update();
+            if (alive) comet.draw();
+            return alive;
         });
+
+        requestAnimationFrame(animate);
+    }
+
+    resize();
+    animate();
+});

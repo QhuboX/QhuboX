@@ -3,69 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>sAIgnalX</title>
-    <link rel="stylesheet" href="siris.css">
+    <title>sAIgnalX — Free v2.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Oxanium:wght@300;400;600;700;800&family=JetBrains+Mono:wght@100;200;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sAIgnalX.css">
 </head>
 <body>
+
+    <!-- Background Layers -->
     <canvas id="techHiveCurve"></canvas>
+    
 
-    <div class="btc-background-provider">
-        <canvas id="btcChartCanvas"></canvas>
-        <div id="btcRealTimePrice" class="btc-price-tag"></div>
-    </div>
-    <canvas id="sniperRange"></canvas>
-
-    <!-- ═══════════════════════════════════════════════════════
-         NAVIGATION
-    ═══════════════════════════════════════════════════════ -->
-    <nav class="main-nav">
-        <a href="/ecosystem/BurnQhuboX/iBurn.html" target="_blank" class="nav-left-link">Burn QHUBX</a>
-        <ul>
-            <li><a href="/QhuboX.html" target="_blank">QhuboX</a></li>
-            <li><a href="/ecosystem/QhuboX.html" target="_blank">Ecosystem</a></li>
-            <li><a href="/whitepaper.html" target="_blank">Whitepaper</a></li>
-
-            <!-- GET PREMIUM button in nav -->
-            <li>
-                <button class="btn-premium-nav" onclick="openPremiumModal()">
-                    <span class="crown-ico">👑</span> Get Premium
-                </button>
-            </li>
-
-            <li class="cta-link down">
-                <a href="javascript:void(0)">Buy QHUBX</a>
-                <ul class="down-menu">
-                    <li><a href="https://raydium.io" target="_blank"><img src="/imahe/ray.png" class="nav-logo"> Raydium</a></li>
-                    <li><a href="#"><img src="/imahe/binance.png" class="nav-logo"> Binance <span class="soon-tag">Soon</span></a></li>
-                    <li><a href="#"><img src="/imahe/bybit.jpg" class="nav-logo"> Bybit <span class="soon-tag">Soon</span></a></li>
-                    <li><a href="#"><img src="/imahe/Bingx.png" class="nav-logo"> BingX <span class="soon-tag">Soon</span></a></li>
-                    <li><a href="#"><img src="/imahe/4.png" class="nav-logo"> OKX <span class="soon-tag">Soon</span></a></li>
-                    <li><a href="#"><img src="/imahe/bitget.png" class="nav-logo"> Bitget <span class="soon-tag">Soon</span></a></li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Top Navigation Bar -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-left">
+            <img src="media/logo.png" alt="Logo" class="nav-logo-img">
+            <span class="nav-brand">sAIgnalX<span class="version-tag">|| Free v2.0</span></span>
+        </div>
+         <p class="typing-effect">
+                    The Only AI Signals Bot Built for Delta Snipers<br>chart 1 to 15 min.
+                </p>
+        <div class="nav-right">
+            <div class="wallet-section" id="walletSection">
+                <button class="btn-connect-wallet" id="connectWalletBtn">⬡ Connect Wallet</button>
+                <div class="wallet-connected hidden" id="walletConnected">
+                    <span class="wallet-address" id="walletAddress"></span>
+                    <button class="btn-disconnect" id="disconnectBtn">✕</button>
+                </div>
+            </div>
+            <div class="sub-status" id="subStatus"></div>
+            <button class="btn-get-premium1" id="getPremiumBtn">👑 Get Premium</button>
+            <button class="btn-go-pro hidden" id="goProBtn">⚡ Go Pro</button>
+        </div>
     </nav>
 
-    <!-- ═══════════════════════════════════════════════════════
-         MAIN SCENE
-    ═══════════════════════════════════════════════════════ -->
+    <!-- Main App Scene -->
     <div class="scene">
         <div class="header">
             <div class="header-content">
                 <div class="logo-row">
                     <img src="media/logo.png" alt="Logo" class="main-logo">
                     <h1 class="brand-name">sAIgnalX</h1>
-                    <span class="version-tag">|| Free v2.0</span>
+                   
                 </div>
-                <p class="typing-effect">
-                    The Only AI Signals Bot Built for Delta Snipers<br>chart 1 to 15 min.
-                </p>
+               
                 <!-- GET PREMIUM button in header -->
                 <button class="btn-get-premium" onclick="openPremiumModal()">
                     👑 &nbsp;Get Premium — $25 / month
                 </button>
             </div>
         </div>
+
 
         <div class="cube" id="cube">
             <div class="face front">
@@ -106,7 +95,7 @@
         </div>
     </div>
 
-    <!-- Side columns -->
+    <!-- Side Tickers -->
     <div class="side-column left-col">
         <div class="col-header">TOP CRYPTO</div>
         <div id="crypto-ticker" class="ticker-wrapper"></div>
@@ -116,528 +105,67 @@
         <div id="global-ticker" class="ticker-wrapper"></div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════
-         FOOTER
-    ═══════════════════════════════════════════════════════ -->
-    <footer>
-        <div class="footer-left">
-            <a href="/QhuboX.html" target="_blank">&copy; 2026 || QhuboX, All Rights Reserved</a>
-        </div>
-        <div class="footer-right">
-            <div class="social-container">
-                <a href="/ecosystem/QhuboX.html"><img src="/ecosystem/Kiaraap/assets/icons/icono_link.svg" alt="home"></a>
-                <a href="#" target="_blank"><img src="/ecosystem/icons/twitter.png" alt="X"></a>
-                <a href="https://discord.com" target="_blank"><img src="/ecosystem/icons/discord.png" alt="Discord"></a>
+    <!-- Premium Payment Modal -->
+    <div class="modal-overlay hidden" id="premiumModal">
+        <div class="modal-box">
+            <button class="modal-close" id="closeModalBtn">✕</button>
+            <div class="modal-header">
+                <div class="modal-badge">PREMIUM</div>
+                <h2>Unlock sAIgnalX Pro</h2>
+                <p class="modal-subtitle">30-day subscription · Auto-renewable</p>
             </div>
-        </div>
-    </footer>
-
-    <!-- ═══════════════════════════════════════════════════════
-         PREMIUM PAYMENT MODAL
-    ═══════════════════════════════════════════════════════ -->
-    <div class="premium-overlay" id="premiumOverlay">
-        <div class="premium-modal" id="premiumModal">
-            <button class="modal-close" onclick="closePremiumModal()">✕</button>
-
-            <!-- Step dots -->
-            <div class="step-indicator">
-                <div class="step-dot active" id="step1dot"></div>
-                <div class="step-dot" id="step2dot"></div>
-                <div class="step-dot" id="step3dot"></div>
-            </div>
-
-            <!-- ── STEP 1: Overview & wallet input ── -->
-            <div id="step1">
-                <div class="modal-header">
-                    <span class="modal-crown">👑</span>
-                    <div class="modal-title">sAIgnalX Premium</div>
-                    <div class="modal-subtitle">POWERED BY QHUBX · SOLANA NETWORK</div>
+            <div class="modal-price-display">
+                <div class="price-row">
+                    <span class="price-usd">$25 USD</span>
+                    <span class="price-separator">=</span>
+                    <span class="price-token" id="priceInToken">— QHUBX</span>
                 </div>
-
-                <!-- Live prices -->
-                <div class="modal-tickers">
-                    <div class="modal-ticker-item">
-                        <div class="ticker-label">SOL / USD</div>
-                        <div class="ticker-value green" id="modalSolPrice">—</div>
-                    </div>
-                    <div class="modal-ticker-item">
-                        <div class="ticker-label">QHUBX / USD</div>
-                        <div class="ticker-value" id="modalQhubxPrice">—</div>
-                    </div>
-                </div>
-
-                <!-- Price display -->
-                <div class="price-display">
-                    <div class="price-usd"><span>$</span>25<span style="font-size:18px;opacity:0.5">.00</span></div>
-                    <div class="price-period">PER MONTH · AUTO-RENEW OPTIONAL</div>
-                    <div class="qhubx-price-row">
-                        <div class="qhubx-icon">Q</div>
-                        <div class="qhubx-amount" id="qhubxEquivalent">
-                            <span class="qhubx-loading">Calculating…</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Features -->
-                <ul class="premium-features">
-                    <li>Unlimited AI signals — all timeframes</li>
-                    <li>Priority signal delivery &amp; lower latency</li>
-                    <li>Advanced delta sniper configurations</li>
-                    <li>Premium-only pairs &amp; exotic markets</li>
-                    <li>30-day access from payment date</li>
-                </ul>
-
-                <hr class="modal-divider">
-
-                <!-- Your wallet input -->
-                <div class="wallet-section">
-                    <label class="input-label">Your Solana Wallet Address</label>
-                    <div class="wallet-input-wrap">
-                        <input
-                            type="text"
-                            class="wallet-input"
-                            id="userWalletInput"
-                            placeholder="Enter your Solana wallet address…"
-                            autocomplete="off"
-                            spellcheck="false"
-                        >
-                    </div>
-                </div>
-
-                <button class="btn-pay" id="btnContinue" onclick="goToStep2()">
-                    CONTINUE →
-                </button>
-
-                <div class="sub-info">
-                    Payment is in QHUBX token on Solana.<br>
-                    Subscription: 30 days · Non-refundable.<br>
-                    <a href="#" onclick="closePremiumModal()">Cancel</a>
+                <div class="price-meta">
+                    <span id="solPrice">SOL: $—</span>
+                    <span id="qhubxPrice">QHUBX: $—</span>
                 </div>
             </div>
-
-            <!-- ── STEP 2: Payment instructions ── -->
-            <div id="step2" style="display:none">
-                <div class="modal-header">
-                    <span class="modal-crown">💸</span>
-                    <div class="modal-title">Send QHUBX</div>
-                    <div class="modal-subtitle">EXACT AMOUNT · SOLANA NETWORK ONLY</div>
+            <div class="modal-token-info">
+                <div class="token-row">
+                    <span class="token-label">Token</span>
+                    <span class="token-value">QHUBX · Solana Network</span>
                 </div>
-
-                <div class="price-display">
-                    <div class="price-usd" style="font-size:clamp(20px,3.5vw,28px)">
-                        <span id="step2Amount">—</span>
-                        <span style="font-size:14px;opacity:0.6;margin-left:4px">QHUBX</span>
-                    </div>
-                    <div class="price-period">≈ $25.00 USD · LOCKED FOR 10 MINUTES</div>
+                <div class="token-row">
+                    <span class="token-label">Duration</span>
+                    <span class="token-value">30 Days</span>
                 </div>
-
-                <!-- Countdown -->
-                <div style="text-align:center;margin-bottom:14px;">
-                    <span style="font-family:'Share Tech Mono',monospace;font-size:clamp(9px,1.5vw,11px);color:rgba(180,190,220,0.5);">
-                        Quote expires in: <span id="countdown" style="color:#ffaa00;">10:00</span>
-                    </span>
+                <div class="token-row">
+                    <span class="token-label">Balance</span>
+                    <span class="token-value" id="qhubxBalance">— QHUBX</span>
                 </div>
-
-                <!-- Destination wallet -->
-                <div class="dest-address">
-                    <div class="dest-label">Send QHUBX to this wallet</div>
-                    <div class="dest-addr-text" id="destAddrDisplay"></div>
-                </div>
-
-                <div style="margin-bottom:14px;">
-                    <label class="input-label">Your Wallet (confirm)</label>
-                    <div class="dest-addr-text" id="confirmedWallet" style="background:rgba(255,255,255,0.02);padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);"></div>
-                </div>
-
-                <!-- Payment status -->
-                <div class="payment-status" id="paymentStatus"></div>
-
-                <button class="btn-pay" id="btnVerify" onclick="startVerification()">
-                    I SENT THE PAYMENT · VERIFY
-                </button>
-
-                <div class="sub-info">
-                    Token: QHUBX on Solana (SPL)<br>
-                    Make sure to send the <strong style="color:#f5c842">exact amount</strong> from your registered wallet.<br>
-                    <a href="javascript:void(0)" onclick="backToStep1()">← Go back</a>
+                <div class="token-row" id="insufficientRow" style="display:none;">
+                    <span class="token-label" style="color:#ff4444;">⚠</span>
+                    <span class="token-value" style="color:#ff4444;">Insufficient QHUBX balance</span>
                 </div>
             </div>
-
-            <!-- ── STEP 3: Success ── -->
-            <div id="step3" style="display:none">
-                <div class="modal-header" style="padding-bottom:0">
-                    <span class="check-icon">✅</span>
-                    <div class="modal-title" style="color:var(--neon-green);">Payment Verified!</div>
-                    <div class="modal-subtitle">PREMIUM ACCESS ACTIVATED</div>
-                </div>
-                <div class="price-display" style="margin-top:20px;border-color:rgba(0,255,157,0.2);background:rgba(0,255,157,0.04);">
-                    <div style="font-family:'Share Tech Mono',monospace;font-size:clamp(9px,1.5vw,11px);color:rgba(0,255,157,0.7);letter-spacing:1px;">
-                        SUBSCRIPTION ACTIVE
-                    </div>
-                    <div style="font-family:'Rajdhani',sans-serif;font-size:clamp(20px,3.5vw,28px);font-weight:700;color:var(--neon-green);margin:6px 0;">
-                        30 Days
-                    </div>
-                    <div class="price-period" id="expiryDisplay">Expires: —</div>
-                </div>
-                <div class="premium-features" style="margin-top:16px;">
-                    <li>All premium features unlocked</li>
-                    <li>Renewal: send QHUBX again before expiry</li>
-                    <li>Wallet: <span id="activeWalletDisplay" style="color:#f5c842"></span></li>
-                </div>
-                <button class="btn-pay" onclick="closePremiumModal()" style="background:linear-gradient(135deg,rgba(0,255,157,0.18),rgba(0,200,100,0.1));border-color:rgba(0,255,157,0.5);color:var(--neon-green);">
-                    START TRADING 🚀
-                </button>
-            </div>
+            <button class="btn-pay-now" id="payNowBtn">
+                <span id="payBtnText">Authorize Payment</span>
+            </button>
+            <p class="modal-disclaimer">
+                Payment is sent to the project wallet automatically.<br>
+                Subscription activates instantly upon confirmation.
+            </p>
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════
-         SCRIPTS
-    ═══════════════════════════════════════════════════════ -->
+    <!-- Footer -->
+    <footer>
+        <div class="footer-left">
+            <a href="/" target="_blank">&copy; 2026 || Ment4l, All Rights Reserved</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="bingx.js"></script>
-    <script src="script.js"></script>
-    <script src="face-matrix.js"></script>
-    <script src="techHiveCurve.js"></script>
-
-    <!-- ── PREMIUM PAYMENT SYSTEM ── -->
-    <script>
-    /**
-     * ══════════════════════════════════════════════════════
-     *  sAIgnalX PREMIUM PAYMENT SYSTEM
-     *  ─────────────────────────────────────────────────────
-     *  HOW TO CONFIGURE:
-     *    1. Set QHUBX_CONTRACT_ADDRESS to your SPL token mint
-     *    2. Set RECEIVER_WALLET to the wallet that collects payments
-     *    3. Deploy — everything else is automatic.
-     *
-     *  Pricing: $25 USD converted to QHUBX in real time
-     *  Duration: 30 days per payment
-     *  Network:  Solana (SPL token)
-     * ══════════════════════════════════════════════════════
-     */
-
-    // ── CONFIGURATION ─────────────────────────────────────
-    const QHUBX_CONTRACT_ADDRESS = 'YOUR_QHUBX_SPL_TOKEN_MINT_HERE';
-    const RECEIVER_WALLET        = 'YOUR_RECEIVER_SOLANA_WALLET_HERE';
-    const PREMIUM_PRICE_USD      = 25;
-    const SUBSCRIPTION_DAYS      = 30;
-    // ──────────────────────────────────────────────────────
-
-    /* ── State ── */
-    const PM = {
-        solPrice:      null,
-        qhubxPrice:    null,
-        qhubxAmount:   null,
-        userWallet:    null,
-        quoteExpiry:   null,
-        countdownTimer: null,
-        verifyInterval: null,
-        currentStep:   1,
-    };
-
-    /* ── Storage helpers (localStorage for persistence) ── */
-    function saveSub(wallet, expiry) {
-        const data = { wallet, expiry, ts: Date.now() };
-        localStorage.setItem('saignalx_premium', JSON.stringify(data));
-    }
-    function loadSub() {
-        try { return JSON.parse(localStorage.getItem('saignalx_premium') || 'null'); }
-        catch { return null; }
-    }
-    function isSubActive() {
-        const d = loadSub();
-        return d && Date.now() < d.expiry;
-    }
-
-    /* ── Price fetching ── */
-    async function fetchPrices() {
-        try {
-            // SOL price via CoinGecko (free, no key needed)
-            const solRes = await fetch(
-                'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd',
-                { cache: 'no-store' }
-            );
-            const solData = await solRes.json();
-            PM.solPrice = solData?.solana?.usd ?? null;
-        } catch { PM.solPrice = null; }
-
-        try {
-            // QHUBX price via DexScreener (no API key)
-            // DexScreener endpoint: /latest/dex/tokens/{tokenAddress}
-            const dexRes = await fetch(
-                `https://api.dexscreener.com/latest/dex/tokens/${QHUBX_CONTRACT_ADDRESS}`,
-                { cache: 'no-store' }
-            );
-            const dexData = await dexRes.json();
-            const pair = dexData?.pairs?.[0];
-            PM.qhubxPrice = pair ? parseFloat(pair.priceUsd) : null;
-        } catch { PM.qhubxPrice = null; }
-
-        updateModalPrices();
-    }
-
-    function updateModalPrices() {
-        const solEl   = document.getElementById('modalSolPrice');
-        const qhubxEl = document.getElementById('modalQhubxPrice');
-        const eqEl    = document.getElementById('qhubxEquivalent');
-
-        if (solEl)   solEl.textContent   = PM.solPrice   ? `$${PM.solPrice.toFixed(2)}`   : '—';
-        if (qhubxEl) qhubxEl.textContent = PM.qhubxPrice ? `$${PM.qhubxPrice.toFixed(8)}` : '—';
-
-        if (PM.qhubxPrice && PM.qhubxPrice > 0) {
-            PM.qhubxAmount = PREMIUM_PRICE_USD / PM.qhubxPrice;
-            if (eqEl) eqEl.textContent = `${PM.qhubxAmount.toFixed(2)} QHUBX`;
-            const s2 = document.getElementById('step2Amount');
-            if (s2) s2.textContent = PM.qhubxAmount.toFixed(2);
-        } else {
-            if (eqEl) eqEl.innerHTML = '<span class="qhubx-loading">Fetching price…</span>';
-        }
-    }
-
-    /* ── Modal open/close ── */
-    function openPremiumModal() {
-        // Check existing active sub
-        if (isSubActive()) {
-            const d = loadSub();
-            const expDate = new Date(d.expiry).toLocaleDateString();
-            showStep(3, d.wallet, d.expiry);
-        } else {
-            showStep(1);
-        }
-        document.getElementById('premiumOverlay').classList.add('active');
-        fetchPrices();
-        // Refresh prices every 30s while modal is open
-        PM._priceInterval = setInterval(fetchPrices, 30000);
-    }
-
-    function closePremiumModal() {
-        document.getElementById('premiumOverlay').classList.remove('active');
-        clearInterval(PM._priceInterval);
-        clearInterval(PM.countdownTimer);
-        clearInterval(PM.verifyInterval);
-    }
-
-    // Close on overlay click
-    document.getElementById('premiumOverlay').addEventListener('click', function(e) {
-        if (e.target === this) closePremiumModal();
-    });
-
-    /* ── Step navigation ── */
-    function showStep(n, wallet, expiry) {
-        [1,2,3].forEach(i => {
-            document.getElementById(`step${i}`).style.display = i === n ? 'block' : 'none';
-            const dot = document.getElementById(`step${i}dot`);
-            dot.classList.remove('active','done');
-            if (i < n) dot.classList.add('done');
-            if (i === n) dot.classList.add('active');
-        });
-        PM.currentStep = n;
-        if (n === 3 && wallet && expiry) activateSuccess(wallet, expiry);
-    }
-
-    function goToStep2() {
-        const w = document.getElementById('userWalletInput').value.trim();
-        if (!w || w.length < 32) {
-            alert('Please enter a valid Solana wallet address.');
-            return;
-        }
-        if (!PM.qhubxAmount) {
-            alert('Prices are still loading. Please wait a moment.');
-            return;
-        }
-        PM.userWallet = w;
-
-        // Show destination & confirmed wallet
-        document.getElementById('destAddrDisplay').textContent = RECEIVER_WALLET;
-        document.getElementById('confirmedWallet').textContent = w;
-        const s2 = document.getElementById('step2Amount');
-        if (s2) s2.textContent = PM.qhubxAmount.toFixed(2);
-
-        // Start 10-min countdown
-        PM.quoteExpiry = Date.now() + 10 * 60 * 1000;
-        startCountdown();
-        clearStatus();
-
-        showStep(2);
-    }
-
-    function backToStep1() {
-        clearInterval(PM.countdownTimer);
-        clearInterval(PM.verifyInterval);
-        showStep(1);
-    }
-
-    /* ── Countdown ── */
-    function startCountdown() {
-        clearInterval(PM.countdownTimer);
-        const el = document.getElementById('countdown');
-        PM.countdownTimer = setInterval(() => {
-            const remaining = PM.quoteExpiry - Date.now();
-            if (remaining <= 0) {
-                clearInterval(PM.countdownTimer);
-                el.textContent = 'EXPIRED';
-                el.style.color = '#ff0055';
-                document.getElementById('btnVerify').disabled = true;
-                setStatus('error', '⚠ Quote expired. Please go back and restart.');
-                return;
-            }
-            const m = Math.floor(remaining / 60000);
-            const s = Math.floor((remaining % 60000) / 1000);
-            el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
-            el.style.color = remaining < 120000 ? '#ff0055' : '#ffaa00';
-        }, 1000);
-    }
-
-    /* ── Payment verification ── */
-    async function startVerification() {
-        if (!PM.userWallet) return;
-        document.getElementById('btnVerify').disabled = true;
-        setStatus('verifying', '<span class="spin-icon">⟳</span> Scanning Solana blockchain…');
-        clearInterval(PM.verifyInterval);
-
-        let attempts = 0;
-        const maxAttempts = 12; // 60s total
-
-        PM.verifyInterval = setInterval(async () => {
-            attempts++;
-            try {
-                const paid = await checkPaymentOnChain(PM.userWallet, PM.qhubxAmount);
-                if (paid) {
-                    clearInterval(PM.verifyInterval);
-                    clearInterval(PM.countdownTimer);
-                    const expiry = Date.now() + SUBSCRIPTION_DAYS * 24 * 60 * 60 * 1000;
-                    saveSub(PM.userWallet, expiry);
-                    showStep(3, PM.userWallet, expiry);
-                    applyPremiumUI();
-                } else if (attempts >= maxAttempts) {
-                    clearInterval(PM.verifyInterval);
-                    setStatus('error', '⚠ Payment not found yet. Check your transaction and try again in a few minutes.');
-                    document.getElementById('btnVerify').disabled = false;
-                } else {
-                    setStatus('verifying', `<span class="spin-icon">⟳</span> Checking… (${attempts}/${maxAttempts})`);
-                }
-            } catch (err) {
-                if (attempts >= maxAttempts) {
-                    clearInterval(PM.verifyInterval);
-                    setStatus('error', '⚠ Network error. Please try again.');
-                    document.getElementById('btnVerify').disabled = false;
-                }
-            }
-        }, 5000);
-    }
-
-    /**
-     * checkPaymentOnChain
-     * ─────────────────────────────────────────────────────
-     * Queries Solana RPC to verify that `senderWallet` sent
-     * at least `expectedAmount` QHUBX tokens to RECEIVER_WALLET
-     * within the last 15 minutes.
-     *
-     * Uses the public Solana mainnet RPC endpoint.
-     * For production, replace with a paid RPC (e.g. Helius, QuickNode).
-     */
-    async function checkPaymentOnChain(senderWallet, expectedAmount) {
-        const RPC = 'https://api.mainnet-beta.solana.com';
-        const TOLERANCE = 0.98; // allow 2% slippage
-
-        // Get recent token transactions for RECEIVER_WALLET
-        const body = {
-            jsonrpc: '2.0', id: 1,
-            method: 'getSignaturesForAddress',
-            params: [RECEIVER_WALLET, { limit: 20 }]
-        };
-        const res  = await fetch(RPC, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
-        const data = await res.json();
-        const sigs = data?.result ?? [];
-
-        for (const sig of sigs) {
-            // Skip very old transactions (> 15 min)
-            if (sig.blockTime && (Date.now()/1000 - sig.blockTime) > 900) continue;
-
-            // Get full transaction
-            const txBody = {
-                jsonrpc: '2.0', id: 2,
-                method: 'getTransaction',
-                params: [sig.signature, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0 }]
-            };
-            const txRes  = await fetch(RPC, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(txBody) });
-            const txData = await txRes.json();
-            const tx = txData?.result;
-            if (!tx) continue;
-
-            // Check if sender matches
-            const accounts = tx.transaction?.message?.accountKeys ?? [];
-            const senderInTx = accounts.some(a =>
-                (a.pubkey || a) === senderWallet
-            );
-            if (!senderInTx) continue;
-
-            // Check SPL token transfers
-            const innerInstructions = tx.meta?.innerInstructions ?? [];
-            const instructions = tx.transaction?.message?.instructions ?? [];
-            const allIx = [...instructions];
-            innerInstructions.forEach(ii => allIx.push(...(ii.instructions || [])));
-
-            for (const ix of allIx) {
-                if (ix.program !== 'spl-token') continue;
-                const parsed = ix.parsed;
-                if (!parsed) continue;
-
-                const type = parsed.type;
-                if (type !== 'transfer' && type !== 'transferChecked') continue;
-
-                const info = parsed.info ?? {};
-                // Check token mint matches QHUBX contract
-                if (info.mint && info.mint !== QHUBX_CONTRACT_ADDRESS) continue;
-
-                // Check amount (decimals: most SPL tokens use 9)
-                const rawAmount = parseFloat(info.tokenAmount?.uiAmount ?? info.amount ?? 0);
-                if (rawAmount >= expectedAmount * TOLERANCE) {
-                    return true; // ✅ Valid payment found
-                }
-            }
-        }
-        return false;
-    }
-
-    /* ── Success state ── */
-    function activateSuccess(wallet, expiry) {
-        const expDate = new Date(expiry);
-        document.getElementById('expiryDisplay').textContent =
-            `Expires: ${expDate.toLocaleDateString()} at ${expDate.toLocaleTimeString()}`;
-        document.getElementById('activeWalletDisplay').textContent =
-            wallet.slice(0,6) + '…' + wallet.slice(-6);
-    }
-
-    function applyPremiumUI() {
-        document.body.classList.add('is-premium');
-        // You can unlock premium features in script.js by checking:
-        // window.sAIgnalX_isPremium = true;
-        window.sAIgnalX_isPremium = true;
-        // Update version tag
-        const vt = document.querySelector('.version-tag');
-        if (vt) vt.innerHTML = '<span class="premium-badge">👑 Premium</span>';
-    }
-
-    /* ── Status helpers ── */
-    function setStatus(type, html) {
-        const el = document.getElementById('paymentStatus');
-        el.className = `payment-status ${type}`;
-        el.innerHTML = html;
-    }
-    function clearStatus() {
-        const el = document.getElementById('paymentStatus');
-        el.className = 'payment-status';
-        el.textContent = '';
-    }
-
-    /* ── On page load: restore premium state ── */
-    window.addEventListener('DOMContentLoaded', () => {
-        if (isSubActive()) {
-            applyPremiumUI();
-        }
-    });
-    </script>
+    <script src="js/bingx.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/face-matrix.js"></script>
+    <script src="js/techHiveCurve.js"></script>
+    <script src="js/wallet.js"></script>
 </body>
 </html>

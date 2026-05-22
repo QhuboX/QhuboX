@@ -80,5 +80,10 @@ Thumbs.db
     **/venv/
     
     # Archivos de caché de Python
-    **/__pycache__/
-    **/*.pyc/
+**/__pycache__/
+**/*.pyc
+
+QhuboX/ecosystem/sAIgnalX/premium/
+AUGUSTA AI BOT/tts_cache/
+QhuboX/ecosystem/sAIgnalX/premium-system.js
+QhuboX/ecosystem/sAIgnalX/server/solana/verifier.js
