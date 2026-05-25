@@ -34,7 +34,7 @@ Integrated fun. Betting systems and games backed by the internal economy, transf
 * **Sollower (Social FI):** Interact, promote, and monetize. A system where earning rewards for attention and crowdfunding are part of the same network.
 * **Kiaraap:** The Crypto Investment Notebook. Strategic portfolio organization for investors who demand order.
 * **DEV Turing:** Instant Creation. Generate games, apps, and websites on the fly with automated development tools.
-* **NeuroQhubox:** Technology with a human purpose. Cognitive development support for individuals with ADHD through adaptive interfaces.
+* **NeuroQhuboX:** Technology with a human purpose. Cognitive development support for individuals with ADHD through adaptive interfaces.
 * **Pebbles:** 24/7 Market Monitor. Total surveillance over liquidity and network movements.
 * **AUGUSTA AI BOT:** The Resident Expert. An AI assistant trained in the entire QhuboX environment and the global crypto landscape.
 

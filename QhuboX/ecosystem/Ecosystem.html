@@ -123,7 +123,7 @@
     </div>
 
     <div class="desktop-icon" data-url="http://localhost:3001" data-app="QhuboX Terminal">
-      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#1a1a2e88,#0d0d1a44)">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#5151ff88,#0d0d1a44)">
         <img src="icons/icon.png" alt="Terminal" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="di-emoji-fb" style="display:none">⌨️</span>
       </div>
@@ -151,7 +151,7 @@
         <img src="media/neuro.png" alt="NeuroQhuboX" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="di-emoji-fb" style="display:none">🧠</span>
       </div>
-      <div class="di-label">NeuroQhuboX</div>
+      <div class="di-label">NeuroboX</div>
     </div>
 
     <div class="desktop-icon" data-url="pebbles.html" data-app="Pebbles">
@@ -162,6 +162,13 @@
       <div class="di-label">Pebbles</div>
     </div>
 
+     <div class="desktop-icon" data-url="Greenplayer.html" data-app="Green Player">
+      <div class="di-thumb di-img-wrap" style="background:linear-gradient(135deg,#aa66ff44,#501a8022)">
+        <img src="icons/Green.png" alt="Greenplayer" class="di-app-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="di-emoji-fb" style="display:none"><🟢></span>
+      </div>
+      <div class="di-label">Greenplayer</div>
+    </div>
   </main>
 
   <!-- ── START MENU ── -->
@@ -235,15 +242,16 @@
     </div>
   </div>
 
-  <!-- ── WALLET / CHAT WINDOW (same size/position as AI modal) ── -->
-  <div id="walletChatWindow" class="chat-container hidden">
-    <div class="chat-titlebar">
-      <span id="walletChatTitle">💳 QhuboX Wallet</span>
-      <button id="walletChatCloseBtn" class="chat-close-btn" aria-label="Close">✕</button>
-    </div>
-    <div class="chat-body">
-      <iframe id="walletChatIframe" src="http://localhost:5173/" allow="clipboard-write" title="QhuboX Wallet &amp; Chat"></iframe>
-    </div>
+  <!-- ── WALLET PANEL — iframe de la app completa, integrado al desktop ── -->
+  <div id="walletPanel" class="wallet-panel hidden" aria-label="QhuboX Wallet">
+    <iframe
+      id="walletPanelIframe"
+      src="http://localhost:5173/?embed=1"
+      allow="clipboard-write; microphone; camera; autoplay"
+      allowfullscreen
+      title="QhuboX App"
+      style="width:100%;height:100%;border:none;display:block;background:transparent"
+    ></iframe>
   </div>
 
   <!-- ── WALLPAPER SWITCHER ── -->

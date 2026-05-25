@@ -43,7 +43,7 @@ const APPS = [
     url: 'pebbles.html',
     desc: '24/7 Market Monitor. Total surveillance over liquidity and network movements.',
     category: 'Analytics' },
-  { id: 'NeuroQhuboX', icon: '🧠', color: '#ff6b9d', img: 'media/neuro.png',
+  { id: 'NeuroQhuboX', icon: '🧠', color: '#ff6b9d', img: 'assets/neuro.png',
     url: 'NeuroQhuboX.html',
     desc: 'Technology with a human purpose. Cognitive development support for individuals with ADHD through adaptive interfaces.',
     category: 'AI' },
@@ -60,7 +60,7 @@ const APPS = [
     desc: 'Gaming & Entertainment — Integrated fun. Betting systems and games backed by the internal economy, transforming leisure into real value.',
     category: 'Gaming' },
   { id: 'Green Player', icon: '🟢', color: '#22d3ee', img: 'icons/Green.png',
-    url: '',
+    url: 'Greenplayer.html',
     desc: 'Green Player — part of the QhuboX ecosystem.',
     category: 'Media' },
   { id: 'QhuboX Project', icon: '📁', color: '#8899cc', img: 'assets/logo.png',
@@ -671,7 +671,7 @@ document.head.appendChild(_closeKF);
 /* ── openAppWindow — main entry point ──────── */
 function openAppWindow(appId) {
   if (appId === 'AI Assistant')    { toggleAIWindow(true); return; }
-  if (appId === 'Qhubox Wallet' || appId === 'QhuboX Chat') { openWalletChatModal(appId); return; }
+  if (appId === 'Qhubox Wallet' || appId === 'QhuboX Chat') { toggleWalletPanel(true); return; }
 
   const app = appByID(appId);
 
@@ -794,37 +794,36 @@ el('aiCloseBtn')?.addEventListener('click', () => toggleAIWindow(false));
 el('aiDockBtn')?.addEventListener('click',  () => toggleAIWindow());
 
 /* ────────────────────────────────────────────
-   WALLET / CHAT MODAL (identical to AI window)
+   WALLET PANEL — toggle sidebar + push gadgets
 ──────────────────────────────────────────── */
-function openWalletChatModal(appId) {
-  const win   = el('walletChatWindow');
-  const iframe = el('walletChatIframe');
-  const title  = el('walletChatTitle');
-  if (!win) return;
+function toggleWalletPanel(forceOpen) {
+  const panel   = el('walletPanel');
+  const dockBtn = el('walletDockBtn');
+  const desktop = el('desktop');
+  if (!panel) return;
 
-  if (appId === 'QhuboX Chat') {
-    if (title)  title.textContent = '💬 QhuboX Chat';
-    if (iframe) iframe.src = 'http://localhost:5173/';
+  const isHidden   = panel.classList.contains('hidden');
+  const shouldOpen = forceOpen !== undefined ? forceOpen : isHidden;
+
+  if (shouldOpen) {
+    panel.classList.remove('hidden');
+    dockBtn?.classList.add('wallet-open');
+    desktop?.classList.add('wallet-open');   // empuja gadgets de la derecha
   } else {
-    if (title)  title.textContent = '💳 QhuboX Wallet';
-    if (iframe) iframe.src = 'http://localhost:5173/';
+    panel.classList.add('hidden');
+    dockBtn?.classList.remove('wallet-open');
+    desktop?.classList.remove('wallet-open');
   }
-  win.classList.remove('hidden');
 }
 
-el('walletChatCloseBtn')?.addEventListener('click', () => {
-  el('walletChatWindow')?.classList.add('hidden');
+el('walletDockBtn')?.addEventListener('click', () => {
+  closeStartMenu();
+  closeSpotlight();
+  toggleWalletPanel();
 });
 
-// Wallet & Chat dock buttons
-el('walletDockBtn')?.addEventListener('click', () => {
-  closeStartMenu(); closeSpotlight();
-  openWalletChatModal('Qhubox Wallet');
-});
-el('chatDockBtn')?.addEventListener('click', () => {
-  closeStartMenu(); closeSpotlight();
-  openWalletChatModal('QhuboX Chat');
-});
+// El WalletModal (Web Component) despacha este evento al presionar su botón ×
+window.addEventListener('qhubox:wallet:close', () => toggleWalletPanel(false));
 
 /* ────────────────────────────────────────────
    START MENU
@@ -855,7 +854,7 @@ el('startBtn')?.addEventListener('click', toggleStartMenu);
 ──────────────────────────────────────────── */
 document.querySelectorAll('.dock-item').forEach(item => {
   // AI, Wallet, Chat handled separately above
-  if (item.id === 'aiDockBtn' || item.id === 'walletDockBtn' || item.id === 'chatDockBtn') return;
+  if (item.id === 'aiDockBtn' || item.id === 'walletDockBtn') return;
 
   const appId  = item.dataset.app;
   const url    = item.dataset.url;
@@ -924,7 +923,7 @@ document.addEventListener('keydown', function(e) {
     closeStartMenu();
     closeSpotlight();
     toggleAIWindow(false);
-    el('walletChatWindow')?.classList.add('hidden');
+    toggleWalletPanel(false);
     return;
   }
   if ((e.ctrlKey || e.metaKey) && (e.key === ' ' || e.key === 'k')) {
@@ -1396,8 +1395,3 @@ document.addEventListener('visibilitychange', () => {
     fetchSolanaPrice();
   }
 });
-
-
-
-
-
