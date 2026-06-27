@@ -1,4 +1,4 @@
-# 🧊 QhuboX Ecosystem
+# 🧊 QhuboX IS
 > **The Era of Integration: Everything you need, in one single environment.**
 
 Decades ago, if you wanted to capture a moment, you needed a camera. To listen to music, you needed a dedicated player (iPod, Discman, radio). To communicate, you used a basic phone. Carrying fragments of technology was tedious, inefficient, and fragmented. The revolution didn't come from modernizing each device separately; it came from a visionary idea: integrating them all into a single experience that changed the world forever.
